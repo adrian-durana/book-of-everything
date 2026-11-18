@@ -1,5 +1,97 @@
 \chapter{Generating Functions and Transforms}\label{ch:generating-functions}
 
-\chapterinfo{STAT2003, STAT3004}{\textit{to be completed}}
+\chapterinfo{STAT2003}{\cref{ch:random-variables,ch:expectation-moments}.}
 
-\textit{Not yet written.}
+% Sources: STAT2003 handwritten notes (pp. 26-27); STAT2003 course notes, Section 2.4.
+
+Many calculations and manipulations involving probability distributions are made easier by transforms. This chapter covers two of them: the probability generating function, for non-negative integer-valued random variables, and the moment generating function. Both determine the distribution uniquely, and both give the moments of a random variable by differentiation. They are particularly useful for sums of independent random variables (\cref{ch:transformations}).
+
+% ==========================================================================
+\section{Probability generating functions}\label{sec:pgf}
+% ==========================================================================
+
+\begin{definition}[Probability generating function]\label{def:pgf}
+Let $X$ be a non-negative, integer-valued random variable. The \emph{probability generating function} (PGF) of $X$ is the function $G \colon [0,1] \to [0,1]$ defined by
+\[
+  G(z) \coloneqq \E z^X = \sum_{x=0}^\infty z^x \, \Prob(X = x).
+\]
+\end{definition}
+
+\begin{example}[PGF of the Poisson distribution]\label{ex:pgf-poisson}
+Let $X$ have pmf
+\[
+  f(x) = e^{-\lambda} \frac{\lambda^x}{x!}, \qquad x = 0, 1, 2, \ldots
+\]
+(the Poisson distribution, \cref{ch:common-distributions}). Its PGF is
+\[
+  G(z) = \sum_{x=0}^\infty z^x e^{-\lambda} \frac{\lambda^x}{x!} = e^{-\lambda} \sum_{x=0}^\infty \frac{(\lambda z)^x}{x!} = e^{-\lambda} e^{\lambda z} = e^{-\lambda(1 - z)}.
+\]
+\end{example}
+
+\begin{theorem}[The pmf from the PGF]\label{thm:pgf-pmf}
+If $X$ has PGF $G$, then
+\[
+  \Prob(X = x) = \frac{1}{x!} \frac{\dd^x}{\dd z^x} G(z) \Big|_{z=0}, \qquad x = 0, 1, 2, \ldots
+\]
+\end{theorem}
+
+\begin{proof}
+By definition,
+\[
+  G(z) = z^0 \Prob(X = 0) + z^1 \Prob(X = 1) + z^2 \Prob(X = 2) + \cdots.
+\]
+Substituting $z = 0$ gives $G(0) = \Prob(X = 0)$. Differentiating once,
+\[
+  G'(z) = \Prob(X = 1) + 2z \Prob(X = 2) + 3z^2 \Prob(X = 3) + \cdots,
+\]
+so $G'(0) = \Prob(X = 1)$. Differentiating again gives $G''(0) = 2 \Prob(X = 2)$, and in general the $x$th derivative of $G$ at zero is $G^{(x)}(0) = x! \, \Prob(X = x)$.
+\end{proof}
+
+So the PGF has the \emph{uniqueness property}: two pmfs are the same if and only if their PGFs are the same.
+
+The moments of $X$ can be obtained by differentiating $G$ and evaluating at $z = 1$. Differentiating $G(z) = \E z^X$ with respect to $z$ gives
+\begin{align*}
+  G'(z) &= \E X z^{X-1}, \\
+  G''(z) &= \E X(X-1) z^{X-2}, \\
+  G'''(z) &= \E X(X-1)(X-2) z^{X-3},
+\end{align*}
+and so on. (To check this, write the expectation as a sum and differentiate term by term; some care is needed with infinite sums.) In particular,
+\[
+  \E X = G'(1), \qquad \E X(X-1) = G''(1),
+\]
+and therefore, since $\E X^2 = \E X(X-1) + \E X$,
+\[
+  \Var(X) = \E X^2 - (\E X)^2 = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2.
+\]
+More generally, the moments can be found by repeatedly applying the operator $z \frac{\dd}{\dd z}$:
+\[
+  \E X^k = \Bigl(z \frac{\dd}{\dd z}\Bigr)^k G(z) \Big|_{z = 1^-}.
+\]
+
+% ==========================================================================
+\section{Moment generating functions}\label{sec:mgf}
+% ==========================================================================
+
+\begin{definition}[Moment generating function]\label{def:mgf}
+The \emph{moment generating function} (MGF) of a random variable $X$ is the function $M \colon I \to [0, \infty)$ given by
+\[
+  M(s) = \E e^{sX} = \begin{cases}
+    \displaystyle \sum_x e^{sx} f(x) & \text{if $X$ is discrete with pmf $f$}, \\[10pt]
+    \displaystyle \int_{-\infty}^\infty e^{sx} f(x) \dd x & \text{if $X$ is continuous with pdf $f$}.
+  \end{cases}
+\]
+Here $I$ is an open interval containing $0$ on which the sum or integral is finite for all $s \in I$.
+\end{definition}
+
+Like the PGF, the MGF has the \emph{uniqueness property}: two MGFs are the same if and only if the corresponding distributions are the same. The moments of $X$ follow from the derivatives of $M$, which explains the name.
+
+\begin{theorem}[Moments from the MGF]\label{thm:mgf-moments}
+If $\E X^n$ exists, then $M$ is $n$ times differentiable, and
+\[
+  \E X^n = M^{(n)}(0).
+\]
+Consequently,
+\[
+  \Var(X) = M''(0) - \bigl(M'(0)\bigr)^2.
+\]
+\end{theorem}

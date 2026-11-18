@@ -3,7 +3,7 @@
 This appendix lists the conventions used throughout the book. They are defined as macros in \texttt{notation.tex}; keep the two in sync.
 
 \section*{Sets and numbers}
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}lp{0.62\textwidth}@{}}
 \toprule
 Notation & Meaning \\
 \midrule
@@ -14,7 +14,7 @@ $\inner{\vect{x}, \vect{y}}$ & inner product \\
 \end{tabular}
 
 \section*{Linear algebra}
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}lp{0.62\textwidth}@{}}
 \toprule
 Notation & Meaning \\
 \midrule
@@ -26,7 +26,7 @@ $\tr \mat{A}, \rank \mat{A}, \diag(\cdot)$ & trace, rank, diagonal matrix \\
 \end{tabular}
 
 \section*{Probability and statistics}
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}lp{0.62\textwidth}@{}}
 \toprule
 Notation & Meaning \\
 \midrule
@@ -40,6 +40,12 @@ $X \eqd Y$ & equal in distribution \\
 $\convp, \convd, \convas$ & convergence in probability, in distribution, almost surely \\
 $\Normal(\mu, \sigma^2)$ & normal distribution, parametrised by \emph{variance} \\
 $\Expo(\lambda)$ & exponential distribution, \emph{rate} $\lambda$ (mean $1/\lambda$) \\
-$\GammaDist(\alpha, \beta)$ & gamma distribution, shape $\alpha$, \emph{rate} $\beta$ \\
+$\Bern(p)$, $\Bin(n, p)$, $\Geom(p)$ & Bernoulli, binomial, geometric (number of trials until the first success) \\
+$\NegBin(k, p)$ & negative binomial (number of trials until the $k$th success) \\
+$\Pois(\lambda)$, $\Hyp(n, r, N)$ & Poisson, hypergeometric \\
+$\Unif[a, b]$ & uniform distribution on $[a, b]$ \\
+$\GammaDist(\alpha, \lambda)$ & gamma distribution, shape $\alpha$, \emph{rate} $\lambda$ \\
+$\ChiSq{n}$, $\BetaDist(\alpha, \beta)$ & chi-squared with $n$ degrees of freedom; beta distribution \\
+$\phi$, $\Phi$ & standard normal pdf and CDF \\
 \bottomrule
 \end{tabular}
