@@ -1,5 +1,248 @@
 \chapter{Expectation, Variance and Moments}\label{ch:expectation-moments}
 
-\chapterinfo{STAT2003}{\textit{to be completed}}
+\chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces,ch:random-variables}.}
 
-\textit{Not yet written.}
+% Sources: STAT2003 handwritten notes (pp. 10-13, 63); STAT2003 course notes, Section 2.3;
+% STAT1301 course notes (2026), Section 1.9.
+
+All the probability information about a random variable is contained in its CDF, or in its pmf or pdf. Even so, it is often useful to consider numerical characteristics of a random variable. This chapter covers the most important ones: the expectation, the variance and the moments. It ends with two inequalities that bound probabilities in terms of these numbers.
+
+% ==========================================================================
+\section{Expectation}\label{sec:expectation}
+% ==========================================================================
+
+The expectation of a random variable is a kind of ``weighted average'' of the values it can take.
+
+\begin{definition}[Expectation]\label{def:expectation}
+The \emph{expectation} (or \emph{expected value}, or colloquially the \emph{mean}) of a random variable $X$, written $\E X$ or $\E(X)$, is
+\[
+  \E X = \begin{cases}
+    \displaystyle \sum_x x \, \Prob(X = x) = \sum_x x f(x) & \text{if $X$ is discrete with pmf $f$}, \\[10pt]
+    \displaystyle \int_{-\infty}^{\infty} x f(x) \dd x & \text{if $X$ is continuous with pdf $f$}.
+  \end{cases}
+\]
+The expectation of $X$ is sometimes written $\mu_X$. It is assumed that the sum or integral is well defined, possibly $\infty$ or $-\infty$.
+\end{definition}
+
+\begin{remark}
+The expectation is not the mean of a set of numbers, but the mean of a probability distribution.
+\end{remark}
+
+\begin{example}[Tossing a fair die]\label{ex:expectation-fair-die}
+Find $\E X$ if $X$ is the outcome of a toss of a fair die.
+\end{example}
+
+\begin{solution}
+$\Prob(X = 1) = \cdots = \Prob(X = 6) = \tfrac16$, so
+\[
+  \E X = 1 \cdot \tfrac16 + 2 \cdot \tfrac16 + \cdots + 6 \cdot \tfrac16 = \tfrac72.
+\]
+Note that $\E X$ need not be a possible outcome of the experiment.
+\end{solution}
+
+One way to interpret the expectation is as a long-run average payout. Suppose we play a game in which two dice are thrown and you are paid out, in dollars, the sum $X$ of the dice. To enter the game, you must pay $d$ dollars, and you can play as many times as you like. What is a ``fair'' amount for $d$? In the long run, the fractions of games in which the sum equals $2, 3, 4, \ldots$ are $\tfrac{1}{36}, \tfrac{2}{36}, \tfrac{3}{36}, \ldots$. So the average payout per game is the weighted sum of $2, 3, \ldots, 12$, with the probabilities as weights:
+\[
+  d = \E X = 2 \cdot \tfrac{1}{36} + 3 \cdot \tfrac{2}{36} + \cdots + 12 \cdot \tfrac{1}{36} = 7.
+\]
+The game is fair if the long-run average profit, $\E X - d$, is zero.
+
+\begin{example}[Expected payout]\label{ex:expected-payout-max}
+In another game, the payout $X$ (in dollars) is the largest face value of two dice. What is a fair fee $d$?
+\end{example}
+
+\begin{solution}
+Using the pmf of the maximum of two dice (\cref{ex:max-two-dice}), the long-run average payout is
+\[
+  \E X = 1 \cdot \tfrac{1}{36} + 2 \cdot \tfrac{3}{36} + 3 \cdot \tfrac{5}{36} + 4 \cdot \tfrac{7}{36} + 5 \cdot \tfrac{9}{36} + 6 \cdot \tfrac{11}{36} = \tfrac{161}{36} \approx 4.47.
+\]
+So you should pay at most $d = \E X \approx \$4.47$.
+\end{solution}
+
+Another interpretation of the expectation is as a centre of mass. Imagine point masses with weights $p_1, \ldots, p_n$ placed at positions $x_1, \ldots, x_n$ on the real line. The centre of mass, the point where the weights balance, is
+\[
+  x_1 p_1 + \cdots + x_n p_n,
+\]
+which is exactly the expectation of a discrete random variable taking the values $x_1, \ldots, x_n$ with probabilities $p_1, \ldots, p_n$. Compare this with moments in physics, and with the moments defined in \cref{sec:variance-moments}. An obvious consequence of this interpretation is the following.
+
+\begin{proposition}[Expectation of a symmetric distribution]\label{prop:symmetric-expectation}
+If the pmf or pdf of $X$ is symmetric about $c$, that is, $f(c + y) = f(c - y)$ for all $y$, then $\E X = c$ (provided the expectation is finite).
+\end{proposition}
+
+\begin{proof}
+We give the discrete case:
+\begin{align*}
+  \E X &= c f(c) + \sum_{x > c} x f(x) + \sum_{x < c} x f(x)
+        = c f(c) + \sum_{y > 0} (c + y) f(c + y) + \sum_{y > 0} (c - y) f(c - y) \\
+       &= c f(c) + \sum_{y > 0} c f(c + y) + \sum_{y > 0} c f(c - y)
+        = c \sum_x f(x) = c,
+\end{align*}
+where the third equality uses $f(c+y) = f(c-y)$ to cancel the terms $y f(c+y)$ and $-y f(c-y)$.
+\end{proof}
+
+\begin{example}[A continuous expectation]\label{ex:expectation-2x}
+Let $X$ have pdf $f(x) = 2x$ for $x \in (0, 1)$, and $f(x) = 0$ otherwise. Then
+\[
+  \E X = \int_{-\infty}^{\infty} x f(x) \dd x = \int_0^1 2x^2 \dd x = \tfrac23 x^3 \Big|_0^1 = \tfrac23.
+\]
+\end{example}
+
+% ==========================================================================
+\section{Expectation of a function of a random variable}\label{sec:expectation-of-function}
+% ==========================================================================
+
+If $X$ is a random variable, then a function of $X$, such as $X^2$ or $\sin(X)$, is also a random variable. Its expected value is the weighted average of the values the function can take.
+
+\begin{theorem}[Expectation of a function of a random variable]\label{thm:lotus}
+Let $g$ be a real-valued function. If $X$ is discrete with pmf $f$, then
+\[
+  \E g(X) = \sum_x g(x) f(x).
+\]
+If $X$ is continuous with pdf $f$, then
+\[
+  \E g(X) = \int_{-\infty}^{\infty} g(x) f(x) \dd x.
+\]
+\end{theorem}
+
+\begin{proof}
+We prove the discrete case only. Let $Y = g(X)$, which is again a random variable. Its pmf is
+\[
+  f_Y(y) = \Prob(Y = y) = \Prob(g(X) = y) = \sum_{x : g(x) = y} \Prob(X = x) = \sum_{x : g(x) = y} f_X(x).
+\]
+So the expectation of $Y$ is
+\[
+  \E Y = \sum_y y f_Y(y) = \sum_y y \sum_{x : g(x) = y} f_X(x) = \sum_y \sum_{x : g(x) = y} g(x) f_X(x) = \sum_x g(x) f_X(x). \qedhere
+\]
+\end{proof}
+
+\begin{example}[Expected square of a fair die]\label{ex:expected-square-die}
+If $X$ is the outcome of a toss of a fair die, then
+\[
+  \E X^2 = 1^2 \cdot \tfrac16 + 2^2 \cdot \tfrac16 + 3^2 \cdot \tfrac16 + \cdots + 6^2 \cdot \tfrac16 = \tfrac{91}{6}.
+\]
+\end{example}
+
+An important consequence of \cref{thm:lotus} is that expectation is linear.
+
+\begin{theorem}[Linearity of expectation]\label{thm:linearity-single}
+Let $h(x) = a_1 h_1(x) + a_2 h_2(x) + \cdots + a_n h_n(x)$, where $a_i \in \R$ and $h_i \colon \R \to \R$ for $i = 1, \ldots, n$. Then
+\[
+  \E h(X) = \sum_{i=1}^n a_i \E h_i(X).
+\]
+In particular, for any real numbers $a$ and $b$ and functions $g$ and $h$,
+\begin{enumerate}
+  \item $\E(aX + b) = a \E X + b$;
+  \item $\E\bigl(g(X) + h(X)\bigr) = \E g(X) + \E h(X)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+In the continuous case, by \cref{thm:lotus},
+\[
+  \E h(X) = \int_{-\infty}^{\infty} h(x) f(x) \dd x = \int_{-\infty}^{\infty} \sum_{i=1}^n a_i h_i(x) f(x) \dd x = \sum_{i=1}^n a_i \int_{-\infty}^{\infty} h_i(x) f(x) \dd x = \sum_{i=1}^n a_i \E h_i(X).
+\]
+The discrete case is the same with sums in place of integrals. For example, statement 1 follows from
+\[
+  \E(aX + b) = \sum_x (ax + b) f(x) = a \sum_x x f(x) + b \sum_x f(x) = a \E X + b. \qedhere
+\]
+\end{proof}
+
+% ==========================================================================
+\section{Variance and moments}\label{sec:variance-moments}
+% ==========================================================================
+
+Another useful number is the variance of $X$, sometimes written $\sigma_X^2$. It measures the spread, or dispersion, of the distribution of $X$.
+
+\begin{definition}[Variance, standard deviation]\label{def:variance}
+The \emph{variance} of a random variable $X$ is
+\[
+  \Var(X) = \E(X - \mu)^2, \qquad \text{where } \mu = \E X.
+\]
+The \emph{standard deviation} of $X$ is $\sqrt{\Var(X)}$.
+\end{definition}
+
+\begin{definition}[Moments]\label{def:moments}
+The number $\E X^r$ is the \emph{$r$th moment} of $X$. With $\mu = \E X$, the number $\E(X - \mu)^k$ is the \emph{$k$th central moment} of $X$.
+\end{definition}
+
+For example, $\E X$ is the mean, and $\E X^2$ is related to the variance. The first few central moments are
+\begin{align*}
+  \text{0th:} \quad & \E(X - \mu)^0 = \E 1 = 1, \\
+  \text{1st:} \quad & \E(X - \mu) = \E X - \mu = \mu - \mu = 0, \\
+  \text{2nd:} \quad & \E(X - \mu)^2 = \Var(X).
+\end{align*}
+So the second central moment is the variance. The third and fourth central moments are related to the \emph{skewness} and \emph{kurtosis} of the distribution.
+
+\begin{theorem}[Properties of the variance]\label{thm:variance-properties}
+For any random variable $X$ and real numbers $a$ and $b$,
+\begin{enumerate}
+  \item $\Var(X) = \E X^2 - (\E X)^2$;
+  \item $\Var(aX + b) = a^2 \Var(X)$.
+\end{enumerate}
+Consequently, the standard deviation of $aX + b$ is $\abs{a}$ times the standard deviation of $X$.
+\end{theorem}
+
+\begin{proof}
+1. Write $\E X = \mu$, so that $\Var(X) = \E(X - \mu)^2 = \E(X^2 - 2\mu X + \mu^2)$. By linearity of expectation (\cref{thm:linearity-single}), this equals $\E X^2 - 2\mu \E X + \mu^2 = \E X^2 - \mu^2$.
+
+2. The expectation of $aX + b$ is $a\mu + b$. So
+\[
+  \Var(aX + b) = \E\bigl(aX + b - (a\mu + b)\bigr)^2 = \E\bigl(a^2 (X - \mu)^2\bigr) = a^2 \E(X - \mu)^2 = a^2 \Var(X).
+\]
+Taking square roots gives the statement about the standard deviation.
+\end{proof}
+
+% ==========================================================================
+\section{The Markov and Chebyshev inequalities}\label{sec:markov-chebyshev}
+% ==========================================================================
+
+For an event $A$, let $\ind_A$ be the \emph{indicator} of $A$: the random variable that equals $1$ if $A$ occurs and $0$ otherwise. It takes the value 1 with probability $\Prob(A)$, so
+\[
+  \E \ind_A = \Prob(A).
+\]
+
+\begin{theorem}[Markov's inequality, general form]\label{thm:markov-general}
+Let $h \colon \R \to [0, \infty)$. Then for every $a > 0$,
+\[
+  \Prob\bigl(h(X) \ge a\bigr) \le \frac{\E h(X)}{a}.
+\]
+\end{theorem}
+
+\begin{proof}
+Fix $a > 0$ and let $A = \set{h(X) \ge a}$. On $A$, $h(X) \ge a = a \ind_A$; off $A$, $h(X) \ge 0 = a \ind_A$. So $h(X) \ge a \ind_A$ always, and therefore
+\[
+  \E h(X) \ge \E(a \ind_A) = a \Prob(A) = a \Prob\bigl(h(X) \ge a\bigr). \qedhere
+\]
+\end{proof}
+
+\begin{corollary}[Markov's inequality]\label{cor:markov}
+For every $a > 0$,
+\[
+  \Prob(\abs{X} \ge a) \le \frac{\E\abs{X}}{a}.
+\]
+In particular, if $X$ is non-negative, then $\Prob(X \ge a) \le \E X / a$.
+\end{corollary}
+
+\begin{proof}
+Take $h(x) = \abs{x}$ in \cref{thm:markov-general}.
+\end{proof}
+
+\begin{corollary}[Chebyshev's inequality]\label{cor:chebyshev}
+Let $X$ have mean $\mu$. For every $a > 0$,
+\[
+  \Prob(\abs{X - \mu} \ge a) \le \frac{\Var(X)}{a^2}.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply \cref{thm:markov-general} with $h(x) = (x - \mu)^2$ at level $b = a^2$:
+\[
+  \Prob(\abs{X - \mu} \ge a) = \Prob\bigl((X - \mu)^2 \ge a^2\bigr) \le \frac{\E(X - \mu)^2}{a^2} = \frac{\Var(X)}{a^2}. \qedhere
+\]
+\end{proof}
+
+\begin{remark}
+For a non-negative continuous random variable with pdf $f$, Markov's inequality can also be seen directly:
+\[
+  \E X = \int_0^a x f(x) \dd x + \int_a^\infty x f(x) \dd x \ge \int_a^\infty x f(x) \dd x \ge \int_a^\infty a f(x) \dd x = a \Prob(X \ge a).
+\]
+\end{remark}
