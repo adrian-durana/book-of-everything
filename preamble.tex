@@ -1,15 +1,12 @@
-% ==========================================================================
-%  preamble.tex — packages, layout and environments for the Book of Everything
-%  SHARED FILE: edit only in the "hub" chat (see CLAUDE.md).
-% ==========================================================================
+% Preamble for main.tex
 
-% ---- Fonts and encoding ---------------------------------------------------
+% ---- Fonts and encoding ----------------------------------------------------
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{microtype}
 
-% ---- Page layout ----------------------------------------------------------
+% ---- Page layout -----------------------------------------------------------
 \usepackage[a4paper, margin=2.5cm, headheight=14pt]{geometry}
 \usepackage{fancyhdr}
 % Space after the chapter title = space between "Chapter N" and the title (20pt).
@@ -34,7 +31,7 @@
 \usepackage{mathtools}
 \usepackage{bm}
 
-% ---- Lists, tables, figures -------------------------------------------------
+% ---- Lists, tables, figures ------------------------------------------------
 \usepackage{enumitem}
 \setlist{itemsep=0.2em, topsep=0.3em}
 \usepackage{booktabs}
@@ -68,7 +65,7 @@
 \definecolor{codebg}{HTML}{F6F8FA}
 \definecolor{codeframe}{HTML}{D0D7DE}
 
-% ---- Hyperlinks and cross-references ----------------------------------------------
+% ---- Hyperlinks and cross-references ---------------------------------------
 \usepackage[colorlinks=true, linkcolor=thmcolor, citecolor=thmcolor, urlcolor=thmcolor]{hyperref}
 \usepackage[capitalise, nameinlink]{cleveref}
 % (Loaded before the theorem definitions so shared counters get the right names.)
@@ -123,7 +120,7 @@
 \lstnewenvironment{python}[1][]{\lstset{language=Python, #1}}{}
 \lstnewenvironment{rcode}[1][]{\lstset{language=R, #1}}{}
 
-% ---- Chapter header: which courses it draws on and what it builds on --------
+% ---- Chapter header: which courses it draws on and what it builds on -------
 % Usage, directly after \chapter{...}:
 %   \chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces}}
 \newcommand{\chapterinfo}[2]{%

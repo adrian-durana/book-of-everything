@@ -1,6 +1,6 @@
 # Book of Everything
 
-A personal reference book of undergraduate mathematics and statistics from The University of Queensland, organised by topic.
+A reference book of all undergraduate statistics and mathematics knowledge I have learnt at UQ. Initially written by Claude, then personally recursively edited by me.
 
 ## Build
 ```
@@ -12,7 +12,7 @@ To work on a single chapter, uncomment `\includeonly{...}` in `main.tex`.
 - `main.tex`: master file. Lists the Parts and chapters.
 - `preamble.tex`: packages, layout and environments.
 - `notation.tex`: all notation macros. This is the single source of truth.
-- `chapters/<part>/<chapter>.tex`: one file per chapter.
+- `chapters/part-<n>-<name>/<chapter>.tex`: one file per chapter, in one folder per Part.
 - `appendices/`: the notation appendix and other appendices.
 - `figures/data/`: data files for plots (generated in R), read by pgfplots.
 - `tools/`: `chapters.py` (the master chapter list) and `gen.py` (stub generator).
@@ -22,4 +22,4 @@ To work on a single chapter, uncomment `\includeonly{...}` in `main.tex`.
 
 ## Working on the book
 - Edit `.tex` files directly and push to `main`. Claude pulls `main` at the start of each session; mention what you changed so it can be reflected in `STYLE.md`.
-- Planning documents (plan, outline, progress log, per-course coverage inventories) live in the claude.ai Project "Book of everything", not in this repo.
+- Planning documents (plan, outline, progress log, per-course coverage inventories) live in the Claude project "Book of everything", not in this repo.

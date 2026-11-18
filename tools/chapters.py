@@ -1,6 +1,6 @@
 # (part_title, folder, lang, [(slug, title, courses)])
 PARTS = [
-("Foundations", "foundations", "Python", [
+("Foundations", "part-1-foundations", "Python", [
  ("logic-and-proof", "Logic and Proof", "MATH1061"),
  ("sets-relations-functions", "Sets, Relations and Functions", "MATH1061"),
  ("induction-recursion-counting", "Induction, Recursion and Counting", "MATH1061"),
@@ -19,7 +19,7 @@ PARTS = [
  ("multiple-integrals", "Multiple Integrals and Change of Variables", "MATH2001"),
  ("vector-calculus", "Vector Calculus", "MATH1072, MATH2001"),
 ]),
-("Differential Equations", "differential-equations", "Python", [
+("Differential Equations", "part-2-differential-equations", "Python", [
  ("first-order-odes", "First-Order Ordinary Differential Equations", "MATH1072, MATH2010"),
  ("linear-higher-order-odes", "Linear Higher-Order ODEs", "MATH1072, MATH2001"),
  ("linear-systems-odes", "Linear Systems of ODEs", "MATH2010"),
@@ -28,7 +28,7 @@ PARTS = [
  ("fourier-series", "Fourier Series", "MATH2011"),
  ("pdes", "Partial Differential Equations", "MATH2011, MATH2001"),
 ]),
-("Probability", "probability", "R", [
+("Probability", "part-3-probability", "R", [
  ("probability-spaces", "Probability Spaces", "STAT2003, STAT1301, MATH1061"),
  ("random-variables", "Random Variables and Distribution Functions", "STAT2003"),
  ("expectation-moments", "Expectation, Variance and Moments", "STAT2003"),
@@ -43,7 +43,7 @@ PARTS = [
  ("stochastic-models", "Stochastic Models and Reliability", "STAT3004, STAT2003"),
  ("simulation-monte-carlo", "Simulation and Monte Carlo Methods", "STAT2003, STAT3004, STAT3500"),
 ]),
-("Statistics", "statistics", "R", [
+("Statistics", "part-4-statistics", "R", [
  ("eda-study-design", "Data, Exploratory Analysis and Study Design", "STAT1301"),
  ("sampling-distributions", "Statistical Models and Sampling Distributions", "STAT2004, STAT1301"),
  ("point-estimation", "Point Estimation", "STAT2004, STAT3001"),
@@ -60,7 +60,7 @@ PARTS = [
  ("em-bootstrap", "The EM Algorithm and the Bootstrap", "STAT3001"),
  ("time-series", "Time Series", "STAT3500"),
 ]),
-("Numerical Methods and Optimisation", "numerics-optimisation", "Python", [
+("Numerical Methods and Optimisation", "part-5-numerics-optimisation", "Python", [
  ("floating-point-root-finding", "Floating-Point Arithmetic, Error and Root-Finding", "COSC2500, MATH1072, MATH2400"),
  ("interpolation-quadrature", "Interpolation, Numerical Differentiation and Quadrature", "COSC2500, MATH1071"),
  ("numerical-odes", "Numerical Methods for ODEs", "COSC2500, MATH1072"),
@@ -80,7 +80,7 @@ PARTS = [
  ("dynamic-programming", "Dynamic Programming", "MATH3202"),
  ("metaheuristics", "Metaheuristics", "MATH3202"),
 ]),
-("Machine Learning", "machine-learning", "Python", [
+("Machine Learning", "part-6-machine-learning", "Python", [
  ("learning-framework", "The Statistical Learning Framework", "STAT3006, STAT3007"),
  ("nearest-neighbours-trees", "Nearest Neighbours and Decision Trees", "STAT3006"),
  ("linear-methods-ml", "Linear Methods for Regression and Classification", "STAT3006"),
@@ -96,13 +96,13 @@ PARTS = [
  ("generative-models", "Generative Models", "STAT3006, STAT3008"),
  ("reinforcement-learning", "Reinforcement Learning", "STAT3007"),
 ]),
-("Applications", "applications", "Python", [
+("Applications", "part-7-applications", "Python", [
  ("interest-annuities-fixed-income", "Interest Rates, Annuities and Fixed Income", "MATH3090"),
  ("equities-derivatives-term-structure", "Equities, Forwards, Futures and the Term Structure", "MATH3090"),
  ("microeconomics", "Microeconomics in Brief", "ECON1010"),
  ("macroeconomics", "Macroeconomics in Brief", "ECON1020"),
 ]),
-("Scientific Computing", "scientific-computing", "Python", [
+("Scientific Computing", "part-8-scientific-computing", "Python", [
  ("python-programming", "Programming in Python", "MATH2504, COSC2500"),
  ("r-programming", "Programming in R", "STAT1301"),
  ("software-development", "Software Development Practice: git, Unix and Testing", "MATH2504"),

@@ -10,7 +10,7 @@ This is a LaTeX reference book covering the author's undergraduate mathematics a
 
 ## File ownership
 - **Shared files:** `main.tex`, `preamble.tex`, `notation.tex` and `appendices/notation.tex`. These are edited only in the hub chat. A course or chapter chat that needs a new chapter listed in `main.tex` should say so in its final message instead of editing the file.
-- Course or chapter chats work on their own branch (`course/<code>`, e.g. `course/stat3001`) and only touch their own chapter files under `chapters/<part>/`.
+- Course or chapter chats work on their own branch (`course/<code>`, e.g. `course/stat3001`) and only touch their own chapter files under `chapters/part-<n>-<name>/`.
 
 ## Ingesting a course
 1. Build a coverage inventory. List every definition, theorem, proof, method and example in the source material, each mapped to a target chapter and section. Save it to the project as `claude/inventory-<course>.md`.
