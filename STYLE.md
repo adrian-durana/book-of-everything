@@ -6,6 +6,10 @@ This is a living document. It will be revised after the pilot chapter, based on 
 - **Write only what is in the course materials** (handwritten notes, course notes, slides). Do not add new information: no extra theorems, proofs, examples, remarks, figures or extensions.
 - **Correct mistakes.** Fix errors in the notes, especially in the handwritten ones, and list each correction in the course's coverage inventory.
 - **Leave gaps alone.** If a source states a result without proof, state it without proof and say so ("not proved in this course"). Later courses will usually fill the gap.
+- **One motivating example, two at most.** Keep the background and motivation from the course notes, but use only one (in extreme cases two) motivating examples per section or subsection.
+- **Write like the course notes.** Keep sentence style, wording, background and structure close to the typed course notes, until further notice.
+- **Figures.** Every image in the typed or handwritten notes (diagrams, plots, Venn diagrams, trees) is redrawn in TikZ/pgfplots. Use the shared `bookplot` style from the preamble. Plots of random simulations use data generated in R with a fixed seed, pasted as coordinates.
+- **Titles change as content grows.** Rename, merge and rearrange sections and subsections whenever new course material is added, so the structure stays logical.
 - **No linking material yet.** Cross-references are limited to "Builds on" and direct citations of results the sources themselves use. Connections, motivation and linking information are added in a separate pass, after every course has been ingested.
 
 ## Voice

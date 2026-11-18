@@ -40,7 +40,24 @@ $\Prob(X = x)$ & $\frac{1}{36}$ & $\frac{2}{36}$ & $\frac{3}{36}$ & $\frac{4}{36
 \bottomrule
 \end{tabular}
 \end{center}
+\Cref{fig:rv-sum-two-dice} depicts $X$ as a function: all outcomes in the encircled set are mapped to 8.
 \end{example}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[scale=0.55]
+  \foreach \i in {1,...,6} \foreach \j in {1,...,6} \fill (\i,\j) circle (2.5pt);
+  \foreach \i in {1,...,6} { \node[font=\scriptsize] at (\i,0.3) {\i}; \node[font=\scriptsize] at (0.3,\i) {\i}; }
+  \draw[thick, rotate around={-45:(4,4)}, color=thmcolor] (4,4) ellipse (3.3 and 0.55);
+  \node at (0.2,6.9) {$\Omega$};
+  \draw[thick] (9,3) -- (20,3);
+  \foreach \x in {2,...,12} { \draw (8+\x,2.85) -- (8+\x,3.15); \node[font=\scriptsize] at (8+\x,2.4) {\x}; }
+  \fill[thmcolor] (16,3) circle (4pt);
+  \draw[-{Stealth}, thick, color=thmcolor] (6.4,5.2) to[bend left=25] node[above, font=\small] {$X$} (15.9,3.3);
+\end{tikzpicture}
+\caption{The random variable $X(i,j) = i + j$ for the sum of two dice. The encircled outcomes form the event $\set{X = 8}$.}
+\label{fig:rv-sum-two-dice}
+\end{figure}
 
 Although random variables are, mathematically speaking, functions, it is often convenient to view a random variable as an observation of a random experiment that has not yet been carried out. It is a measurement that becomes available once we carry out the experiment, for example tomorrow. All the thinking about the experiment and the measurement can be done today. In particular, we can specify today exactly the probabilities pertaining to the random variable.
 
@@ -52,7 +69,7 @@ Flip a coin $n$ times, where each flip lands heads with probability $p$. Suppose
 This contains all the information about $X$ that we could wish to know.
 \end{example}
 
-Other examples of random variables are the number of defective transistors out of 100 inspected, the number of bugs in a computer program, the amount of rain in Brisbane in June, and the time needed for an operation.
+Other examples of random variables are the number of bugs in a computer program and the amount of rain in Brisbane in June.
 
 The set of all values a random variable can take is its \emph{range}. We distinguish between two kinds of random variable:
 \begin{itemize}
@@ -87,6 +104,24 @@ The \emph{cumulative distribution function} (CDF) of a random variable $X$ is th
 \]
 We write $F_X$ when the random variable needs naming.
 \end{definition}
+
+\Cref{fig:generic-cdf} shows the graph of a CDF.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, width=0.6\textwidth, height=4.2cm, xmin=-3, xmax=4, ymin=0, ymax=1.1, xtick=\empty, ytick={0,1}, xlabel={$x$}, ylabel={$F(x)$}]
+  \addplot[no marks, color=thmcolor, domain=-3:0, samples=40] {0.3/(1+exp(-2*(x+1)))};
+  \addplot[no marks, color=thmcolor, domain=0:1] {0.6};
+  \addplot[no marks, color=thmcolor, domain=1:4, samples=40] {1 - 0.4*exp(-1.5*(x-1))};
+  \addplot[only marks, mark=*, mark size=1.5pt, color=thmcolor] coordinates {(0,0.6)};
+  \addplot[only marks, mark=*, mark size=1.5pt, mark options={fill=white}, color=thmcolor] coordinates {(0,0.2647)};
+  \addplot[dashed, thin, domain=-3:4] {1};
+\end{axis}
+\end{tikzpicture}
+\caption{A cumulative distribution function: non-decreasing, between 0 and 1, and right-continuous (filled dot) at a jump.}
+\label{fig:generic-cdf}
+\end{figure}
 
 \begin{theorem}[Properties of a CDF]\label{thm:cdf-properties}
 Let $F$ be the CDF of a random variable $X$. Then
@@ -141,7 +176,20 @@ The easiest way to specify the distribution of a discrete random variable is to 
 \begin{equation}\label{eq:pmf-sum-rule}
   \Prob(X \in B) = \sum_{x \in B} f(x)
 \end{equation}
-for any subset $B$ of the range of $X$.
+for any subset $B$ of the range of $X$ (say an interval $(a, b)$), as illustrated in \cref{fig:pmf-sum-rule}. Read $\set{X \in B}$ as ``$X$ is an element of the region $B$''.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=0, xmax=11, ymax=0.25, xtick=\empty, ytick=\empty, xlabel={$x$}, ylabel={$f(x)$}]
+  \addplot+[color=remcolor] coordinates {(1,0.05) (2,0.12) (3,0.18) (8,0.08) (9,0.06) (10,0.03)};
+  \addplot+[color=thmcolor] coordinates {(4,0.2) (5,0.15) (6,0.1) (7,0.03)};
+  \draw[decorate, decoration={brace, mirror, amplitude=5pt}, thick] (axis cs:3.7,-0.01) -- node[below=5pt] {$B$} (axis cs:7.3,-0.01);
+\end{axis}
+\end{tikzpicture}
+\caption{A probability mass function. $\Prob(X \in B)$ is the sum of the masses $f(x)$ for $x$ in $B$ (highlighted).}
+\label{fig:pmf-sum-rule}
+\end{figure}
 
 \begin{remark}\label{rem:pmf-from-cdf}
 By \cref{prop:cdf-interval-probabilities}(b), the pmf can be recovered from the CDF:
@@ -196,8 +244,22 @@ The function $f$ is the \emph{probability density function} (pdf) of $X$.
 
 We write $X \sim f$ or $X \sim F$ to indicate that $X$ is distributed according to the pdf $f$ or the CDF $F$. The same notation is used for a pmf. Once we know the pdf, we can calculate the probability that $X$ lies in a set $B$ by integration, in analogy with \eqref{eq:pmf-sum-rule}:
 \begin{equation}\label{eq:pdf-integral-rule}
-  \Prob(X \in B) = \int_B f(x) \dd x.
+  \Prob(X \in B) = \int_B f(x) \dd x,
 \end{equation}
+as illustrated in \cref{fig:pdf-integral-rule}.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, width=0.6\textwidth, height=4.2cm, xmin=-1, xmax=6, ymin=0, ymax=0.45, xtick={1.5,3.2}, xticklabels={$a$, $b$}, ytick=\empty, xlabel={$x$}, ylabel={$f(x)$}]
+  \addplot[name path=f, no marks, color=thmcolor, domain=-1:6, samples=80] {0.4*exp(-0.5*(x-2)^2/1.2)};
+  \path[name path=axis] (axis cs:-1,0) -- (axis cs:6,0);
+  \addplot[thmcolor!25] fill between[of=f and axis, soft clip={domain=1.5:3.2}];
+\end{axis}
+\end{tikzpicture}
+\caption{A probability density function. $\Prob(a < X \le b)$ is the shaded area under $f$ between $a$ and $b$.}
+\label{fig:pdf-integral-rule}
+\end{figure}
 
 The CDF $F$ is a primitive (antiderivative) of the pdf $f$. In particular,
 \[

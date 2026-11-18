@@ -40,29 +40,34 @@ $\Prob(X = 1) = \cdots = \Prob(X = 6) = \tfrac16$, so
 Note that $\E X$ need not be a possible outcome of the experiment.
 \end{solution}
 
-One way to interpret the expectation is as a long-run average payout. Suppose we play a game in which two dice are thrown and you are paid out, in dollars, the sum $X$ of the dice. To enter the game, you must pay $d$ dollars, and you can play as many times as you like. What is a ``fair'' amount for $d$? In the long run, the fractions of games in which the sum equals $2, 3, 4, \ldots$ are $\tfrac{1}{36}, \tfrac{2}{36}, \tfrac{3}{36}, \ldots$. So the average payout per game is the weighted sum of $2, 3, \ldots, 12$, with the probabilities as weights:
+One way to interpret the expectation is as a long-run average payout. Suppose in a game of dice the payout $X$ (dollars) is the largest of the face values of two dice, and a fee of $d$ dollars must be paid to play. What would be a fair amount for $d$? If the game is played many times, the long-run fractions of games in which the maximum face value is $1, 2, \ldots, 6$ are $\Prob(X = 1), \Prob(X = 2), \ldots, \Prob(X = 6)$. Hence the long-run average payout is the weighted sum of $1, 2, \ldots, 6$, with the probabilities as weights (\cref{ex:max-two-dice}):
 \[
-  d = \E X = 2 \cdot \tfrac{1}{36} + 3 \cdot \tfrac{2}{36} + \cdots + 12 \cdot \tfrac{1}{36} = 7.
+  \E X = 1 \times \tfrac{1}{36} + 2 \times \tfrac{3}{36} + 3 \times \tfrac{5}{36} + 4 \times \tfrac{7}{36} + 5 \times \tfrac{9}{36} + 6 \times \tfrac{11}{36} = \tfrac{161}{36} \approx 4.47.
 \]
-The game is fair if the long-run average profit, $\E X - d$, is zero.
+The game is ``fair'' if the long-run average profit $\E X - d$ is zero, so you should pay at most $d = \E X$ dollars.
 
-\begin{example}[Expected payout]\label{ex:expected-payout-max}
-In another game, the payout $X$ (in dollars) is the largest face value of two dice. What is a fair fee $d$?
-\end{example}
-
-\begin{solution}
-Using the pmf of the maximum of two dice (\cref{ex:max-two-dice}), the long-run average payout is
-\[
-  \E X = 1 \cdot \tfrac{1}{36} + 2 \cdot \tfrac{3}{36} + 3 \cdot \tfrac{5}{36} + 4 \cdot \tfrac{7}{36} + 5 \cdot \tfrac{9}{36} + 6 \cdot \tfrac{11}{36} = \tfrac{161}{36} \approx 4.47.
-\]
-So you should pay at most $d = \E X \approx \$4.47$.
-\end{solution}
-
-Another interpretation of the expectation is as a centre of mass. Imagine point masses with weights $p_1, \ldots, p_n$ placed at positions $x_1, \ldots, x_n$ on the real line. The centre of mass, the point where the weights balance, is
+Another interpretation of the expectation is as a centre of mass. Imagine point masses with weights $p_1, \ldots, p_n$ placed at positions $x_1, \ldots, x_n$ on the real line (\cref{fig:centre-of-mass}). The centre of mass, the place where we can ``balance'' the weights, is
 \[
   x_1 p_1 + \cdots + x_n p_n,
 \]
 which is exactly the expectation of a discrete random variable taking the values $x_1, \ldots, x_n$ with probabilities $p_1, \ldots, p_n$. Compare this with moments in physics, and with the moments defined in \cref{sec:variance-moments}. An obvious consequence of this interpretation is the following.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \draw[thick] (0,0) -- (8,0);
+  \foreach \x/\w/\l in {0.8/0.35/1, 2.6/0.5/2, 6.8/0.3/n} {
+    \fill[thmcolor] (\x-\w/2,0) rectangle (\x+\w/2,\w*1.6);
+    \node[font=\small] at (\x,\w*1.6+0.3) {$p_{\l}$};
+    \node[font=\small] at (\x,-0.35) {$x_{\l}$};
+  }
+  \node at (4.6,0.3) {$\cdots$};
+  \fill[remcolor] (3.3,0) -- (3.0,-0.5) -- (3.6,-0.5) -- cycle;
+  \node[font=\small] at (3.3,-0.85) {$\E X$};
+\end{tikzpicture}
+\caption{The expectation as a centre of mass: weights $p_i$ at positions $x_i$ balance at $\E X$.}
+\label{fig:centre-of-mass}
+\end{figure}
 
 \begin{proposition}[Expectation of a symmetric distribution]\label{prop:symmetric-expectation}
 If the pmf or pdf of $X$ is symmetric about $c$, that is, $f(c + y) = f(c - y)$ for all $y$, then $\E X = c$ (provided the expectation is finite).

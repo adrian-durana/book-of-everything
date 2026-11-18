@@ -29,6 +29,25 @@ for any distinct indices $i_1, \ldots, i_k$ (\cref{ex:binomial-law}). The distri
   \item negative binomial: the number of trials until the $k$th success (values $k, k+1, \ldots$).
 \end{itemize}
 
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \foreach \y/\lab/\m in {0/{$\Bern(p)$}/1, -0.9/{$\Bin(n,p)$}/2, -1.8/{$\Geom(p)$}/3, -2.7/{$\NegBin(k,p)$}/4} {
+    \draw[thick] (0,\y) -- (6.2,\y);
+    \node[anchor=west, font=\small] at (6.4,\y) {\lab};
+  }
+  \foreach \x/\l in {0/0, 5/1} { \draw (\x,-0.08) -- (\x,0.08); \node[font=\scriptsize, below] at (\x,-0.05) {\l}; }
+  \foreach \x/\l in {0/0, 0.8/1, 1.6/2, 5/n} { \draw (\x,-0.98) -- (\x,-0.82); \node[font=\scriptsize, below] at (\x,-0.95) {$\l$}; }
+  \node[font=\scriptsize] at (3.3,-1.15) {$\cdots$};
+  \foreach \x/\l in {0.8/1, 1.6/2, 2.4/3, 3.2/4, 4.0/5, 4.8/6} { \draw (\x,-1.88) -- (\x,-1.72); \node[font=\scriptsize, below] at (\x,-1.85) {\l}; }
+  \foreach \x/\l in {1.6/k, 2.6/{k+1}, 3.6/{k+2}} { \draw (\x,-2.78) -- (\x,-2.62); \node[font=\scriptsize, below] at (\x,-2.75) {$\l$}; }
+  \node at (6.6,-2.7) {};
+\end{tikzpicture}
+\caption{Possible values of the Bernoulli, binomial, geometric and negative binomial random variables, all defined from the same sequence of i.i.d.\ Bernoulli trials.}
+\label{fig:bernoulli-family-supports}
+\end{figure}
+
+
 % ==========================================================================
 \section{Discrete distributions}\label{sec:discrete-families}
 % ==========================================================================
@@ -44,6 +63,18 @@ We write $X \sim \Bern(p)$.
 \end{definition}
 
 Despite its simplicity, this is one of the most important distributions in probability. It models, for example, a single coin toss.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[pmfplot, width=0.45\textwidth, height=4cm, xmin=-0.5, xmax=1.5, ymax=0.7, xtick={0,1}, xlabel={$x$}, ylabel={$f(x)$}]
+  \addplot coordinates {(0,0.4) (1,0.6)};
+\end{axis}
+\end{tikzpicture}
+\caption{The pmf of the Bernoulli distribution with $p = 0.6$.}
+\label{fig:bernoulli-pmf}
+\end{figure}
+
 
 \begin{theorem}[Properties of the Bernoulli distribution]\label{thm:bernoulli-properties}
 Let $X \sim \Bern(p)$. Then
@@ -81,6 +112,20 @@ Let $X$ be the number of successes in $n$ independent Bernoulli trials (coin tos
   f(x) = \Prob(X = x) = \binom{n}{x} p^x (1-p)^{n-x}, \qquad x = 0, 1, \ldots, n.
 \]
 \end{definition}
+
+\Cref{fig:binomial-pmf} shows an example.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=-0.5, xmax=10.5, xlabel={$x$}, ylabel={$f(x)$}, xtick={0,...,10}]
+  \addplot table[x=x, y=p] {figures/data/binom-10-07.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{The pmf of the $\Bin(10, 0.7)$ distribution.}
+\label{fig:binomial-pmf}
+\end{figure}
+
 
 \begin{theorem}[Properties of the binomial distribution]\label{thm:binomial-properties}
 Let $X \sim \Bin(n, p)$. Then
@@ -125,6 +170,20 @@ since the only sequence of the required form is $x - 1$ Tails followed by a Head
 \begin{definition}[Geometric distribution]\label{def:geometric}
 A random variable with pmf $f(x) = (1-p)^{x-1} p$, $x = 1, 2, \ldots$, has a \emph{geometric distribution} with parameter $p$. We write $X \sim \Geom(p)$.
 \end{definition}
+
+\Cref{fig:geometric-pmf} shows an example.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=0.5, xmax=16.5, xlabel={$x$}, ylabel={$f(x)$}, xtick={1,...,16}]
+  \addplot table[x=x, y=p] {figures/data/geom-03.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{The pmf of the $\Geom(0.3)$ distribution.}
+\label{fig:geometric-pmf}
+\end{figure}
+
 
 \begin{theorem}[Properties of the geometric distribution]\label{thm:geometric-properties}
 Let $X \sim \Geom(p)$. Then
@@ -201,6 +260,20 @@ The pmf sums to 1, since by the Maclaurin series for $e^\lambda$,
 \[
   \sum_{x=0}^\infty f(x) = e^{-\lambda} \sum_{x=0}^\infty \frac{\lambda^x}{x!} = e^{-\lambda} e^{\lambda} = 1.
 \]
+
+\Cref{fig:poisson-pmf} shows an example.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=-0.5, xmax=20.5, xlabel={$x$}, ylabel={$f(x)$}, xtick={0,2,...,20}]
+  \addplot table[x=x, y=p] {figures/data/pois-10.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{The pmf of the $\Pois(10)$ distribution.}
+\label{fig:poisson-pmf}
+\end{figure}
+
 
 The Poisson distribution is used in many probability models. It can be viewed as the limit of the $\Bin(n, \lambda/n)$ distribution for large $n$.
 
@@ -306,6 +379,20 @@ A random variable $X$ has a \emph{uniform distribution} on the interval $[a, b]$
 
 $X \sim \Unif[a, b]$ models a point chosen at random from $[a, b]$, each choice being equally likely. The total area under the pdf is 1.
 
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, width=0.5\textwidth, height=3.8cm, xmin=0, xmax=5, ymin=0, ymax=0.6, xtick={1,4}, xticklabels={$a$,$b$}, ytick={0.3333}, yticklabels={$\frac{1}{b-a}$}, xlabel={$x$}, ylabel={$f(x)$}]
+  \addplot[no marks, color=thmcolor, fill=thmcolor!15] coordinates {(1,0) (1,0.3333) (4,0.3333) (4,0)};
+  \addplot[no marks, color=thmcolor] coordinates {(0,0) (1,0)};
+  \addplot[no marks, color=thmcolor] coordinates {(4,0) (5,0)};
+\end{axis}
+\end{tikzpicture}
+\caption{The pdf of the uniform distribution on $[a, b]$.}
+\label{fig:uniform-pdf}
+\end{figure}
+
+
 \begin{theorem}[Properties of the uniform distribution]\label{thm:uniform-properties}
 Let $X \sim \Unif[a, b]$. Then
 \begin{enumerate}
@@ -342,6 +429,22 @@ has an \emph{exponential distribution} with parameter (rate) $\lambda > 0$. We w
 \end{definition}
 
 The exponential distribution can be viewed as a continuous version of the geometric distribution.
+
+Graphs of the pdf for various values of $\lambda$ are given in \cref{fig:exponential-pdfs}.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, xmin=0, xmax=5, ymin=0, ymax=2.1, xlabel={$x$}, ylabel={$f(x)$}, legend pos=north east]
+  \addplot[no marks, color=thmcolor, domain=0:5, samples=60] {2*exp(-2*x)}; \addlegendentry{$\lambda = 2$}
+  \addplot[no marks, color=defcolor, domain=0:5, samples=60] {exp(-x)}; \addlegendentry{$\lambda = 1$}
+  \addplot[no marks, color=excolor, domain=0:5, samples=60] {0.5*exp(-0.5*x)}; \addlegendentry{$\lambda = 0.5$}
+\end{axis}
+\end{tikzpicture}
+\caption{The pdf of the $\Expo(\lambda)$ distribution for various $\lambda$.}
+\label{fig:exponential-pdfs}
+\end{figure}
+
 
 \begin{theorem}[Properties of the exponential distribution]\label{thm:exponential-properties}
 Let $X \sim \Expo(\lambda)$. Then
@@ -407,6 +510,22 @@ The CDF of the standard normal distribution is denoted $\Phi$.
 \end{definition}
 
 The parameters $\mu$ and $\sigma^2$ turn out to be the expectation and variance of the distribution. The normal distribution is symmetric about $\mu$, and its spread is controlled by $\sigma^2$, or the standard deviation $\sigma$.
+
+\Cref{fig:normal-pdfs} shows the pdf of the $\Normal(\mu, \sigma^2)$ distribution for various $\mu$ and $\sigma^2$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, xmin=-3, xmax=5, ymin=0, ymax=0.62, xlabel={$x$}, ylabel={$f(x)$}, legend pos=north east]
+  \addplot[no marks, color=thmcolor, domain=-3:5, samples=100] {exp(-x^2/(2*0.5))/sqrt(2*pi*0.5)}; \addlegendentry{$\mu = 0,\ \sigma^2 = 0.5$}
+  \addplot[no marks, color=defcolor, domain=-3:5, samples=100] {exp(-x^2/2)/sqrt(2*pi)}; \addlegendentry{$\mu = 0,\ \sigma^2 = 1$}
+  \addplot[no marks, color=excolor, domain=-3:5, samples=100] {exp(-(x-2)^2/2)/sqrt(2*pi)}; \addlegendentry{$\mu = 2,\ \sigma^2 = 1$}
+\end{axis}
+\end{tikzpicture}
+\caption{Probability density functions of various normal distributions.}
+\label{fig:normal-pdfs}
+\end{figure}
+
 
 \begin{theorem}[Standardisation]\label{thm:standardisation}
 If $Z$ has a standard normal distribution, then $X = \mu + \sigma Z$ has a $\Normal(\mu, \sigma^2)$ distribution. Consequently, if $X \sim \Normal(\mu, \sigma^2)$, then the \emph{standardised} random variable
@@ -478,6 +597,20 @@ There is no simple formula for areas under the normal density curve. As a rough 
   \item about 99.7\% for $c = 3$.
 \end{itemize}
 
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, width=0.55\textwidth, height=4cm, xmin=-3.5, xmax=3.5, ymin=0, ymax=0.45, xtick={-1,0,1}, xticklabels={$\mu - c\sigma$, $\mu$, $\mu + c\sigma$}, ytick=\empty, xlabel={$x$}]
+  \addplot[name path=f, no marks, color=thmcolor, domain=-3.5:3.5, samples=100] {exp(-x^2/2)/sqrt(2*pi)};
+  \path[name path=axis] (axis cs:-3.5,0) -- (axis cs:3.5,0);
+  \addplot[thmcolor!25] fill between[of=f and axis, soft clip={domain=-1:1}];
+\end{axis}
+\end{tikzpicture}
+\caption{The shaded area is $\Prob(\abs{X - \mu} \le c\sigma)$, the probability that $X$ lies within $c$ standard deviations of its expectation.}
+\label{fig:normal-within-c-sd}
+\end{figure}
+
+
 The function \texttt{pnorm} also evaluates the CDF of a general normal distribution. For example, for $X \sim \Normal(1, 4)$, $\Prob(X \le 3)$ is \texttt{pnorm(3, mean = 1, sd = 2)} $= 0.8413$. Note that R uses the \emph{standard deviation} as its argument, not the variance.
 
 We can also go the other way: for $X \sim \Normal(1, 4)$, which value $z$ has $\Prob(X \le z) = 0.9$? Such a value is a quantile (\cref{def:quantiles}), here the $0.9$-quantile, and for the normal distribution it is given by \texttt{qnorm}. In statistical inference we often need values that cut off small tail areas under the standard normal curve.
@@ -485,6 +618,21 @@ We can also go the other way: for $X \sim \Normal(1, 4)$, which value $z$ has $\
 \begin{definition}[$z_\alpha$]\label{def:z-alpha}
 For $0 < \alpha < 1$, $z_\alpha$ is the value for which the area under the standard normal pdf to the right of $z_\alpha$ is $\alpha$. Equivalently, $\Phi(z_\alpha) = 1 - \alpha$: $z_\alpha$ is the $(1 - \alpha)$-quantile of the standard normal distribution.
 \end{definition}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, width=0.55\textwidth, height=4cm, xmin=-3.5, xmax=3.5, ymin=0, ymax=0.45, xtick={1.645}, xticklabels={$z_\alpha$}, ytick=\empty, xlabel={$z$}]
+  \addplot[name path=f, no marks, color=thmcolor, domain=-3.5:3.5, samples=100] {exp(-x^2/2)/sqrt(2*pi)};
+  \path[name path=axis] (axis cs:-3.5,0) -- (axis cs:3.5,0);
+  \addplot[thmcolor!25] fill between[of=f and axis, soft clip={domain=1.645:3.5}];
+  \node[font=\small] at (axis cs:2.5,0.12) {area $\alpha$};
+\end{axis}
+\end{tikzpicture}
+\caption{The value $z_\alpha$: the area under the standard normal pdf to its right is $\alpha$.}
+\label{fig:z-alpha}
+\end{figure}
+
 
 \begin{rcode}
 qnorm(0.975)                    # 1.959964  (= z_0.025)
@@ -547,6 +695,23 @@ A random variable $X$ has a \emph{chi-squared distribution} with $n \in \set{1, 
 \end{definition}
 
 In other words, the $\ChiSq{n}$ distribution is a special case of the gamma distribution.
+
+\Cref{fig:chi-squared-pdfs} shows the pdf of the $\ChiSq{n}$ distribution for various $n$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, xmin=0, xmax=10, ymin=0, ymax=0.5, xlabel={$x$}, ylabel={$f(x)$}, legend pos=north east]
+  \addplot[no marks, color=thmcolor, domain=0.08:10, samples=100] {x^(-0.5)*exp(-x/2)/sqrt(2*pi)}; \addlegendentry{$n = 1$}
+  \addplot[no marks, color=defcolor, domain=0:10, samples=60] {exp(-x/2)/2}; \addlegendentry{$n = 2$}
+  \addplot[no marks, color=excolor, domain=0:10, samples=60] {sqrt(x)*exp(-x/2)/sqrt(2*pi)}; \addlegendentry{$n = 3$}
+  \addplot[no marks, color=remcolor, domain=0:10, samples=60] {x*exp(-x/2)/4}; \addlegendentry{$n = 4$}
+\end{axis}
+\end{tikzpicture}
+\caption{Pdfs of the $\ChiSq{n}$ distribution for various degrees of freedom $n$.}
+\label{fig:chi-squared-pdfs}
+\end{figure}
+
 
 \subsection{Beta distribution}\label{sec:beta}
 
