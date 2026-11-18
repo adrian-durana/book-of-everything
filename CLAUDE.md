@@ -3,6 +3,7 @@
 This is a LaTeX reference book covering the author's undergraduate mathematics and statistics at UQ. It is organised by topic, not by course. The author edits all text directly.
 
 ## Before writing anything
+0. **Content rule:** use only material from the course sources (corrections allowed, additions not). See the "Content rule" section of `STYLE.md`.
 1. Read `STYLE.md`. It covers voice, environments, labels and notation rules.
 2. Read `notation.tex` and use its macros. Never invent notation. If you need something new, add it to `NOTATION_REQUESTS.md` with a proposed macro and a reason.
 3. Read the project docs (`claude/book-plan.md`, the course map and the coverage inventories) for scope and chapter assignments.

@@ -2,6 +2,12 @@
 
 This is a living document. It will be revised after the pilot chapter, based on the author's edits.
 
+## Content rule (current phase: course ingestion)
+- **Write only what is in the course materials** (handwritten notes, course notes, slides). Do not add new information: no extra theorems, proofs, examples, remarks, figures or extensions.
+- **Correct mistakes.** Fix errors in the notes, especially in the handwritten ones, and list each correction in the course's coverage inventory.
+- **Leave gaps alone.** If a source states a result without proof, state it without proof and say so ("not proved in this course"). Later courses will usually fill the gap.
+- **No linking material yet.** Cross-references are limited to "Builds on" and direct citations of results the sources themselves use. Connections, motivation and linking information are added in a separate pass, after every course has been ingested.
+
 ## Voice
 - Aim between lecture notes and a textbook: precise, but readable. Write in full sentences, and don't pad.
 - Use "we" in arguments ("we show that…"). Never use "the student" or "the reader will…".
