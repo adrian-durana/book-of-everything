@@ -25,7 +25,7 @@ This is a living document. It will be revised after the pilot chapter, based on 
 | `proof` | A full proof for every stated result in the Important and Background tiers. If a proof is genuinely beyond scope, say so and give a reference. |
 | `example` + `solution` | 1–2 per major method. Rewrite exam questions; don't copy them. |
 | `remark` | Intuition, warnings, common mistakes, connections. |
-| `python` / `rcode` | Short snippets. Use one language per Part unless strictly necessary. |
+| `python` / `rcode` | Short snippets. R (`rcode`) for Parts III–IV (Probability, Statistics); Python (`python`) for all other Parts. Use the other language only when strictly necessary. |
 
 - All items share one counter per chapter (Definition 3.1, Theorem 3.2, …).
 - Give every result a short descriptive name in brackets where one exists, e.g. `[Continuity of probability]`.
