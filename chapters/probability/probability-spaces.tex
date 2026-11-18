@@ -2,4 +2,42 @@
 
 \chapterinfo{STAT2003, STAT1301, MATH1061}{\textit{to be completed}}
 
-\textit{Not yet written.}
+% --------------------------------------------------------------------------
+%  PARTIALLY WRITTEN. Only the results that Chapter 26 (the pilot) depends on
+%  are here. The rest of the chapter comes from the STAT2003 ingestion; see the
+%  project doc claude/inventory-stat2003.md.
+% --------------------------------------------------------------------------
+
+\textit{This chapter is not yet written. The two results below were added early because \cref{ch:random-variables} depends on them.}
+
+\section{Probability spaces}\label{sec:probability-space-definition}
+
+\begin{definition}[$\sigma$-algebra]\label{def:sigma-algebra}
+Let $\Omega$ be a set. A collection $\mathcal{F}$ of subsets of $\Omega$ is a \emph{$\sigma$-algebra} on $\Omega$ if
+\begin{enumerate}[label=(\roman*)]
+  \item $\Omega \in \mathcal{F}$;
+  \item $A \in \mathcal{F} \implies A^c \in \mathcal{F}$;
+  \item $A_1, A_2, \ldots \in \mathcal{F} \implies \bigcup_{n=1}^\infty A_n \in \mathcal{F}$.
+\end{enumerate}
+\end{definition}
+
+\section{Continuity of probability}\label{sec:continuity-of-probability}
+
+\begin{lemma}[Continuity of probability]\label{lem:continuity-of-probability}
+Let $(\Omega, \mathcal{F}, \Prob)$ be a probability space and $A_1, A_2, \ldots \in \mathcal{F}$.
+\begin{enumerate}[label=(\roman*)]
+  \item If $A_1 \subseteq A_2 \subseteq \cdots$, then $\Prob\bigl(\bigcup_{n=1}^\infty A_n\bigr) = \lim_{n\to\infty} \Prob(A_n)$.
+  \item If $A_1 \supseteq A_2 \supseteq \cdots$, then $\Prob\bigl(\bigcap_{n=1}^\infty A_n\bigr) = \lim_{n\to\infty} \Prob(A_n)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Set $B_1 = A_1$ and $B_n = A_n \setminus A_{n-1}$ for $n \ge 2$. The $B_n$ are pairwise disjoint, $\bigcup_{k=1}^n B_k = A_n$, and $\bigcup_{k=1}^\infty B_k = \bigcup_{k=1}^\infty A_k$. By countable additivity,
+\[
+  \Prob\Bigl(\bigcup_{k=1}^\infty A_k\Bigr) = \sum_{k=1}^\infty \Prob(B_k) = \lim_{n\to\infty} \sum_{k=1}^n \Prob(B_k) = \lim_{n\to\infty} \Prob(A_n).
+\]
+(ii) The complements $A_n^c$ are increasing. By (i) and De Morgan's law,
+\[
+  \Prob\Bigl(\bigcap_{n=1}^\infty A_n\Bigr) = 1 - \Prob\Bigl(\bigcup_{n=1}^\infty A_n^c\Bigr) = 1 - \lim_{n\to\infty} \Prob(A_n^c) = \lim_{n\to\infty} \Prob(A_n). \qedhere
+\]
+\end{proof}

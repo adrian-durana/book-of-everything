@@ -1,57 +1,131 @@
-% --------------------------------------------------------------------------
-%  FORMAT SAMPLE — shows every environment in use. To be replaced by the
-%  STAT2003 pilot chapter once source material is ingested.
-% --------------------------------------------------------------------------
 \chapter{Random Variables and Distribution Functions}\label{ch:random-variables}
 
-\chapterinfo{STAT2003 (format sample)}{probability spaces $(\Omega, \mathcal{F}, \Prob)$ and the probability axioms.}
+\chapterinfo{STAT2003}{\cref{ch:probability-spaces} (probability spaces, $\sigma$-algebras, continuity of probability); \cref{ch:integration} (Riemann integrals, the fundamental theorem of calculus).}
 
-A random variable turns the outcome of an experiment into a number, so we can do calculus and algebra with chance. Its distribution function tells us everything about how it behaves probabilistically. This chapter defines both and proves the basic properties every later chapter relies on.
+A probability space describes an experiment completely, but usually we only care about a few numbers it produces: the sum of two dice, the number of heads, the lifetime of a component. A \emph{random variable} is such a number. Its \emph{distribution} records how probability is spread over the real line. This chapter defines both and develops the main tool for describing a distribution, the cumulative distribution function (CDF). It then introduces the two common special cases, discrete and continuous distributions, and finishes with the quantile function. The quantile function inverts the CDF, and it is the theory behind simulating random variables (\cref{ch:simulation-monte-carlo}). Expectation and moments follow in \cref{ch:expectation-moments}, and the catalogue of named distributions is in \cref{ch:common-distributions}.
 
-\section{Random variables}\label{sec:rv-definition}
+Throughout, $(\Omega, \mathcal{F}, \Prob)$ is a probability space.
+
+% ==========================================================================
+\section{Random variables}\label{sec:random-variables}
+% ==========================================================================
 
 \begin{definition}[Random variable]\label{def:random-variable}
-Let $(\Omega, \mathcal{F}, \Prob)$ be a probability space. A \emph{random variable} is a function $X \colon \Omega \to \R$ such that
+A \emph{random variable} is a function $X \colon \Omega \to \R$ such that
 \[
   \set{\omega \in \Omega : X(\omega) \le x} \in \mathcal{F} \quad \text{for every } x \in \R.
 \]
-We write $\set{X \le x}$ for this event.
 \end{definition}
 
-The condition guarantees that $\Prob(X \le x)$ is defined. Without it, the events we care about might not have probabilities.
+For a set $B \subseteq \R$, we write
+\[
+  \set{X \in B} \coloneqq \set{\omega \in \Omega : X(\omega) \in B} = X^{-1}(B),
+\]
+and similarly $\set{X \le x}$, $\set{X = x}$, $\set{a < X \le b}$. We also drop the braces inside probabilities, so $\Prob(X \le x)$ means $\Prob(\set{X \le x})$. Random variables are usually written with capital letters from the end of the alphabet ($X, Y, Z, X_1, X_2, \ldots$), and their observed values with the matching lower-case letters.
+
+The condition in \cref{def:random-variable} guarantees that $\Prob(X \le x)$ is defined, because only sets in $\mathcal{F}$ have probabilities. When $\Omega$ is finite or countable and $\mathcal{F} = 2^\Omega$, the condition holds automatically, so every function $\Omega \to \R$ is a random variable.
+
+\begin{remark}
+A random variable is neither random nor a variable: it is a fixed function. The randomness is in which $\omega$ the experiment produces. A useful way to think of $X$ is as a measurement you plan to make on an experiment that has not happened yet. You can work out all its probabilities today, before the outcome is known.
+\end{remark}
+
+\begin{example}[Sum of two dice]\label{ex:sum-two-dice}
+Roll two fair dice. Take $\Omega = \set{1, \ldots, 6}^2$, $\mathcal{F} = 2^\Omega$, and $\Prob(\set{\omega}) = 1/36$ for each of the 36 outcomes. Define $X(i, j) = i + j$. Then
+\[
+  \set{X = 8} = \set{(2,6), (3,5), (4,4), (5,3), (6,2)}, \qquad \text{so} \qquad \Prob(X = 8) = \tfrac{5}{36}.
+\]
+Counting the outcomes on each anti-diagonal $i + j = x$ gives
+\begin{equation}\label{eq:sum-two-dice-pmf}
+  \Prob(X = x) = \frac{6 - \abs{7 - x}}{36}, \qquad x = 2, 3, \ldots, 12.
+\end{equation}
+\end{example}
+
+\begin{example}[Number of heads]\label{ex:number-of-heads}
+Toss a coin $n$ times, independently, where each toss lands heads with probability $p$. Take $\Omega = \set{0,1}^n$, with $1$ for heads, and
+\[
+  \Prob(\set{\omega}) = p^{s(\omega)} (1-p)^{n - s(\omega)}, \qquad s(\omega) = \omega_1 + \cdots + \omega_n.
+\]
+The number of heads is the random variable $X(\omega) = s(\omega)$. Exactly $\binom{n}{k}$ outcomes have $k$ heads, and each has probability $p^k (1-p)^{n-k}$, so
+\[
+  \Prob(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \qquad k = 0, 1, \ldots, n.
+\]
+This is the binomial distribution, $X \sim \Bin(n, p)$ (\cref{ch:common-distributions}). We will rarely need to write down $\Omega$ again: the distribution of $X$ carries all the information we use.
+\end{example}
+
+% ==========================================================================
+\section{The distribution of a random variable}\label{sec:distribution}
+% ==========================================================================
+
+\Cref{def:random-variable} only asks that sets of the form $\set{X \le x}$ be events. The next result shows that this is enough: every reasonable set $B$ gives an event $\set{X \in B}$. Here ``reasonable'' means Borel.
+
+\begin{definition}[Borel sets]\label{def:borel-sets}
+The \emph{Borel $\sigma$-algebra} $\mathcal{B}(\R)$ is the smallest $\sigma$-algebra on $\R$ (\cref{def:sigma-algebra}) that contains every half-line $(-\infty, x]$, $x \in \R$. Its members are called \emph{Borel sets}.
+\end{definition}
+
+The smallest such $\sigma$-algebra exists, because the intersection of any collection of $\sigma$-algebras is again a $\sigma$-algebra. $\mathcal{B}(\R)$ contains every set met in practice. For example,
+\[
+  (a, b] = (-\infty, b] \setminus (-\infty, a], \qquad
+  (-\infty, x) = \bigcup_{n=1}^\infty (-\infty, x - \tfrac1n], \qquad
+  \set{x} = \bigcap_{n=1}^\infty (x - \tfrac1n, x],
+\]
+and from these we get every interval, every open or closed set, and every countable set.
+
+\begin{lemma}\label{lem:rv-borel-preimages}
+If $X$ is a random variable, then $\set{X \in B} \in \mathcal{F}$ for every Borel set $B$.
+\end{lemma}
+
+\begin{proof}
+Let $\mathcal{G} = \set{B \subseteq \R : X^{-1}(B) \in \mathcal{F}}$. We show $\mathcal{G}$ is a $\sigma$-algebra on $\R$:
+\begin{itemize}
+  \item $X^{-1}(\R) = \Omega \in \mathcal{F}$, so $\R \in \mathcal{G}$.
+  \item If $B \in \mathcal{G}$, then $X^{-1}(B^c) = \bigl(X^{-1}(B)\bigr)^c \in \mathcal{F}$, so $B^c \in \mathcal{G}$.
+  \item If $B_1, B_2, \ldots \in \mathcal{G}$, then $X^{-1}\bigl(\bigcup_n B_n\bigr) = \bigcup_n X^{-1}(B_n) \in \mathcal{F}$, so $\bigcup_n B_n \in \mathcal{G}$.
+\end{itemize}
+By \cref{def:random-variable}, $\mathcal{G}$ contains every half-line $(-\infty, x]$. Since $\mathcal{B}(\R)$ is the smallest $\sigma$-algebra with this property, $\mathcal{B}(\R) \subseteq \mathcal{G}$.
+\end{proof}
+
+\begin{definition}[Distribution]\label{def:distribution}
+The \emph{distribution} (or \emph{law}) of a random variable $X$ is the function
+\[
+  \Prob_X(B) \coloneqq \Prob(X \in B), \qquad B \in \mathcal{B}(\R).
+\]
+Two random variables $X$ and $Y$ are \emph{equal in distribution}, written $X \eqd Y$, if $\Prob_X = \Prob_Y$.
+\end{definition}
+
+\begin{proposition}\label{prop:distribution-is-probability}
+$\Prob_X$ is a probability measure on $(\R, \mathcal{B}(\R))$.
+\end{proposition}
+
+\begin{proof}
+$\Prob_X$ is defined on all of $\mathcal{B}(\R)$ by \cref{lem:rv-borel-preimages}. We check the three axioms.
+\begin{itemize}
+  \item $\Prob_X(B) = \Prob(X \in B) \ge 0$.
+  \item $\Prob_X(\R) = \Prob(\Omega) = 1$.
+  \item If $B_1, B_2, \ldots$ are pairwise disjoint, then so are the events $\set{X \in B_n}$, because no $\omega$ can have $X(\omega)$ in two disjoint sets. Hence
+  \[
+    \Prob_X\Bigl(\bigcup_n B_n\Bigr) = \Prob\Bigl(\bigcup_n \set{X \in B_n}\Bigr) = \sum_n \Prob(X \in B_n) = \sum_n \Prob_X(B_n). \qedhere
+  \]
+\end{itemize}
+\end{proof}
+
+So a random variable carries the probability on $\Omega$ over to a probability on $\R$. Questions about $X$ alone can be answered with $\Prob_X$, and the underlying space can be forgotten. Random variables on different probability spaces can have the same distribution: a fair coin and the parity of a fair die both give a value in $\set{0, 1}$ with probability $\tfrac12$ each.
+
+A distribution is a function on sets, which is awkward to write down. The rest of this chapter describes distributions by ordinary functions on $\R$ instead: the CDF in every case, and the probability mass function or density in the two common special cases.
+
+% ==========================================================================
+\section{The cumulative distribution function}\label{sec:cdf}
+% ==========================================================================
 
 \begin{definition}[Cumulative distribution function]\label{def:cdf}
 The \emph{cumulative distribution function} (CDF) of a random variable $X$ is
 \[
-  F_X(x) = \Prob(X \le x), \qquad x \in \R.
+  F_X(x) \coloneqq \Prob(X \le x), \qquad x \in \R.
 \]
+We drop the subscript when only one random variable is in play. We write $X \sim F$ to mean that $X$ has CDF $F$.
 \end{definition}
 
-\section{Properties of the distribution function}\label{sec:cdf-properties}
-
-The proofs in this section all rest on one fact about probability measures: probabilities behave continuously along monotone sequences of events.
-
-\begin{lemma}[Continuity of probability]\label{lem:continuity-of-probability}
-Let $A_1, A_2, \ldots \in \mathcal{F}$.
-\begin{enumerate}[label=(\roman*)]
-  \item If $A_1 \subseteq A_2 \subseteq \cdots$, then $\Prob\bigl(\bigcup_{n=1}^\infty A_n\bigr) = \lim_{n\to\infty} \Prob(A_n)$.
-  \item If $A_1 \supseteq A_2 \supseteq \cdots$, then $\Prob\bigl(\bigcap_{n=1}^\infty A_n\bigr) = \lim_{n\to\infty} \Prob(A_n)$.
-\end{enumerate}
-\end{lemma}
-
-\begin{proof}
-(i) Set $B_1 = A_1$ and $B_n = A_n \setminus A_{n-1}$ for $n \ge 2$. The $B_n$ are pairwise disjoint, $\bigcup_{k=1}^n B_k = A_n$, and $\bigcup_{k=1}^\infty B_k = \bigcup_{k=1}^\infty A_k$. By countable additivity,
-\[
-  \Prob\Bigl(\bigcup_{k=1}^\infty A_k\Bigr) = \sum_{k=1}^\infty \Prob(B_k) = \lim_{n\to\infty} \sum_{k=1}^n \Prob(B_k) = \lim_{n\to\infty} \Prob(A_n).
-\]
-(ii) The complements $A_n^c$ are increasing, so by (i) and De Morgan's law,
-\[
-  \Prob\Bigl(\bigcap_{n=1}^\infty A_n\Bigr) = 1 - \Prob\Bigl(\bigcup_{n=1}^\infty A_n^c\Bigr) = 1 - \lim_{n\to\infty} \Prob(A_n^c) = \lim_{n\to\infty} \Prob(A_n). \qedhere
-\]
-\end{proof}
-
 \begin{theorem}[Properties of a CDF]\label{thm:cdf-properties}
-Let $F = F_X$ be the CDF of a random variable $X$. Then
+Let $F$ be the CDF of a random variable $X$. Then
 \begin{enumerate}[label=(\roman*)]
   \item $F$ is non-decreasing: $x \le y \implies F(x) \le F(y)$;
   \item $\lim_{x \to -\infty} F(x) = 0$ and $\lim_{x \to \infty} F(x) = 1$;
@@ -60,48 +134,363 @@ Let $F = F_X$ be the CDF of a random variable $X$. Then
 \end{theorem}
 
 \begin{proof}
-(i) If $x \le y$ then $\set{X \le x} \subseteq \set{X \le y}$, so $F(x) \le F(y)$ by monotonicity of $\Prob$.
+(i) If $x \le y$, then $\set{X \le x} \subseteq \set{X \le y}$, so $F(x) \le F(y)$ by monotonicity of $\Prob$.
 
-(ii) Since $F$ is monotone, it suffices to take limits along integer sequences. The events $\set{X \le -n}$ decrease to $\bigcap_n \set{X \le -n} = \emptyset$, because every real number $X(\omega)$ exceeds some $-n$. By \cref{lem:continuity-of-probability}(ii), $F(-n) \to \Prob(\emptyset) = 0$. Similarly, $\set{X \le n}$ increase to $\Omega$, so $F(n) \to 1$ by \cref{lem:continuity-of-probability}(i).
+(ii) Because $F$ is monotone, it is enough to take limits along the integers. The events $\set{X \le -n}$ decrease, and their intersection is empty, since every real number $X(\omega)$ exceeds some $-n$. By \cref{lem:continuity-of-probability}(ii), $F(-n) \to \Prob(\emptyset) = 0$. Similarly, the events $\set{X \le n}$ increase to $\Omega$, so $F(n) \to 1$ by \cref{lem:continuity-of-probability}(i).
 
-(iii) Again by monotonicity, it suffices to take $h = 1/n$. The events $\set{X \le x + 1/n}$ decrease to $\set{X \le x}$, so $F(x + 1/n) \to F(x)$ by \cref{lem:continuity-of-probability}(ii).
+(iii) Again by monotonicity, it suffices to take $h = 1/n$. The events $\set{X \le x + 1/n}$ decrease to $\bigcap_n \set{X \le x + 1/n} = \set{X \le x}$, so $F(x + 1/n) \to F(x)$ by \cref{lem:continuity-of-probability}(ii).
 \end{proof}
 
-\begin{remark}
-A CDF need not be left-continuous. The size of the jump at $x$ is $F(x) - \lim_{h \downarrow 0} F(x - h) = \Prob(X = x)$, so $F$ is continuous at $x$ exactly when $\Prob(X = x) = 0$.
-\end{remark}
+A CDF need not be continuous from the left. Since $F$ is non-decreasing and bounded, the left limit
+\[
+  F(x^-) \coloneqq \lim_{h \downarrow 0} F(x - h)
+\]
+exists at every $x$, and $F(x^-) \le F(x)$. The gap between them is a probability.
 
-\begin{corollary}\label{cor:interval-probability}
-For $a < b$, $\Prob(a < X \le b) = F_X(b) - F_X(a)$.
+\begin{proposition}[Probabilities from the CDF]\label{prop:cdf-interval-probabilities}
+Let $X \sim F$ and $a < b$. Then
+\begin{enumerate}[label=(\alph*)]
+  \item $\Prob(X > x) = 1 - F(x)$;
+  \item $\Prob(a < X \le b) = F(b) - F(a)$;
+  \item $\Prob(X < x) = F(x^-)$;
+  \item $\Prob(X = x) = F(x) - F(x^-)$;
+  \item $\Prob(a \le X \le b) = F(b) - F(a^-)$, $\Prob(a < X < b) = F(b^-) - F(a)$, and $\Prob(a \le X < b) = F(b^-) - F(a^-)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) $\set{X > x}$ is the complement of $\set{X \le x}$.
+
+(b) $\set{X \le b}$ is the disjoint union of $\set{X \le a}$ and $\set{a < X \le b}$, so $F(b) = F(a) + \Prob(a < X \le b)$.
+
+(c) The events $\set{X \le x - 1/n}$ increase to $\set{X < x}$. By \cref{lem:continuity-of-probability}(i), $\Prob(X < x) = \lim_n F(x - 1/n) = F(x^-)$.
+
+(d) $\set{X \le x}$ is the disjoint union of $\set{X < x}$ and $\set{X = x}$. Apply (c).
+
+(e) Each event is $\set{a < X \le b}$ with the endpoint events $\set{X = a}$ or $\set{X = b}$ added or removed. Combine (b) and (d).
+\end{proof}
+
+\begin{corollary}\label{cor:cdf-continuity-atoms}
+$F_X$ is continuous at $x$ if and only if $\Prob(X = x) = 0$.
 \end{corollary}
 
 \begin{proof}
-$\set{X \le b}$ is the disjoint union of $\set{X \le a}$ and $\set{a < X \le b}$. Apply additivity.
+$F$ is always right-continuous, so it is continuous at $x$ exactly when $F(x^-) = F(x)$, that is, when $\Prob(X = x) = 0$ by \cref{prop:cdf-interval-probabilities}(d).
 \end{proof}
 
-\begin{example}[Exponential distribution]\label{ex:exponential-cdf}
-Let $X \sim \Expo(\lambda)$ with rate $\lambda > 0$, so that
+A point $x$ with $\Prob(X = x) > 0$ is called an \emph{atom} of $X$.
+
+\begin{proposition}\label{prop:countably-many-atoms}
+A random variable has at most countably many atoms. Equivalently, a CDF has at most countably many jumps.
+\end{proposition}
+
+\begin{proof}
+For $k \in \N$, let $A_k$ be the set of $x$ with $\Prob(X = x) > 1/k$. If $A_k$ contained $k$ distinct points $x_1, \ldots, x_k$, the disjoint events $\set{X = x_i}$ would have total probability greater than $k \cdot \tfrac1k = 1$, which is impossible. So $A_k$ has fewer than $k$ points. The set of atoms is $\bigcup_k A_k$, a countable union of finite sets, and so it is countable.
+\end{proof}
+
+The CDF determines the distribution completely, which is why it is the standard way to specify one.
+
+\begin{theorem}[The CDF determines the distribution]\label{thm:cdf-determines-distribution}
+If $F_X = F_Y$, then $\Prob_X(B) = \Prob_Y(B)$ for every Borel set $B$. That is, $X \eqd Y$.
+\end{theorem}
+
+\begin{remark}
+\Cref{prop:cdf-interval-probabilities} already shows that $F$ determines $\Prob_X(B)$ for every interval, and so for every finite disjoint union of intervals. Extending this to all Borel sets needs a tool from measure theory, Dynkin's $\pi$--$\lambda$ theorem: two probability measures that agree on a collection of sets closed under intersection (here, the half-lines) agree on the $\sigma$-algebra it generates. That proof is beyond the scope of this book; see a measure-theoretic probability text such as Billingsley, \emph{Probability and Measure}. The converse question, whether every function with properties (i)--(iii) of \cref{thm:cdf-properties} is a CDF, is answered (yes) in \cref{cor:every-cdf-is-a-cdf}.
+\end{remark}
+
+% ==========================================================================
+\section{Discrete distributions}\label{sec:discrete-distributions}
+% ==========================================================================
+
+\begin{definition}[Discrete distribution, probability mass function]\label{def:discrete-distribution}
+A random variable $X$ is \emph{discrete}, or has a \emph{discrete distribution}, if there is a finite or countable set $C \subseteq \R$ with $\Prob(X \in C) = 1$. Its \emph{probability mass function} (pmf) is
 \[
-  F_X(x) = \begin{cases} 0, & x < 0, \\ 1 - e^{-\lambda x}, & x \ge 0. \end{cases}
+  f_X(x) \coloneqq \Prob(X = x), \qquad x \in \R.
 \]
-Find $\Prob(1 < X \le 2)$, and check that $F_X$ satisfies \cref{thm:cdf-properties}.
+The set $\set{x : f_X(x) > 0}$ of atoms is the \emph{support} of $X$.
+\end{definition}
+
+\begin{proposition}[Properties of a pmf]\label{prop:pmf-properties}
+Let $X$ be discrete, with $\Prob(X \in C) = 1$ for a countable set $C$, and pmf $f$. Then
+\begin{enumerate}[label=(\roman*)]
+  \item $f(x) \ge 0$ for all $x$, and $f(x) = 0$ for $x \notin C$;
+  \item $\sum_{x \in C} f(x) = 1$;
+  \item $\Prob(X \in B) = \sum_{x \in B \cap C} f(x)$ for every Borel set $B$;
+  \item $F_X(x) = \sum_{y \in C,\, y \le x} f(y)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) $f(x)$ is a probability, so it is non-negative. If $x \notin C$, then $\set{X = x} \subseteq \set{X \notin C}$, which has probability $0$.
+
+(iii) Write $\set{X \in B}$ as the disjoint union of $\set{X \in B \cap C}$ and $\set{X \in B \setminus C}$. The second is contained in $\set{X \notin C}$, so it has probability $0$. The first is the countable disjoint union of the events $\set{X = x}$, $x \in B \cap C$, so by countable additivity $\Prob(X \in B) = \sum_{x \in B \cap C} \Prob(X = x)$.
+
+(ii) and (iv) are (iii) with $B = \R$ and $B = (-\infty, x]$.
+\end{proof}
+
+So a discrete distribution is specified completely by listing its support and pmf. Its CDF increases only by jumps: by \cref{prop:cdf-interval-probabilities}(d), the jump at $x$ is $F(x) - F(x^-) = f(x)$. In the common case where $X$ takes integer values, $F(k^-) = F(k-1)$, so
+\[
+  f(k) = F(k) - F(k - 1), \qquad k \in \Z.
+\]
+This shortcut does \emph{not} hold for a general discrete $X$. Always use $f(x) = F(x) - F(x^-)$ unless the support is the integers.
+
+\begin{example}[Sum of two dice, continued]\label{ex:sum-two-dice-cdf}
+The sum $X$ of two fair dice (\cref{ex:sum-two-dice}) is discrete with support $\set{2, \ldots, 12}$ and pmf \eqref{eq:sum-two-dice-pmf}:
+\begin{center}
+\begin{tabular}{@{}l*{11}{c}@{}}
+\toprule
+$x$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
+\midrule
+$36 f(x)$ & 1 & 2 & 3 & 4 & 5 & 6 & 5 & 4 & 3 & 2 & 1 \\
+$36 F(x)$ & 1 & 3 & 6 & 10 & 15 & 21 & 26 & 30 & 33 & 35 & 36 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Find $\Prob(X \ge 10)$, $\Prob(4 < X \le 7)$ and $F(7.5)$.
 \end{example}
 
 \begin{solution}
-By \cref{cor:interval-probability},
-\[
-  \Prob(1 < X \le 2) = F_X(2) - F_X(1) = (1 - e^{-2\lambda}) - (1 - e^{-\lambda}) = e^{-\lambda} - e^{-2\lambda}.
-\]
-$F_X$ is constant on $(-\infty, 0)$ and increasing on $[0, \infty)$, which gives (i). We have $F_X(x) = 0$ for all $x < 0$ and $e^{-\lambda x} \to 0$ as $x \to \infty$, which gives (ii). $F_X$ is continuous everywhere, since $1 - e^{0} = 0$ at the join, which gives (iii).
+By \cref{prop:pmf-properties}(iii), $\Prob(X \ge 10) = f(10) + f(11) + f(12) = \tfrac{6}{36} = \tfrac16$. By \cref{prop:cdf-interval-probabilities}(b), $\Prob(4 < X \le 7) = F(7) - F(4) = \tfrac{21 - 6}{36} = \tfrac{5}{12}$. Finally, $F(7.5) = F(7) = \tfrac{21}{36} = \tfrac{7}{12}$, because $X$ has no mass in $(7, 7.5]$. \Cref{fig:sum-two-dice-cdf} shows the CDF: it is a step function, right-continuous, with a jump of size $f(x)$ at each support point.
 \end{solution}
 
-The same probability, computed numerically:
-\begin{python}
-from scipy import stats
-import numpy as np
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.8\textwidth, height=5.5cm,
+  xmin=0, xmax=14, ymin=-0.05, ymax=1.1,
+  xtick={2,...,12}, ytick={0,0.25,0.5,0.75,1},
+  xlabel={$x$}, ylabel={$F(x)$},
+  axis lines=left, every axis plot/.append style={thick, color=thmcolor},
+]
+% horizontal steps [x_k, x_{k+1})
+\addplot[const plot, no marks] coordinates {
+  (0,0) (2,1/36) (3,3/36) (4,6/36) (5,10/36) (6,15/36) (7,21/36)
+  (8,26/36) (9,30/36) (10,33/36) (11,35/36) (12,1) (14,1)};
+% closed dots at the value taken (right-continuity)
+\addplot[only marks, mark=*, mark size=1.6pt] coordinates {
+  (2,1/36) (3,3/36) (4,6/36) (5,10/36) (6,15/36) (7,21/36)
+  (8,26/36) (9,30/36) (10,33/36) (11,35/36) (12,1)};
+% open dots at the left limits
+\addplot[only marks, mark=*, mark size=1.6pt, mark options={fill=white}] coordinates {
+  (2,0) (3,1/36) (4,3/36) (5,6/36) (6,10/36) (7,15/36)
+  (8,21/36) (9,26/36) (10,30/36) (11,33/36) (12,35/36)};
+\end{axis}
+\end{tikzpicture}
+\caption{CDF of the sum of two fair dice. Filled dots mark $F(x)$; open dots mark the left limits $F(x^-)$.}
+\label{fig:sum-two-dice-cdf}
+\end{figure}
 
-lam = 0.5
-X = stats.expon(scale=1/lam)        # SciPy uses scale = 1/rate
-print(X.cdf(2) - X.cdf(1))          # 0.2386...
-print(np.exp(-lam) - np.exp(-2*lam))  # same value, from the closed form
-\end{python}
+% ==========================================================================
+\section{Continuous distributions}\label{sec:continuous-distributions}
+% ==========================================================================
+
+\begin{definition}[Continuous distribution, probability density function]\label{def:continuous-distribution}
+A random variable $X$ has a \emph{continuous distribution} if there is a function $f \colon \R \to [0, \infty)$, the \emph{probability density function} (pdf) of $X$, such that
+\[
+  F_X(x) = \int_{-\infty}^x f(u) \dd u \qquad \text{for every } x \in \R.
+\]
+We write $f_X$ when the random variable needs naming.
+\end{definition}
+
+In this book, densities are piecewise continuous, and the integrals are (possibly improper) Riemann integrals, as in \cref{ch:integration}. (The general theory uses the Lebesgue integral and calls such distributions \emph{absolutely continuous}. Nothing in this book depends on the difference.)
+
+\begin{proposition}[Properties of a pdf]\label{prop:pdf-properties}
+Let $X$ have pdf $f$ and CDF $F$. Then
+\begin{enumerate}[label=(\roman*)]
+  \item $\int_{-\infty}^{\infty} f(u) \dd u = 1$;
+  \item $F$ is continuous, and so $\Prob(X = x) = 0$ for every $x \in \R$;
+  \item for $a \le b$,
+  \[
+    \Prob(a < X \le b) = \Prob(a \le X \le b) = \Prob(a < X < b) = \Prob(a \le X < b) = \int_a^b f(u) \dd u;
+  \]
+  \item $F'(x) = f(x)$ at every $x$ where $f$ is continuous;
+  \item if $f$ is continuous at $x$, then $\Prob(x < X \le x + h) = h f(x) + o(h)$ as $h \downarrow 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) By \cref{thm:cdf-properties}(ii), $\int_{-\infty}^\infty f = \lim_{x\to\infty} \int_{-\infty}^x f = \lim_{x \to \infty} F(x) = 1$.
+
+(ii) An integral is a continuous function of its upper limit (\cref{ch:integration}), so $F$ is continuous. \Cref{cor:cdf-continuity-atoms} then gives $\Prob(X = x) = 0$.
+
+(iii) By \cref{prop:cdf-interval-probabilities}(b), $\Prob(a < X \le b) = F(b) - F(a) = \int_a^b f$. The other three events differ from $\set{a < X \le b}$ only by the events $\set{X = a}$ and $\set{X = b}$, which have probability $0$ by (ii).
+
+(iv) This is the fundamental theorem of calculus (\cref{ch:integration}) applied to $F(x) = \int_{-\infty}^x f$.
+
+(v) By (iii) and (iv), $\Prob(x < X \le x + h) / h = (F(x+h) - F(x))/h \to F'(x) = f(x)$.
+\end{proof}
+
+Property (v) explains the name: $f(x)$ is the probability \emph{per unit length} near $x$. It is not itself a probability.
+
+\begin{remark}[Common mistakes with densities]\label{rem:density-pitfalls}
+\leavevmode
+\begin{itemize}
+  \item A density can exceed $1$. For example, the uniform density on $(0, \tfrac12)$ equals $2$. Only its integrals are probabilities.
+  \item A density is not unique. Changing $f$ at finitely many points does not change any integral, so it does not change $F$. We always pick the most convenient version, which is why it doesn't matter whether we write $f(x) = 1$ on $[0,1]$ or on $(0,1)$.
+  \item $\Prob(X = x) = 0$ for every $x$ does not mean that $X$ never takes a value. It means that no \emph{single} value carries positive probability.
+\end{itemize}
+\end{remark}
+
+In practice, we usually go between $F$ and $f$ like this. Given $f$, integrate to get $F$. Given an $F$ that is continuous and differentiable except at finitely many points, its derivative (defined arbitrarily at those points) is a density.
+
+\begin{definition}[Uniform distribution]\label{def:uniform-distribution}
+For $a < b$, $X$ has the \emph{uniform distribution} on $(a, b)$, written $X \sim \Unif(a, b)$, if it has density and CDF
+\[
+  f(x) = \begin{cases} \dfrac{1}{b - a}, & a < x < b, \\[4pt] 0, & \text{otherwise}, \end{cases}
+  \qquad
+  F(x) = \begin{cases} 0, & x \le a, \\ \dfrac{x - a}{b - a}, & a < x < b, \\[4pt] 1, & x \ge b. \end{cases}
+\]
+\end{definition}
+
+The probability that $X \sim \Unif(a,b)$ lands in a subinterval of $(a,b)$ is its length divided by $b - a$, wherever the subinterval sits. This is the precise meaning of ``every point is equally likely''. The standard uniform $\Unif(0,1)$, with $F(u) = u$ on $[0, 1]$, is the starting point for simulation (\cref{sec:quantile-function}).
+
+\begin{example}[Finding a CDF from a density]\label{ex:density-2x}
+Let $X$ have density $f(x) = 2x$ for $0 < x < 1$ and $f(x) = 0$ otherwise. Check that $f$ is a density, find $F$, and compute $\Prob(\tfrac14 < X \le \tfrac12)$ and $\Prob(X > \tfrac12)$.
+\end{example}
+
+\begin{solution}
+$f \ge 0$ and $\int_0^1 2x \dd x = 1$, so $f$ is a density. For $0 \le x \le 1$, $F(x) = \int_0^x 2u \dd u = x^2$, so
+\[
+  F(x) = \begin{cases} 0, & x < 0, \\ x^2, & 0 \le x \le 1, \\ 1, & x > 1. \end{cases}
+\]
+Then $\Prob(\tfrac14 < X \le \tfrac12) = F(\tfrac12) - F(\tfrac14) = \tfrac14 - \tfrac1{16} = \tfrac{3}{16}$, and $\Prob(X > \tfrac12) = 1 - F(\tfrac12) = \tfrac34$. The density increases towards $1$, so large values are more likely: three-quarters of the mass lies in the upper half of the interval.
+\end{solution}
+
+\subsection{Distributions that are neither discrete nor continuous}\label{sec:mixed-distributions}
+
+Discrete and continuous distributions are the two cases used most, but they do not cover everything. A CDF can have jumps \emph{and} rise continuously in between.
+
+\begin{example}[Waiting at a traffic light]\label{ex:traffic-light}
+A traffic light is green with probability $\tfrac12$ when you arrive, in which case you wait $X = 0$ seconds. Otherwise, you wait a $\Unif(0, 60)$ number of seconds. By the law of total probability (\cref{ch:probability-spaces}),
+\[
+  F(x) = \Prob(X \le x) = \begin{cases} 0, & x < 0, \\[2pt] \dfrac12 + \dfrac12 \cdot \dfrac{x}{60}, & 0 \le x < 60, \\[4pt] 1, & x \ge 60. \end{cases}
+\]
+$X$ is not continuous, since $F$ jumps by $\tfrac12$ at $0$, so $\Prob(X = 0) = \tfrac12$. It is not discrete either: $0$ is its only atom, and it carries only half the probability. This is a \emph{mixed} distribution: a mixture of a point mass at $0$ and a density on $(0, 60)$.
+\end{example}
+
+\begin{remark}
+In general, every distribution on $\R$ is a mixture of a discrete part, a part with a density, and a third, \emph{singular continuous} part (the Lebesgue decomposition). A singular continuous distribution has a continuous CDF but no density. The standard example is the Cantor distribution. Singular distributions do not come up in this book.
+\end{remark}
+
+% ==========================================================================
+\section{The quantile function}\label{sec:quantile-function}
+% ==========================================================================
+
+The CDF maps values to probabilities. Often we need to go the other way: what value $x$ has $F(x) = 0.95$? If $F$ is continuous and strictly increasing, the answer is the ordinary inverse $F^{-1}(0.95)$. But a CDF can jump, so that no $x$ solves $F(x) = u$, or be flat, so that many do. The \emph{generalised inverse} handles both cases by taking the smallest $x$ that reaches level $u$.
+
+\begin{definition}[Quantile function]\label{def:quantile-function}
+The \emph{quantile function}, or \emph{generalised inverse}, of a CDF $F$ is
+\[
+  F^{-1}(u) \coloneqq \inf \set{x \in \R : F(x) \ge u}, \qquad 0 < u < 1.
+\]
+For $0 < \alpha < 1$, $F^{-1}(\alpha)$ is the \emph{$\alpha$-quantile} of $F$. The \emph{median} is $F^{-1}(\tfrac12)$, and the lower and upper \emph{quartiles} are $F^{-1}(\tfrac14)$ and $F^{-1}(\tfrac34)$.
+\end{definition}
+
+When $F$ is a bijection from an interval onto $(0,1)$, $F^{-1}$ is its ordinary inverse, so the notation is consistent. Everything in this section follows from one equivalence.
+
+\begin{lemma}[Switching lemma]\label{lem:quantile-switching}
+Let $F$ be a CDF and $0 < u < 1$. Then $F^{-1}(u)$ is a finite real number, $F\bigl(F^{-1}(u)\bigr) \ge u$, and for every $x \in \R$,
+\[
+  F^{-1}(u) \le x \iff u \le F(x).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $S = \set{x : F(x) \ge u}$. Since $F(x) \to 1 > u$ as $x \to \infty$, $S$ is non-empty. Since $F(x) \to 0 < u$ as $x \to -\infty$, there is an $x_0$ with $F(x) < u$ for all $x \le x_0$, so $S$ is bounded below by $x_0$. Hence $q = F^{-1}(u) = \inf S$ is finite.
+
+Choose $x_n \in S$ with $x_n \downarrow q$. If $q \in S$ we can take $x_n = q$; otherwise the $x_n$ decrease strictly to $q$. By right-continuity, $F(q) = \lim_n F(x_n) \ge u$.
+
+For the equivalence: if $u \le F(x)$, then $x \in S$, so $q \le x$. Conversely, if $q \le x$, then $F(x) \ge F(q) \ge u$ because $F$ is non-decreasing.
+\end{proof}
+
+\begin{theorem}[Inverse-transform theorem]\label{thm:inverse-transform}
+Let $F$ be a CDF and $U \sim \Unif(0,1)$. Then $X = F^{-1}(U)$ has CDF $F$.
+\end{theorem}
+
+\begin{proof}
+$U$ lies in $(0,1)$ with probability one, so $X$ is defined with probability one. For $x \in \R$, \cref{lem:quantile-switching} gives $\set{X \le x} = \set{U \le F(x)}$. Since $F(x) \in [0, 1]$ and $\Prob(U \le u) = u$ for $u \in [0, 1]$,
+\[
+  \Prob(X \le x) = \Prob\bigl(U \le F(x)\bigr) = F(x). \qedhere
+\]
+\end{proof}
+
+\begin{corollary}[Every CDF is the CDF of something]\label{cor:every-cdf-is-a-cdf}
+Let $F \colon \R \to [0,1]$ satisfy (i)--(iii) of \cref{thm:cdf-properties}. Then there is a random variable with CDF $F$.
+\end{corollary}
+
+\begin{proof}
+Nothing in \cref{lem:quantile-switching} or \cref{thm:inverse-transform} used more about $F$ than properties (i)--(iii). Take $\Omega = (0,1)$, with $\Prob$ assigning each interval its length, and let $U(\omega) = \omega$. Then $\Prob(U \le u) = u$, so $U \sim \Unif(0,1)$. The function $X = F^{-1}(U)$ is a random variable, because $\set{X \le x} = \set{U \le F(x)} = (0, F(x)] \cap (0,1)$ is an interval. By \cref{thm:inverse-transform}, $X \sim F$.
+\end{proof}
+
+(The existence of a probability that assigns each interval of $(0,1)$ its length, the Lebesgue measure, is itself a theorem of measure theory. We take it as given.)
+
+Together with \cref{thm:cdf-determines-distribution}, this shows that distributions on $\R$ and functions satisfying (i)--(iii) are in one-to-one correspondence. To specify a distribution, it is enough to write down a valid CDF.
+
+The next theorem runs the inverse-transform theorem backwards. Feeding a random variable into its own CDF produces a uniform, provided the CDF has no jumps.
+
+\begin{theorem}[Probability integral transform]\label{thm:probability-integral-transform}
+If $X \sim F$ and $F$ is continuous, then $F(X) \sim \Unif(0,1)$.
+\end{theorem}
+
+\begin{proof}
+Let $V = F(X)$, which takes values in $[0,1]$. Fix $0 < u < 1$ and put $q = F^{-1}(u)$. By \cref{lem:quantile-switching}, $F(q) \ge u$. Also $F(x) < u$ for every $x < q$, since otherwise $x$ would belong to the set whose infimum is $q$. Hence $F(q^-) \le u$. Because $F$ is continuous, $F(q) = F(q^-)$, so $F(q) = u$.
+
+By \cref{lem:quantile-switching} again, $\set{V \ge u} = \set{u \le F(X)} = \set{X \ge q}$. So, using \cref{prop:cdf-interval-probabilities}(c) and continuity,
+\[
+  \Prob(V \ge u) = 1 - \Prob(X < q) = 1 - F(q^-) = 1 - u.
+\]
+Therefore $\Prob(V < u) = u$ for all $0 < u < 1$. The events $\set{V < u + 1/n}$ decrease to $\set{V \le u}$, so by \cref{lem:continuity-of-probability}, $\Prob(V \le u) = \lim_n (u + 1/n) = u$ for $0 < u < 1$. Finally, $\Prob(V \le 0) = \lim_{u \downarrow 0} u = 0$ and $\Prob(V \le 1) = 1$, so $V \sim \Unif(0,1)$.
+\end{proof}
+
+\begin{remark}
+The two theorems are used constantly:
+\begin{itemize}
+  \item The inverse-transform theorem turns uniform random numbers into samples from any distribution with a computable quantile function. It is the basis of the simulation methods in \cref{ch:simulation-monte-carlo}.
+  \item The probability integral transform says that a p-value computed from a continuous test statistic is $\Unif(0,1)$ under the null hypothesis (\cref{ch:hypothesis-testing}).
+\end{itemize}
+Continuity in \cref{thm:probability-integral-transform} cannot be dropped: see \cref{ex:bernoulli-quantile}.
+\end{remark}
+
+\begin{example}[Exponential quantiles]\label{ex:exponential-quantile}
+Let $X \sim \Expo(\lambda)$, with density $f(x) = \lambda e^{-\lambda x}$ for $x \ge 0$ (and $0$ otherwise), where $\lambda > 0$ is the rate. Find the CDF, the quantile function and the median. Then use them to simulate from $\Expo(\lambda)$.
+\end{example}
+
+\begin{solution}
+For $x \ge 0$, $F(x) = \int_0^x \lambda e^{-\lambda u} \dd u = 1 - e^{-\lambda x}$, and $F(x) = 0$ for $x < 0$. On $(0, \infty)$, $F$ is continuous and strictly increasing onto $(0,1)$, so we can invert it directly. Solving $u = 1 - e^{-\lambda x}$ gives
+\[
+  F^{-1}(u) = -\frac{\ln(1 - u)}{\lambda}, \qquad 0 < u < 1.
+\]
+The median is $F^{-1}(\tfrac12) = \ln 2 / \lambda$. Note that this is smaller than the mean $1/\lambda$ (\cref{ch:common-distributions}), as you would expect for a distribution with a long right tail.
+
+By \cref{thm:inverse-transform}, if $U \sim \Unif(0,1)$ then $-\ln(1-U)/\lambda \sim \Expo(\lambda)$. Since $1 - U \sim \Unif(0,1)$ as well, $-\ln(U)/\lambda$ works too. By \cref{thm:probability-integral-transform}, $1 - e^{-\lambda X} \sim \Unif(0,1)$.
+\end{solution}
+
+The R code below checks all three claims numerically. R names its distribution functions with a prefix: \texttt{d} for the pmf or density, \texttt{p} for the CDF, \texttt{q} for the quantile function and \texttt{r} for random generation. For example, \texttt{dexp}, \texttt{pexp}, \texttt{qexp} and \texttt{rexp}.
+\begin{rcode}
+set.seed(2003)
+lambda <- 2
+u <- runif(1e5)                    # U ~ U(0, 1)
+x <- -log(1 - u) / lambda          # inverse transform: X ~ Exp(2)
+
+mean(x <= 0.5)                     # empirical P(X <= 0.5): about 0.63
+pexp(0.5, rate = lambda)           # exact: 1 - exp(-1) = 0.632...
+c(median(x), qexp(0.5, rate = lambda), log(2) / lambda)  # all near 0.35
+
+v <- pexp(x, rate = lambda)        # probability integral transform
+quantile(v, c(0.1, 0.5, 0.9))      # close to 0.1, 0.5, 0.9: V ~ U(0, 1)
+\end{rcode}
+
+\begin{example}[A discrete quantile function]\label{ex:bernoulli-quantile}
+Let $X \sim \Bern(p)$: $\Prob(X = 1) = p$ and $\Prob(X = 0) = 1 - p$. Find $F^{-1}$ and show that $F(X)$ is not uniform.
+\end{example}
+
+\begin{solution}
+The CDF is $F(x) = 0$ for $x < 0$, $F(x) = 1 - p$ for $0 \le x < 1$, and $F(x) = 1$ for $x \ge 1$. The smallest $x$ with $F(x) \ge u$ is $0$ if $u \le 1 - p$ and $1$ otherwise, so
+\[
+  F^{-1}(u) = \begin{cases} 0, & 0 < u \le 1 - p, \\ 1, & 1 - p < u < 1. \end{cases}
+\]
+By \cref{thm:inverse-transform}, $\ind\set{U > 1 - p} \sim \Bern(p)$ for $U \sim \Unif(0,1)$: ``success if the uniform lands in the top $p$ of the interval''. The same idea, applied to any discrete distribution, is the discrete inverse-transform algorithm (\cref{ch:simulation-monte-carlo}).
+
+On the other hand, $F(X)$ takes only the two values $1 - p$ and $1$, so it is not uniform. The probability integral transform fails because $F$ has jumps.
+\end{solution}
