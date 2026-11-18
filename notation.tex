@@ -1,0 +1,68 @@
+% ==========================================================================
+%  notation.tex — every notational convention in the book lives here.
+%  SHARED FILE: edit only in the "hub" chat (see CLAUDE.md).
+%
+%  Rule: chapters never type raw notation for anything with a macro below.
+%  Changing a convention = editing one line here.
+%  Keep the notation appendix (appendices/notation.tex) in sync.
+% ==========================================================================
+
+% ---- Number sets -------------------------------------------------------------
+\newcommand{\N}{\mathbb{N}}          % natural numbers {1, 2, ...}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% ---- Delimiters (starred versions auto-size: \abs*{...}) ---------------------
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\inner}{\langle}{\rangle}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+
+% ---- Linear algebra ---------------------------------------------------------
+\newcommand{\vect}[1]{\bm{#1}}       % vectors: bold, column by default
+\newcommand{\mat}[1]{\bm{#1}}        % matrices: bold upper case
+\newcommand{\T}{^{\top}}             % transpose: A\T
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\spn}{span}
+
+% ---- Calculus and analysis --------------------------------------------------
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}  % upright differential: \int f(x) \dd x
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% ---- Probability ------------------------------------------------------------
+\newcommand{\Prob}{\mathbb{P}}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Corr}{Corr}
+\newcommand{\given}{\mid}                % conditioning: \Prob(A \given B)
+\newcommand{\ind}{\mathbf{1}}            % indicator: \ind_A or \ind\{X > 0\}
+\newcommand{\indep}{\perp\!\!\!\perp}    % independence
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}
+\newcommand{\eqd}{\overset{d}{=}}        % equal in distribution
+\newcommand{\convp}{\xrightarrow{\;p\;}}
+\newcommand{\convd}{\xrightarrow{\;d\;}}
+\newcommand{\convas}{\xrightarrow{\text{a.s.}}}
+
+% ---- Named distributions (upright names) -------------------------------------
+\newcommand{\Normal}{\mathrm{N}}         % \Normal(\mu, \sigma^2) — variance, not sd
+\newcommand{\Bern}{\mathrm{Bernoulli}}
+\newcommand{\Bin}{\mathrm{Bin}}
+\newcommand{\Pois}{\mathrm{Poisson}}
+\newcommand{\Geom}{\mathrm{Geom}}
+\newcommand{\Unif}{\mathrm{U}}
+\newcommand{\Expo}{\mathrm{Exp}}         % Exp(\lambda) — rate parametrisation
+\newcommand{\GammaDist}{\mathrm{Gamma}}  % Gamma(\alpha, \beta) — shape, rate
+\newcommand{\BetaDist}{\mathrm{Beta}}
+
+% ---- Statistics ---------------------------------------------------------------
+\DeclareMathOperator{\bias}{bias}
+\DeclareMathOperator{\MSE}{MSE}
+\DeclareMathOperator{\se}{se}

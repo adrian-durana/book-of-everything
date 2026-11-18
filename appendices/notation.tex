@@ -1,0 +1,45 @@
+\chapter{Notation}\label{app:notation}
+
+This appendix lists the conventions used throughout the book. They are defined as macros in \texttt{notation.tex}; keep the two in sync.
+
+\section*{Sets and numbers}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Notation & Meaning \\
+\midrule
+$\N, \Z, \Q, \R, \C$ & naturals $\set{1, 2, \ldots}$, integers, rationals, reals, complex numbers \\
+$\abs{x}, \norm{\vect{x}}$ & absolute value, norm \\
+$\inner{\vect{x}, \vect{y}}$ & inner product \\
+\bottomrule
+\end{tabular}
+
+\section*{Linear algebra}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Notation & Meaning \\
+\midrule
+$\vect{x}$ & vector (bold, column vector by default) \\
+$\mat{A}$ & matrix (bold upper case) \\
+$\mat{A}\T$ & transpose \\
+$\tr \mat{A}, \rank \mat{A}, \diag(\cdot)$ & trace, rank, diagonal matrix \\
+\bottomrule
+\end{tabular}
+
+\section*{Probability and statistics}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Notation & Meaning \\
+\midrule
+$\Prob(A), \Prob(A \given B)$ & probability, conditional probability \\
+$\E[X], \Var(X), \Cov(X, Y)$ & expectation, variance, covariance \\
+$F_X$ & cumulative distribution function of $X$ \\
+$\ind_A$ & indicator of the event $A$ \\
+$X \indep Y$ & $X$ and $Y$ are independent \\
+$X_1, \ldots, X_n \iid F$ & independent and identically distributed from $F$ \\
+$X \eqd Y$ & equal in distribution \\
+$\convp, \convd, \convas$ & convergence in probability, in distribution, almost surely \\
+$\Normal(\mu, \sigma^2)$ & normal distribution, parametrised by \emph{variance} \\
+$\Expo(\lambda)$ & exponential distribution, \emph{rate} $\lambda$ (mean $1/\lambda$) \\
+$\GammaDist(\alpha, \beta)$ & gamma distribution, shape $\alpha$, \emph{rate} $\beta$ \\
+\bottomrule
+\end{tabular}

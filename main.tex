@@ -1,0 +1,53 @@
+% ==========================================================================
+%  Book of Everything — master file
+%  SHARED FILE: edit only in the "hub" chat (see CLAUDE.md).
+%
+%  While editing one chapter, uncomment \includeonly to compile just that
+%  chapter (cross-references to other chapters still resolve from the .aux).
+% ==========================================================================
+\documentclass[11pt, a4paper, twoside, openany]{book}
+
+\input{preamble}
+\input{notation}
+
+% \includeonly{chapters/probability/random-variables}
+
+\title{\Huge Book of Everything\\[0.5em]\Large Undergraduate Mathematics and Statistics}
+\author{Adrian Durana}
+\date{\today}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\include{frontmatter/preface}
+\tableofcontents
+
+\mainmatter
+
+% ---- Part I: Foundations -----------------------------------------------------
+% \part{Foundations}
+
+% ---- Part II: Differential Equations ------------------------------------------
+% \part{Differential Equations}
+
+% ---- Part III: Probability -----------------------------------------------------
+\part{Probability}
+\include{chapters/probability/random-variables}
+
+% ---- Part IV: Statistics -----------------------------------------------------
+% \part{Statistics}
+
+% ---- Part V: Numerical Methods and Optimisation ---------------------------------
+% \part{Numerical Methods and Optimisation}
+
+% ---- Part VI: Machine Learning ---------------------------------------------------
+% \part{Machine Learning}
+
+% ---- Part VII: Applications -----------------------------------------------------
+% \part{Applications}
+
+\appendix
+\include{appendices/notation}
+
+\end{document}

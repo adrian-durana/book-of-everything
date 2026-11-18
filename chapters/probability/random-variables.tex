@@ -1,0 +1,107 @@
+% --------------------------------------------------------------------------
+%  FORMAT SAMPLE — shows every environment in use. To be replaced by the
+%  STAT2003 pilot chapter once source material is ingested.
+% --------------------------------------------------------------------------
+\chapter{Random Variables and Distribution Functions}\label{ch:random-variables}
+
+\chapterinfo{STAT2003 (format sample)}{probability spaces $(\Omega, \mathcal{F}, \Prob)$ and the probability axioms.}
+
+A random variable turns the outcome of an experiment into a number, so we can do calculus and algebra with chance. Its distribution function tells us everything about how it behaves probabilistically. This chapter defines both and proves the basic properties every later chapter relies on.
+
+\section{Random variables}\label{sec:rv-definition}
+
+\begin{definition}[Random variable]\label{def:random-variable}
+Let $(\Omega, \mathcal{F}, \Prob)$ be a probability space. A \emph{random variable} is a function $X \colon \Omega \to \R$ such that
+\[
+  \set{\omega \in \Omega : X(\omega) \le x} \in \mathcal{F} \quad \text{for every } x \in \R.
+\]
+We write $\set{X \le x}$ for this event.
+\end{definition}
+
+The condition guarantees that $\Prob(X \le x)$ is defined. Without it, the events we care about might not have probabilities.
+
+\begin{definition}[Cumulative distribution function]\label{def:cdf}
+The \emph{cumulative distribution function} (CDF) of a random variable $X$ is
+\[
+  F_X(x) = \Prob(X \le x), \qquad x \in \R.
+\]
+\end{definition}
+
+\section{Properties of the distribution function}\label{sec:cdf-properties}
+
+The proofs in this section all rest on one fact about probability measures: probabilities behave continuously along monotone sequences of events.
+
+\begin{lemma}[Continuity of probability]\label{lem:continuity-of-probability}
+Let $A_1, A_2, \ldots \in \mathcal{F}$.
+\begin{enumerate}[label=(\roman*)]
+  \item If $A_1 \subseteq A_2 \subseteq \cdots$, then $\Prob\bigl(\bigcup_{n=1}^\infty A_n\bigr) = \lim_{n\to\infty} \Prob(A_n)$.
+  \item If $A_1 \supseteq A_2 \supseteq \cdots$, then $\Prob\bigl(\bigcap_{n=1}^\infty A_n\bigr) = \lim_{n\to\infty} \Prob(A_n)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) Set $B_1 = A_1$ and $B_n = A_n \setminus A_{n-1}$ for $n \ge 2$. The $B_n$ are pairwise disjoint, $\bigcup_{k=1}^n B_k = A_n$, and $\bigcup_{k=1}^\infty B_k = \bigcup_{k=1}^\infty A_k$. By countable additivity,
+\[
+  \Prob\Bigl(\bigcup_{k=1}^\infty A_k\Bigr) = \sum_{k=1}^\infty \Prob(B_k) = \lim_{n\to\infty} \sum_{k=1}^n \Prob(B_k) = \lim_{n\to\infty} \Prob(A_n).
+\]
+(ii) The complements $A_n^c$ are increasing, so by (i) and De Morgan's law,
+\[
+  \Prob\Bigl(\bigcap_{n=1}^\infty A_n\Bigr) = 1 - \Prob\Bigl(\bigcup_{n=1}^\infty A_n^c\Bigr) = 1 - \lim_{n\to\infty} \Prob(A_n^c) = \lim_{n\to\infty} \Prob(A_n). \qedhere
+\]
+\end{proof}
+
+\begin{theorem}[Properties of a CDF]\label{thm:cdf-properties}
+Let $F = F_X$ be the CDF of a random variable $X$. Then
+\begin{enumerate}[label=(\roman*)]
+  \item $F$ is non-decreasing: $x \le y \implies F(x) \le F(y)$;
+  \item $\lim_{x \to -\infty} F(x) = 0$ and $\lim_{x \to \infty} F(x) = 1$;
+  \item $F$ is right-continuous: $\lim_{h \downarrow 0} F(x + h) = F(x)$ for every $x \in \R$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i) If $x \le y$ then $\set{X \le x} \subseteq \set{X \le y}$, so $F(x) \le F(y)$ by monotonicity of $\Prob$.
+
+(ii) Since $F$ is monotone, it suffices to take limits along integer sequences. The events $\set{X \le -n}$ decrease to $\bigcap_n \set{X \le -n} = \emptyset$, because every real number $X(\omega)$ exceeds some $-n$. By \cref{lem:continuity-of-probability}(ii), $F(-n) \to \Prob(\emptyset) = 0$. Similarly, $\set{X \le n}$ increase to $\Omega$, so $F(n) \to 1$ by \cref{lem:continuity-of-probability}(i).
+
+(iii) Again by monotonicity, it suffices to take $h = 1/n$. The events $\set{X \le x + 1/n}$ decrease to $\set{X \le x}$, so $F(x + 1/n) \to F(x)$ by \cref{lem:continuity-of-probability}(ii).
+\end{proof}
+
+\begin{remark}
+A CDF need not be left-continuous. The size of the jump at $x$ is $F(x) - \lim_{h \downarrow 0} F(x - h) = \Prob(X = x)$, so $F$ is continuous at $x$ exactly when $\Prob(X = x) = 0$.
+\end{remark}
+
+\begin{corollary}\label{cor:interval-probability}
+For $a < b$, $\Prob(a < X \le b) = F_X(b) - F_X(a)$.
+\end{corollary}
+
+\begin{proof}
+$\set{X \le b}$ is the disjoint union of $\set{X \le a}$ and $\set{a < X \le b}$. Apply additivity.
+\end{proof}
+
+\begin{example}[Exponential distribution]\label{ex:exponential-cdf}
+Let $X \sim \Expo(\lambda)$ with rate $\lambda > 0$, so that
+\[
+  F_X(x) = \begin{cases} 0, & x < 0, \\ 1 - e^{-\lambda x}, & x \ge 0. \end{cases}
+\]
+Find $\Prob(1 < X \le 2)$, and check that $F_X$ satisfies \cref{thm:cdf-properties}.
+\end{example}
+
+\begin{solution}
+By \cref{cor:interval-probability},
+\[
+  \Prob(1 < X \le 2) = F_X(2) - F_X(1) = (1 - e^{-2\lambda}) - (1 - e^{-\lambda}) = e^{-\lambda} - e^{-2\lambda}.
+\]
+$F_X$ is constant on $(-\infty, 0)$ and increasing on $[0, \infty)$, which gives (i). We have $F_X(x) = 0$ for all $x < 0$ and $e^{-\lambda x} \to 0$ as $x \to \infty$, which gives (ii). $F_X$ is continuous everywhere, since $1 - e^{0} = 0$ at the join, which gives (iii).
+\end{solution}
+
+The same probability, computed numerically:
+\begin{python}
+from scipy import stats
+import numpy as np
+
+lam = 0.5
+X = stats.expon(scale=1/lam)        # SciPy uses scale = 1/rate
+print(X.cdf(2) - X.cdf(1))          # 0.2386...
+print(np.exp(-lam) - np.exp(-2*lam))  # same value, from the closed form
+\end{python}

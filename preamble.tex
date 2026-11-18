@@ -1,0 +1,108 @@
+% ==========================================================================
+%  preamble.tex — packages, layout and environments for the Book of Everything
+%  SHARED FILE: edit only in the "hub" chat (see CLAUDE.md).
+% ==========================================================================
+
+% ---- Fonts and encoding ---------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ---- Page layout ----------------------------------------------------------
+\usepackage[a4paper, margin=2.5cm, headheight=14pt]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\nouppercase{\leftmark}}
+\fancyhead[RO]{\small\nouppercase{\rightmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\raggedbottom
+
+% ---- Mathematics -----------------------------------------------------------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+
+% ---- Lists, tables, figures -------------------------------------------------
+\usepackage{enumitem}
+\setlist{itemsep=0.2em, topsep=0.3em}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+% ---- Colours (single place to restyle the book) ----------------------------
+\definecolor{thmcolor}{HTML}{1F4E79}   % theorems, lemmas, propositions, corollaries
+\definecolor{defcolor}{HTML}{2E7D32}   % definitions
+\definecolor{excolor}{HTML}{8A6D3B}    % examples
+\definecolor{remcolor}{HTML}{6B6B6B}   % remarks
+\definecolor{codebg}{HTML}{F6F8FA}
+\definecolor{codeframe}{HTML}{D0D7DE}
+
+% ---- Hyperlinks and cross-references ----------------------------------------------
+\usepackage[colorlinks=true, linkcolor=thmcolor, citecolor=thmcolor, urlcolor=thmcolor]{hyperref}
+\usepackage[capitalise, nameinlink]{cleveref}
+% (Loaded before the theorem definitions so shared counters get the right names.)
+\crefname{example}{Example}{Examples}
+\crefname{remark}{Remark}{Remarks}
+\crefname{definition}{Definition}{Definitions}
+
+% ---- Theorem-like environments ---------------------------------------------
+% One shared counter per chapter (Definition 4.1, Theorem 4.2, Example 4.3, ...)
+% so any numbered item is easy to find by number alone.
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Boxes around the environments (amsthm counters keep cleveref working).
+\usepackage[most]{tcolorbox}
+\tcbset{bookbox/.style={breakable, enhanced, boxrule=0pt, arc=0pt,
+  left=6pt, right=6pt, top=4pt, bottom=4pt, before skip=10pt, after skip=10pt}}
+\tcolorboxenvironment{theorem}{bookbox, colback=thmcolor!5, borderline west={2.5pt}{0pt}{thmcolor}}
+\tcolorboxenvironment{lemma}{bookbox, colback=thmcolor!5, borderline west={2.5pt}{0pt}{thmcolor}}
+\tcolorboxenvironment{proposition}{bookbox, colback=thmcolor!5, borderline west={2.5pt}{0pt}{thmcolor}}
+\tcolorboxenvironment{corollary}{bookbox, colback=thmcolor!5, borderline west={2.5pt}{0pt}{thmcolor}}
+\tcolorboxenvironment{definition}{bookbox, colback=defcolor!5, borderline west={2.5pt}{0pt}{defcolor}}
+\tcolorboxenvironment{example}{bookbox, colback=white, borderline west={1pt}{0pt}{excolor}}
+\tcolorboxenvironment{remark}{bookbox, colback=white, borderline west={1pt}{0pt}{remcolor}}
+
+% Solution to an example (unnumbered, ends with a marker).
+\newenvironment{solution}{\par\textit{Solution.}\ }{\hfill$\blacktriangleleft$\par}
+
+% ---- Code listings ---------------------------------------------------------
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single, rulecolor=\color{codeframe},
+  keywordstyle=\color{thmcolor}\bfseries,
+  commentstyle=\color{remcolor}\itshape,
+  stringstyle=\color{defcolor},
+  showstringspaces=false, breaklines=true,
+  columns=fullflexible, keepspaces=true,
+  xleftmargin=4pt, xrightmargin=4pt, aboveskip=8pt, belowskip=8pt
+}
+\lstnewenvironment{python}[1][]{\lstset{language=Python, #1}}{}
+\lstnewenvironment{rcode}[1][]{\lstset{language=R, #1}}{}
+
+% ---- Chapter header: which courses it draws on and what it builds on --------
+% Usage, directly after \chapter{...}:
+%   \chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces}}
+\newcommand{\chapterinfo}[2]{%
+  \begin{tcolorbox}[bookbox, colback=remcolor!6, borderline west={1pt}{0pt}{remcolor}]
+    \small\textbf{Courses:} #1\par
+    \textbf{Builds on:} #2
+  \end{tcolorbox}}
