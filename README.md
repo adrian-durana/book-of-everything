@@ -13,6 +13,7 @@ To work on a single chapter, uncomment `\includeonly{...}` in `main.tex`.
 - `preamble.tex`: packages, layout and environments.
 - `notation.tex`: all notation macros. This is the single source of truth.
 - `chapters/part-<n>-<name>/<chapter>.tex`: one file per chapter, in one folder per Part.
+- `chapters/frontmatter/`: the preface (pages before Chapter 1).
 - `appendices/`: the notation appendix and other appendices.
 - `figures/data/`: data files for plots (generated in R), read by pgfplots.
 - `tools/`: `chapters.py` (the master chapter list) and `gen.py` (stub generator).
