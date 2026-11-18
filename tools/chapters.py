@@ -104,6 +104,7 @@ PARTS = [
 ]),
 ("Scientific Computing", "scientific-computing", "Python", [
  ("python-programming", "Programming in Python", "MATH2504, COSC2500"),
+ ("r-programming", "Programming in R", "STAT1301"),
  ("software-development", "Software Development Practice: git, Unix and Testing", "MATH2504"),
  ("algorithms-data-structures", "Algorithms and Data Structures", "MATH2504"),
  ("symbolic-computation", "Symbolic Computation", "MATH2504"),

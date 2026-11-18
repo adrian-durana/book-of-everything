@@ -12,6 +12,12 @@
 % ---- Page layout ----------------------------------------------------------
 \usepackage[a4paper, margin=2.5cm, headheight=14pt]{geometry}
 \usepackage{fancyhdr}
+% Space after the chapter title = space between "Chapter N" and the title (20pt).
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@makechapterhead}{\vskip 40\p@}{\vskip 20\p@}{}{}
+\patchcmd{\@makeschapterhead}{\vskip 40\p@}{\vskip 20\p@}{}{}
+\makeatother
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LE]{\small\nouppercase{\leftmark}}
@@ -121,7 +127,7 @@
 % Usage, directly after \chapter{...}:
 %   \chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces}}
 \newcommand{\chapterinfo}[2]{%
-  \begin{tcolorbox}[bookbox, colback=remcolor!6, borderline west={1pt}{0pt}{remcolor}]
+  \begin{tcolorbox}[bookbox, before skip=2pt, colback=remcolor!6, borderline west={1pt}{0pt}{remcolor}]
     \small\textbf{Courses:} #1\par
     \textbf{Builds on:} #2
   \end{tcolorbox}}
