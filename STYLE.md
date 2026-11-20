@@ -1,6 +1,6 @@
-# Style Guide — Book of Everything (draft v0)
+# Style Guide — Book of Everything
 
-This is a living document. It will be revised after the pilot chapter, based on the author's edits.
+This is a living document. The section "Writing and layout preferences" collects the author's review feedback (from Chapter 25 onwards). It applies to every chapter, not only the one that prompted it.
 
 ## Content rule (current phase: course ingestion)
 - **Write only what is in the course materials** (handwritten notes, course notes, slides). Do not add new information: no extra theorems, proofs, examples, remarks, figures or extensions.
@@ -15,9 +15,6 @@ This is a living document. It will be revised after the pilot chapter, based on 
 ## Voice
 - Aim between lecture notes and a textbook: precise, but readable. Write in full sentences, and don't pad.
 - Use "we" in arguments ("we show that…"). Never use "the student" or "the reader will…".
-- This is a personal reference book, so don't write as if the reader is seeing the material for the first time. Keep section introductions short. The exception is the harder third-year courses, where the expanded, first-encounter style of introduction is kept.
-- Open each chapter with one short explanatory paragraph: what the topic is for, its main building blocks, and what the chapter covers. Model it on the Chapter 25 opening.
-- Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
 - Before a hard proof, give one sentence on the idea.
 - Use Australian/British spelling: optimisation, modelling, behaviour, parametrise.
 
@@ -41,17 +38,63 @@ This is a living document. It will be revised after the pilot chapter, based on 
 
 - All items share one counter per chapter (Definition 3.1, Theorem 3.2, …).
 - Give every result a short descriptive name in brackets where one exists, e.g. `[Continuity of probability]`. Don't attach names to individual list items (no "(complement rule)").
-- Theorem bodies are upright (preamble style). Italics only for a term being defined or mentioned, and for maths.
-- Figures use `[H]` and sit in the source directly after the box or paragraph that first mentions them.
-- A proof of an enumerated list of statements is itself a list: "Proof." on its own line, then `\item[1.]`, `\item[2.]`, …, with `\qedhere` at the end of the last item.
-- `solution` ends with ◀.
+
+## Writing and layout preferences (author's review feedback)
+These came from the author's review of Chapter 25. Apply them to every chapter, including new ones and those drafted by course chats.
+
+### Tone and length
+- This is a personal reference book. Don't write as if the reader is seeing the material for the first time. The exception is the harder third-year courses, where the expanded, first-encounter style is kept.
+- Open each chapter with one short explanatory paragraph: what the topic is for, its main building blocks, and what the chapter covers. Model it on the Chapter 25 opening ("The purpose of this chapter is to introduce…").
+- Keep section and subsection introductions short. Set a model up once, then let the examples be brief (see Ch 25, "Coin-tossing models").
+- Keep the source's wording where it reads well. Paraphrase only to shorten or clarify.
+- Cut filler sentences:
+  - announcements such as "Because this principle is so important, we formulate it as a theorem";
+  - restatements of the obvious, such as "Axiom 2 just states that the probability of the certain event is 1";
+  - commentary on a figure that only repeats what the figure shows, such as "In this diagram, A ∩ C = ∅, so A and C are disjoint".
+- Cut qualifiers that add nothing, such as "(in days)" or "(and will)".
+- Prefer precise words: "almost surely" rather than "certainly" where that is the meaning, and "a set of possible outcomes" where the set isn't unique.
+- Numbers in prose: write "0.5" rather than "½" for values such as limits and probabilities.
+- Keep a source's lists of examples when they show different kinds of case (for example discrete and continuous random experiments). Trim the surrounding commentary instead.
+- Question lists in examples: at most two questions per kind (for example two probability questions and two statistics questions).
+- Reactions to a result should be brief and accurate: "This is surprisingly small!", not "so not very big!".
+
+### Naming and referring
+- Name a result by what it is, not by its number: "The inclusion–exclusion principle extends to n events", not "Property 5 extends…".
+- Don't attach names to individual list items (no "(complement rule)" after an item).
+- Refer to an axiom or property by its name ("Axiom 3") rather than an equation number. Number an equation only if it is cited again.
+- Write "the Kolmogorov axioms", not "the axioms (Kolmogorov, 1933)". Leave out dates and citations of historical origin.
+- Don't read symbols out in words ("$A \cup B$ ($A$ union $B$)") outside the chapter that introduces them; set operations belong to the Foundations chapter on sets.
+- Say "probability measure" for $\Prob$ (not "probability law" or "probability rule").
 - Coins: "heads" and "tails" in lower case.
-- Lists (`itemize`, `enumerate`) of short points have no punctuation between or after items. Lists of full sentences keep their full stops.
-- In a definition, italicise only the term named in the title (e.g. *event*, not *occurs*). Don't read symbols out in words ("$A \cup B$ ($A$ union $B$)") outside the chapter that introduces them.
-- Long equations broken over lines use `align*`: the continuation starts with `&\qquad +`, a little right of the `=`, not right-aligned like `multline`.
-- Avoid paragraphs whose last line holds only a word or two: reword slightly. If a line inside a box has stretched word spacing (usually from long inline maths), put `\raggedright` at the start of that paragraph rather than leave the gaps.
+
+### Italics
+- Theorem bodies are upright (set in the preamble).
+- Italicise only the term a definition names (in a definition box, the term in the title: *event*, not *occurs*), terms defined in running text, and maths. No italics for emphasis.
+
+### Lists
+- Short-point lists (`itemize`, `enumerate`) have no punctuation between or after items. Lists of full sentences keep their full stops.
+- A proof of an enumerated list of statements is itself a list: "Proof." on its own line, then `\item[1.]`, `\item[2.]`, …, with `\qedhere` at the end of the last item.
+
+### Equations and spacing
+- Long equations broken over lines use `align*`. The continuation line starts with `&\qquad +`, a little right of the `=`, not right-aligned as in `multline`.
 - Inline fractions of probabilities get light spacing: `\Prob(A \cap B) \mkern2mu / \mkern2mu \Prob(B)`.
+- Avoid paragraphs whose last line holds only a word or two: reword slightly. Check the built PDF for these before handing a chapter over.
+- If a line inside a box has stretched word spacing (usually from long inline maths), put `\raggedright` at the start of that paragraph. Normal word spacing with a gap at the right edge is preferred to stretched spacing.
+
+### Figures
+- Place each figure with `[H]` directly after the box or paragraph that first mentions it.
+- A figure must explain its idea on its own: label the elements (outcomes, weights, urns, positions) and say in the caption what to read off it. Redraw any figure from the notes that doesn't do this. Examples: Ch 25 Figs 25.3 and 25.7.
+- Drop figures that only illustrate an analogy already clear in words (e.g. the triangles for the area measure).
+
+### Boxes and headers
+- "Builds on: nothing" in the chapter box (lower case, no full stop).
+- Courses in the chapter box are listed in dependency order (X relies on Y, which relies on Z).
 - Odd-page headers show the section title only, without its number.
+- `solution` ends with ◀.
+
+### Notation
+- Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
+- Elementary probabilities: $p_i = \Prob(\set{a_i})$.
 
 ## Labels and cross-references
 - Use `\cref{...}` only, never "Theorem~\ref{...}".
