@@ -110,6 +110,8 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - Expectation is written $\E(X)$, $\E(X^2)$, $\E(g(X))$, with $\E\bigl((X - \mu)^2\bigr)$ for powers of brackets. $\E[X]$ and $\E X$ are mentioned once, as alternatives, in the definition. Use $\E X$ only where brackets would clutter, e.g. $(\E X)^2$.
 - Alternative symbols for a quantity go in its definition ("written $\Var(X)$ or $\sigma_X^2$"), not in the surrounding text.
 - State facts as formulas where that is clearer: $\sigma_{aX+b} = \abs{a}\,\sigma_X$, not "the standard deviation of $aX + b$ is $\abs{a}$ times …".
+- Every theorem box has a name in brackets, and states its result as a formula where possible ("$-1 \le \Corr(X, Y) \le 1$", not "always lies between −1 and 1").
+- Definitions are phrased "The *term* of … is …" or "… has a *term* if …", not "We define the *term* by …". Avoid "obvious"; say "follows in the same way".
 - Name results plainly: "Markov inequality", "Chebyshev inequality", "Generalised Markov inequality" (not "Markov's inequality, general form"). Give a colloquial name alongside the formal one where it is common, e.g. "Law of the unconscious statistician, LOTUS".
 - Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
 - Elementary probabilities: $p_i = \Prob(\set{a_i})$.
