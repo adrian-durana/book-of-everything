@@ -79,7 +79,7 @@ Despite its simplicity, this is one of the most important distributions in proba
 \begin{theorem}[Properties of the Bernoulli distribution]\label{thm:bernoulli-properties}
 Let $X \sim \Bern(p)$. Then
 \begin{enumerate}
-  \item $\E X = p$
+  \item $\E(X) = p$
   \item $\Var(X) = p(1-p)$
   \item the PGF is $G(z) = 1 - p + zp$
 \end{enumerate}
@@ -87,8 +87,8 @@ Let $X \sim \Bern(p)$. Then
 
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=*]
-  \item[1.] $\E X = 0 \cdot \Prob(X = 0) + 1 \cdot \Prob(X = 1) = 0 \cdot (1-p) + 1 \cdot p = p$.
-  \item[2.] Since $X^2 = X$, $\Var(X) = \E X^2 - (\E X)^2 = \E X - (\E X)^2 = p - p^2 = p(1-p)$.
+  \item[1.] $\E(X) = 0 \cdot \Prob(X = 0) + 1 \cdot \Prob(X = 1) = 0 \cdot (1-p) + 1 \cdot p = p$.
+  \item[2.] Since $X^2 = X$, $\Var(X) = \E(X^2) - (\E(X))^2 = \E(X) - (\E(X))^2 = p - p^2 = p(1-p)$.
   \item[3.] $G(z) = z^0 (1-p) + z^1 p = 1 - p + zp$. \qedhere
 \end{enumerate}
 \end{proof}
@@ -130,7 +130,7 @@ Let $X$ be the number of successes in $n$ independent Bernoulli trials (coin tos
 \begin{theorem}[Properties of the binomial distribution]\label{thm:binomial-properties}
 Let $X \sim \Bin(n, p)$. Then
 \begin{enumerate}
-  \item $\E X = np$
+  \item $\E(X) = np$
   \item $\Var(X) = np(1-p)$
   \item the PGF is $G(z) = (1 - p + zp)^n$
 \end{enumerate}
@@ -139,7 +139,7 @@ Let $X \sim \Bin(n, p)$. Then
 \begin{proof}
 1--2. One could evaluate $\sum_{x=0}^n x \binom{n}{x} p^x (1-p)^{n-x}$ directly, but this is not elegant. Instead, $X$ can be viewed as a sum $X = X_1 + \cdots + X_n$ of $n$ independent $\Bern(p)$ random variables, where $X_i$ indicates whether the $i$th toss is a success. The expectation of a sum is the sum of the expectations, and for independent random variables the variance of a sum is the sum of the variances (\cref{ch:multivariate-distributions}). So
 \begin{align*}
-  \E X &= \E X_1 + \cdots + \E X_n = p + \cdots + p = np, \\
+  \E(X) &= \E(X_1) + \cdots + \E(X_n) = p + \cdots + p = np, \\
   \Var(X) &= \Var(X_1) + \cdots + \Var(X_n) = p(1-p) + \cdots + p(1-p) = np(1-p).
 \end{align*}
 
@@ -189,7 +189,7 @@ A random variable with pmf $f(x) = (1-p)^{x-1} p$, $x = 1, 2, \ldots$, has a \em
 Let $X \sim \Geom(p)$. Then
 \begin{enumerate}
   \item the PGF is $G(z) = \dfrac{zp}{1 - z(1-p)}$
-  \item $\E X = 1/p$
+  \item $\E(X) = 1/p$
   \item $\Var(X) = (1-p)/p^2$
   \item $\Prob(X > k) = (1-p)^k$, so the CDF is $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$
 \end{enumerate}
@@ -201,7 +201,7 @@ Let $X \sim \Geom(p)$. Then
 \[
   G(z) = \sum_{x=1}^\infty z^x p (1-p)^{x-1} = zp \sum_{k=0}^\infty \bigl(z(1-p)\bigr)^k = \frac{zp}{1 - z(1-p)}.
 \]
-  \item[2.] Differentiating, $\E X = G'(1) = 1/p$. This is intuitive: if successes occur with probability $p$, we expect to wait $1/p$ throws for one.
+  \item[2.] Differentiating, $\E(X) = G'(1) = 1/p$. This is intuitive: if successes occur with probability $p$, we expect to wait $1/p$ throws for one.
   \item[3.] Differentiating twice,
 \[
   \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \frac{2(1-p)}{p^2} + \frac1p - \frac{1}{p^2} = \frac{1-p}{p^2}.
@@ -242,7 +242,7 @@ Let $X$ be the number of coin tosses needed until there are $k$ successes. Then 
 \end{definition}
 
 \begin{theorem}\label{thm:negative-binomial-properties}
-If $X \sim \NegBin(k, p)$, then $\E X = k/p$ and $\Var(X) = k(1-p)/p^2$.
+If $X \sim \NegBin(k, p)$, then $\E(X) = k/p$ and $\Var(X) = k(1-p)/p^2$.
 \end{theorem}
 
 \subsection{Poisson distribution}\label{sec:poisson}
@@ -296,7 +296,7 @@ As $n \to \infty$, the second and fourth factors go to 1, and the third goes to 
 Let $X \sim \Pois(\lambda)$. Then
 \begin{enumerate}
   \item the PGF is $G(z) = e^{-\lambda(1-z)}$
-  \item $\E X = \lambda$
+  \item $\E(X) = \lambda$
   \item $\Var(X) = \lambda$
 \end{enumerate}
 So for the Poisson distribution, the expectation and variance are equal.
@@ -305,9 +305,9 @@ So for the Poisson distribution, the expectation and variance are equal.
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=*]
   \item[1.] This is \cref{ex:pgf-poisson}.
-  \item[2.] $\E X = G'(1) = \lambda$. Directly,
+  \item[2.] $\E(X) = G'(1) = \lambda$. Directly,
 \[
-  \E X = \sum_{x=0}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=1}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=0}^\infty (x+1) e^{-\lambda} \frac{\lambda^{x+1}}{(x+1)!} = \lambda \sum_{x=0}^\infty e^{-\lambda} \frac{\lambda^x}{x!} = \lambda.
+  \E(X) = \sum_{x=0}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=1}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=0}^\infty (x+1) e^{-\lambda} \frac{\lambda^{x+1}}{(x+1)!} = \lambda \sum_{x=0}^\infty e^{-\lambda} \frac{\lambda^x}{x!} = \lambda.
 \]
 Intuitively, the mean number of successes in the corresponding coin-flip experiment is $np = n(\lambda/n) = \lambda$.
   \item[3.] The same argument suggests the variance should be $n(\lambda/n)(1 - \lambda/n) \to \lambda$. Indeed,
@@ -342,6 +342,7 @@ Total & $r$ & $N - r$ & $N$ \\
 \begin{example}[Aces]\label{ex:hypergeometric-aces}
 Five cards are selected from a full deck of 52. The number $X$ of Aces has a $\Hyp(n = 5, r = 4, N = 52)$ distribution:
 \begin{center}
+\renewcommand{\arraystretch}{1.9}\setlength{\tabcolsep}{7pt}
 \begin{tabular}{c|cccccc}
 $k$ & 0 & 1 & 2 & 3 & 4 & $\sum$ \\
 \hline
@@ -353,7 +354,7 @@ $\Prob(X = k)$ & 0.659 & 0.299 & 0.040 & 0.002 & 0.000 & 1 \\
 \begin{theorem}[Properties of the hypergeometric distribution]\label{thm:hypergeometric-properties}
 If $X \sim \Hyp(n, r, N)$, then
 \[
-  \E X = n \frac{r}{N}, \qquad \Var(X) = n \frac{r}{N} \Bigl(1 - \frac{r}{N}\Bigr) \frac{N - n}{N - 1}.
+  \E(X) = n \frac{r}{N}, \qquad \Var(X) = n \frac{r}{N} \Bigl(1 - \frac{r}{N}\Bigr) \frac{N - n}{N - 1}.
 \]
 \end{theorem}
 
@@ -393,7 +394,7 @@ $X \sim \Unif[a, b]$ models a point chosen at random from $[a, b]$, each choice 
 \begin{theorem}[Properties of the uniform distribution]\label{thm:uniform-properties}
 Let $X \sim \Unif[a, b]$. Then
 \begin{enumerate}
-  \item $\E X = (a + b)/2$
+  \item $\E(X) = (a + b)/2$
   \item $\Var(X) = (b - a)^2/12$
 \end{enumerate}
 \end{theorem}
@@ -402,7 +403,7 @@ Let $X \sim \Unif[a, b]$. Then
 \begin{enumerate}[leftmargin=*]
   \item[1.] Directly,
 \[
-  \E X = \int_a^b \frac{x}{b - a} \dd x = \frac{1}{b-a} \cdot \frac{b^2 - a^2}{2} = \frac{a + b}{2}.
+  \E(X) = \int_a^b \frac{x}{b - a} \dd x = \frac{1}{b-a} \cdot \frac{b^2 - a^2}{2} = \frac{a + b}{2}.
 \]
 Alternatively, the expectation is finite (it lies between $a$ and $b$) and the pdf is symmetric about $(a+b)/2$, so by \cref{prop:symmetric-expectation} it equals the symmetry point.
   \item[2.] Write $X = a + (b - a)U$, where $U \sim \Unif[0, 1]$: choosing a point at random in $[a, b]$ is the same as choosing a point at random in $[0, 1]$, multiplying by $b - a$ and adding $a$. Indeed, for $x \in [a, b]$,
@@ -411,7 +412,7 @@ Alternatively, the expectation is finite (it lies between $a$ and $b$) and the p
 \]
 By \cref{thm:variance-properties}, $\Var(X) = \Var\bigl(a + (b-a)U\bigr) = (b-a)^2 \Var(U)$. Finally,
 \[
-  \Var(U) = \E U^2 - (\E U)^2 = \int_0^1 u^2 \dd u - \Bigl(\frac12\Bigr)^2 = \frac13 - \frac14 = \frac{1}{12}. \qedhere \qedhere
+  \Var(U) = \E(U^2) - (\E(U))^2 = \int_0^1 u^2 \dd u - \Bigl(\frac12\Bigr)^2 = \frac13 - \frac14 = \frac{1}{12}. \qedhere \qedhere
   \]
 \end{enumerate}
 \end{proof}
@@ -448,7 +449,7 @@ Graphs of the pdf for various values of $\lambda$ are given in \cref{fig:exponen
 Let $X \sim \Expo(\lambda)$. Then
 \begin{enumerate}
   \item the MGF is $M(s) = \dfrac{\lambda}{\lambda - s}$ for $s < \lambda$
-  \item $\E X = 1/\lambda$
+  \item $\E(X) = 1/\lambda$
   \item $\Var(X) = 1/\lambda^2$
   \item the CDF is $F(x) = 1 - e^{-\lambda x}$ for $x \ge 0$
   \item the tail probability decays exponentially: $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$
@@ -461,11 +462,11 @@ Let $X \sim \Expo(\lambda)$. Then
 \[
   M(s) = \int_0^\infty e^{sx} \lambda e^{-\lambda x} \dd x = \lambda \int_0^\infty e^{-(\lambda - s)x} \dd x = \lambda \Bigl[\frac{-e^{-(\lambda - s)x}}{\lambda - s}\Bigr]_{x=0}^\infty = \frac{\lambda}{\lambda - s}.
 \]
-  \item[2.] $\E X = M'(0) = \dfrac{\lambda}{(\lambda - s)^2}\Big|_{s=0} = \dfrac1\lambda$. Alternatively, integrating by parts,
+  \item[2.] $\E(X) = M'(0) = \dfrac{\lambda}{(\lambda - s)^2}\Big|_{s=0} = \dfrac1\lambda$. Alternatively, integrating by parts,
 \[
-  \E X = \int_0^\infty x \lambda e^{-\lambda x} \dd x = \bigl[-x e^{-\lambda x}\bigr]_0^\infty + \int_0^\infty e^{-\lambda x} \dd x = 0 + \Bigl[\frac{-e^{-\lambda x}}{\lambda}\Bigr]_0^\infty = \frac1\lambda.
+  \E(X) = \int_0^\infty x \lambda e^{-\lambda x} \dd x = \bigl[-x e^{-\lambda x}\bigr]_0^\infty + \int_0^\infty e^{-\lambda x} \dd x = 0 + \Bigl[\frac{-e^{-\lambda x}}{\lambda}\Bigr]_0^\infty = \frac1\lambda.
 \]
-  \item[3.] The second moment is $\E X^2 = M''(0) = \dfrac{2\lambda}{(\lambda - s)^3}\Big|_{s=0} = \dfrac{2}{\lambda^2}$, so $\Var(X) = \dfrac{2}{\lambda^2} - \dfrac{1}{\lambda^2} = \dfrac{1}{\lambda^2}$.
+  \item[3.] The second moment is $\E(X^2) = M''(0) = \dfrac{2\lambda}{(\lambda - s)^3}\Big|_{s=0} = \dfrac{2}{\lambda^2}$, so $\Var(X) = \dfrac{2}{\lambda^2} - \dfrac{1}{\lambda^2} = \dfrac{1}{\lambda^2}$.
   \item[4.] $F(x) = \int_0^x \lambda e^{-\lambda u} \dd u = \bigl[-e^{-\lambda u}\bigr]_0^x = 1 - e^{-\lambda x}$.
   \item[5.] $\Prob(X > x) = 1 - F(x) = e^{-\lambda x}$. \qedhere
 \end{enumerate}
@@ -544,27 +545,27 @@ So any normal random variable is an affine (linear plus constant) transformation
 \begin{theorem}[Properties of the normal distribution]\label{thm:normal-properties}
 Let $X \sim \Normal(\mu, \sigma^2)$. Then
 \begin{enumerate}
-  \item $\E X = \mu$
+  \item $\E(X) = \mu$
   \item $\Var(X) = \sigma^2$
-  \item the MGF is $\E e^{sX} = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
+  \item the MGF is $\E(e^{sX}) = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=*]
   \item[1.] The pdf is symmetric about $\mu$ (\cref{prop:symmetric-expectation}).
-  \item[2.] Write $X = \mu + \sigma Z$ with $Z$ standard normal. Then $\Var(X) = \sigma^2 \Var(Z)$, so it suffices to show $\Var(Z) = \E Z^2 = 1$ (the expectation of $Z$ is 0). Integrating by parts,
+  \item[2.] Write $X = \mu + \sigma Z$ with $Z$ standard normal. Then $\Var(X) = \sigma^2 \Var(Z)$, so it suffices to show $\Var(Z) = \E(Z^2) = 1$ (the expectation of $Z$ is 0). Integrating by parts,
 \[
-  \E Z^2 = \int_{-\infty}^\infty z \cdot z \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = \Bigl[z \cdot \frac{-1}{\sqrt{2\pi}} e^{-z^2/2}\Bigr]_{-\infty}^\infty + \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = 0 + 1 = 1,
+  \E(Z^2) = \int_{-\infty}^\infty z \cdot z \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = \Bigl[z \cdot \frac{-1}{\sqrt{2\pi}} e^{-z^2/2}\Bigr]_{-\infty}^\infty + \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = 0 + 1 = 1,
 \]
 since the last integrand is the standard normal pdf.
   \item[3.] First let $Z \sim \Normal(0, 1)$. Completing the square,
 \[
-  \E e^{sZ} = \int_{-\infty}^\infty e^{sz} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = e^{s^2/2} \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-(z - s)^2/2} \dd z = e^{s^2/2},
+  \E(e^{sZ}) = \int_{-\infty}^\infty e^{sz} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = e^{s^2/2} \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-(z - s)^2/2} \dd z = e^{s^2/2},
 \]
 since the last integrand is the $\Normal(s, 1)$ pdf. For general $X = \mu + \sigma Z$,
 \[
-  \E e^{sX} = \E e^{s(\mu + \sigma Z)} = e^{s\mu} \E e^{s\sigma Z} = e^{s\mu} e^{\sigma^2 s^2/2}. \qedhere \qedhere
+  \E(e^{sX}) = \E(e^{s(\mu + \sigma Z)}) = e^{s\mu} \E(e^{s\sigma Z}) = e^{s\mu} e^{\sigma^2 s^2/2}. \qedhere \qedhere
   \]
 \end{enumerate}
 \end{proof}
@@ -666,7 +667,7 @@ has a \emph{gamma distribution}, written $X \sim \GammaDist(\alpha, \lambda)$. T
 Let $X \sim \GammaDist(\alpha, \lambda)$. Then
 \begin{enumerate}
   \item the MGF is $M(s) = \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^\alpha$ for $s < \lambda$
-  \item $\E X = \alpha/\lambda$
+  \item $\E(X) = \alpha/\lambda$
   \item $\Var(X) = \alpha/\lambda^2$
 \end{enumerate}
 \end{theorem}
@@ -678,9 +679,9 @@ Let $X \sim \GammaDist(\alpha, \lambda)$. Then
   M(s) = \int_0^\infty e^{sx} \frac{e^{-\lambda x} \lambda^\alpha x^{\alpha - 1}}{\Gamma(\alpha)} \dd x = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^\alpha \int_0^\infty \frac{e^{-(\lambda - s)x} (\lambda - s)^\alpha x^{\alpha - 1}}{\Gamma(\alpha)} \dd x = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^\alpha,
 \]
 since the last integrand is the $\GammaDist(\alpha, \lambda - s)$ pdf.
-  \item[2.] $\E X = M'(0) = \dfrac{\alpha}{\lambda} \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^{\alpha + 1}\Big|_{s=0} = \dfrac{\alpha}{\lambda}$. Alternatively, using the $\GammaDist(\alpha + 1, \lambda)$ pdf and $\Gamma(\alpha+1) = \alpha\Gamma(\alpha)$,
+  \item[2.] $\E(X) = M'(0) = \dfrac{\alpha}{\lambda} \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^{\alpha + 1}\Big|_{s=0} = \dfrac{\alpha}{\lambda}$. Alternatively, using the $\GammaDist(\alpha + 1, \lambda)$ pdf and $\Gamma(\alpha+1) = \alpha\Gamma(\alpha)$,
 \[
-  \E X = \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha + 1)}{\lambda^{\alpha + 1}} \int_0^\infty \frac{\lambda^{\alpha + 1} x^\alpha e^{-\lambda x}}{\Gamma(\alpha + 1)} \dd x = \frac{1}{\lambda} \frac{\Gamma(\alpha + 1)}{\Gamma(\alpha)} = \frac{\alpha}{\lambda}.
+  \E(X) = \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha + 1)}{\lambda^{\alpha + 1}} \int_0^\infty \frac{\lambda^{\alpha + 1} x^\alpha e^{-\lambda x}}{\Gamma(\alpha + 1)} \dd x = \frac{1}{\lambda} \frac{\Gamma(\alpha + 1)}{\Gamma(\alpha)} = \frac{\alpha}{\lambda}.
 \]
   \item[3.] Similarly, by differentiating the MGF twice. \qedhere
 \end{enumerate}
