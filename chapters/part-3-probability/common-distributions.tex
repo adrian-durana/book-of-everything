@@ -5,7 +5,7 @@
 % Sources: STAT2003 handwritten notes (pp. 14-25); STAT2003 course notes, Sections 2.5-2.6;
 % STAT1301 course notes (2026), Sections 2.1-2.5 and Table 2.1.
 
-This chapter lists the most important discrete and continuous distributions, with their main properties. The pmf or pdf of each depends on one or more \emph{parameters}, fixed values that determine the shape of the distribution, so each is really a \emph{family} of distributions. Although statistics uses a relatively small collection of families, choosing the parameters gives an infinite number of distributions.
+This chapter lists the most important discrete and continuous distributions (\cref{def:distribution}) and their main properties. The pmf or pdf of each depends on one or more \emph{parameters}, fixed values that determine the shape of the distribution, so each is really a \emph{family} of distributions. Although statistics uses a relatively small collection of families, choosing the parameters gives an infinite number of distributions.
 
 % ==========================================================================
 \section{Bernoulli trials}\label{sec:bernoulli-trials}
@@ -17,16 +17,16 @@ A \emph{Bernoulli trial} is a random experiment with only two possible outcomes,
 Random variables (or trials) are \emph{i.i.d.} if they are \emph{independent and identically distributed}.
 \end{definition}
 
-Most of the important discrete distributions are associated with a sequence of i.i.d.\ Bernoulli trials. They are all induced by the same probability space: $\Omega$ is the set of sequences of coin flips, such as $HHH\ldots$ or $HTH\ldots$, and if $A_i$ is the event that flip $i$ is a success (1), then $\Prob(A_i) = p$ and
+Most important discrete distributions are associated with a sequence of i.i.d.\ Bernoulli trials. They are all induced by the same probability space: $\Omega$ is the set of sequences of coin flips, such as $HHH\ldots$ or $HTH\ldots$, and if $A_i$ is the event that flip $i$ is a success (1), then $\Prob(A_i) = p$ and
 \[
   \Prob(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = \Prob(A_{i_1}) \cdots \Prob(A_{i_k})
 \]
 for any distinct indices $i_1, \ldots, i_k$ (\cref{sec:coin-tossing-models}). The distributions differ in what they count:
 \begin{itemize}
   \item Bernoulli: the outcome of a single trial (values 0 and 1)
-  \item binomial: the number of successes in $n$ trials (values $0, 1, \ldots, n$)
-  \item geometric: the number of trials until the first success (values $1, 2, \ldots$)
-  \item negative binomial: the number of trials until the $k$th success (values $k, k+1, \ldots$)
+  \item Binomial: the number of successes in $n$ trials (values $0, 1, \ldots, n$)
+  \item Geometric: the number of trials until the first success (values $1, 2, \ldots$)
+  \item Negative binomial: the number of trials until the $k$th success (values $k, k+1, \ldots$)
 \end{itemize}
 
 \begin{figure}[H]
@@ -219,7 +219,7 @@ For $X \sim \Geom(p)$,
 
 The geometric distribution has the \emph{memoryless property}. Suppose we have tossed the coin $x$ times without a success. What is the probability that we need more than $y$ additional tosses? Obviously it is the same as the probability of needing more than $y$ tosses starting from scratch, $\Prob(X > y) = (1-p)^y$, whatever $x$ is. The coin has no memory of what happened.
 
-\begin{theorem}[Memoryless property of the geometric distribution]\label{thm:geometric-memoryless}
+\begin{theorem}[Memoryless property]\label{thm:geometric-memoryless}
 Let $X \sim \Geom(p)$. For all $x, y = 1, 2, \ldots$,
 \[
   \Prob(X > x + y \given X > x) = \Prob(X > y).
@@ -298,7 +298,10 @@ Let $X_n$ be the number of successes in $n$ coin tosses with success probability
   \Prob(X_n = x) &= \binom{n}{x} \Bigl(\frac{\lambda}{n}\Bigr)^x \Bigl(1 - \frac{\lambda}{n}\Bigr)^{n-x} \\
   &= \frac{\lambda^x}{x!} \cdot \frac{n(n-1)\cdots(n-x+1)}{n \cdot n \cdots n} \cdot \Bigl(1 - \frac{\lambda}{n}\Bigr)^n \cdot \Bigl(1 - \frac{\lambda}{n}\Bigr)^{-x}.
 \end{align*}
-As $n \to \infty$, the second and fourth factors go to 1, and the third goes to $e^{-\lambda}$ (one of the defining properties of the exponential function). Hence $\lim_{n\to\infty} \Prob(X_n = x) = \frac{\lambda^x}{x!} e^{-\lambda}$.
+As $n \to \infty$, the second and fourth factors go to 1, and the third goes to $e^{-\lambda}$ (one of the defining properties of the exponential function), and so
+\[
+  \lim_{n \to \infty} \Prob(X_n = x) = \frac{\lambda^x}{x!} e^{-\lambda}. \qedhere
+\]
 \end{proof}
 
 \begin{theorem}[Properties of the Poisson distribution]\label{thm:poisson-properties}
@@ -480,9 +483,9 @@ For $X \sim \Expo(\lambda)$,
 \end{enumerate}
 \end{proof}
 
-The most important property of the exponential distribution is the following.
+The most important property of the exponential distribution is the memoryless property, which we met for the geometric distribution (\cref{thm:geometric-memoryless}).
 
-\begin{theorem}[Memoryless property of the exponential distribution]\label{thm:exponential-memoryless}
+\begin{theorem}[Memoryless property]\label{thm:exponential-memoryless}
 Let $X \sim \Expo(\lambda)$. For all $x, y \ge 0$,
 \[
   \Prob(X > x + y \given X > x) = \Prob(X > y).

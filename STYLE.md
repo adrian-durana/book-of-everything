@@ -112,6 +112,10 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - State facts as formulas where that is clearer: $\sigma_{aX+b} = \abs{a}\,\sigma_X$, not "the standard deviation of $aX + b$ is $\abs{a}$ times …".
 - Every theorem box has a name in brackets, and states its result as a formula where possible ("$-1 \le \Corr(X, Y) \le 1$", not "always lies between −1 and 1").
 - Definitions are phrased "The *term* of … is …" or "… has a *term* if …", not "We define the *term* by …". Avoid "obvious"; say "follows in the same way".
+- Keep theorem names short when the section makes the context clear ("Memoryless property", not "Memoryless property of the exponential distribution"). When a result reappears for another object, say where it was met before.
+- A proof that ends in a formula gives it in a display: "…, and so [display]", not "Hence $\lim … = …$" inline.
+- In a list of labelled items ("Binomial: the number of …"), capitalise the first word of each item.
+- Link a term to its definition in an earlier chapter the first time a chapter relies on it (e.g. "distributions (Definition 26.4)").
 - Name results plainly: "Markov inequality", "Chebyshev inequality", "Generalised Markov inequality" (not "Markov's inequality, general form"). Give a colloquial name alongside the formal one where it is common, e.g. "Law of the unconscious statistician, LOTUS".
 - Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
 - Elementary probabilities: $p_i = \Prob(\set{a_i})$.
