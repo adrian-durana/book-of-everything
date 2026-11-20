@@ -2,48 +2,50 @@
 
 \chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces,ch:random-variables,ch:expectation-moments,ch:generating-functions,ch:common-distributions}.}
 
-% Sources: STAT2003 handwritten notes (pp. 32-35, 36-39, 40, 46-47); STAT2003 course notes,
-% Sections 4.1-4.2; STAT1301 course notes (2026), Sections 3.1-3.4.
+% Sources: STAT2003 handwritten notes (pp. 32-39, 40, 46-47) [style reference];
+% STAT2003 course notes, Sections 4.1-4.2; STAT1301 course notes (2026), Sections 3.1-3.4.
 
-In practice, most random experiments involve several random variables. For example:
-\begin{enumerate}
-  \item select $n = 10$ people at random and observe their heights $X_1, \ldots, X_n$;
-  \item toss a coin repeatedly, with $X_i = 1$ if the $i$th toss is Heads and $X_i = 0$ otherwise, giving a sequence $X_1, X_2, \ldots$ of Bernoulli random variables;
-  \item select a person at random from a large population and measure their mass $X$ and height $Y$;
-  \item simulate 10\,000 realisations $X_1, \ldots, X_{10\,000}$ from the standard normal distribution.
-\end{enumerate}
-To describe such experiments, it is not enough to specify the distribution of each random variable: we must also say something about how they interact. In the third experiment, if the height $Y$ is large, the mass $X$ is most likely large as well. In the first two, it is reasonable to assume that the random variables are independent, in the sense that information about one gives no information about the others. What we need to specify is the \emph{joint distribution}. The theory follows the same path as for a single random variable.
+In practice, most random experiments involve several random variables, not just one. For example, if we select a person at random from a large population and measure their mass $X$ and height $Y$, it is not enough to know the distribution of $X$ and the distribution of $Y$: we also need to know how they interact. If the height is large, the mass is most likely large as well. What we need to specify is the \emph{joint distribution} of the random variables. The theory for multiple random variables follows the same path as for a single random variable.
 
 % ==========================================================================
 \section{Joint distributions}\label{sec:joint-distributions}
 % ==========================================================================
 
-Let $X_1, \ldots, X_n$ be random variables describing a random experiment. They can be collected into a \emph{random vector} $\vect{X} = (X_1, \ldots, X_n)\T$, a function $\vect{X} \colon \Omega \to \R^n$.
+We extend the concept of a random variable to multiple variables.
+
+\begin{definition}[Random vector]\label{def:random-vector}
+A \emph{random vector} (or multiple random variable) is a function $\vect{X} = (X_1, \ldots, X_n)\T \colon \Omega \to \R^n$, where $n$ is the number of variables.
+\end{definition}
 
 \begin{definition}[Joint CDF]\label{def:joint-cdf}
-The \emph{joint cumulative distribution function} of $X_1, \ldots, X_n$ is
+We define the \emph{joint cumulative distribution function} of $\vect{X} = (X_1, \ldots, X_n)\T$ by
 \[
-  F(x_1, \ldots, x_n) = \Prob(\set{X_1 \le x_1} \cap \cdots \cap \set{X_n \le x_n}) = \Prob(X_1 \le x_1, \ldots, X_n \le x_n).
+  F_{\vect{X}}(\vect{x}) = \Prob(X_1 \le x_1, X_2 \le x_2, \ldots, X_n \le x_n).
 \]
 \end{definition}
 
-The right-hand side shows the abbreviation, used from now on, of commas for intersections. If we know $F$, we can in principle derive any probability involving the $X_i$. As in the one-dimensional case, we distinguish discrete and continuous joint distributions.
+Here the commas abbreviate intersections: $\Prob(X_1 \le x_1, \ldots, X_n \le x_n) = \Prob(\set{X_1 \le x_1} \cap \cdots \cap \set{X_n \le x_n})$. If we know $F$, we can in principle derive any probability involving the $X_i$. As in the one-dimensional case, we distinguish between discrete and continuous joint distributions.
 
 \subsection{Discrete joint distributions}\label{sec:discrete-joint}
 
 \begin{definition}[Joint pmf]\label{def:joint-pmf}
-The \emph{joint probability mass function} of discrete random variables $X_1, \ldots, X_n$ is
+We define the \emph{joint probability mass function} of discrete random variables $X_1, \ldots, X_n$ by
 \[
   f(x_1, \ldots, x_n) = \Prob(X_1 = x_1, \ldots, X_n = x_n).
 \]
-We write $f_{X_1, \ldots, X_n}$, or $f_{\vect{X}}$ for the random vector $\vect{X}$, when the random variables need naming.
+We write $f_{X_1 X_2 \cdots X_n}$ or, given the vector $\vect{X} = (X_1, \ldots, X_n)\T$, $f_{\vect{X}}$.
 \end{definition}
 
-For two random variables $X$ and $Y$,
+With two random variables $X$ and $Y$,
+\begin{align*}
+  f_{X,Y}(x, y) = \Prob(X = x, Y = y)
+  &= \Prob\bigl(\set{\omega \in \Omega : (X(\omega), Y(\omega)) = (x, y)}\bigr) \\
+  &= \Prob\bigl(\set{\omega \in \Omega : X(\omega) = x} \cap \set{\omega \in \Omega : Y(\omega) = y}\bigr),
+\end{align*}
+and
 \[
-  f_{X,Y}(x, y) = \Prob(X = x, Y = y) = \Prob\bigl(\set{\omega : X(\omega) = x} \cap \set{\omega : Y(\omega) = y}\bigr),
+  \sum_x \sum_y f_{X,Y}(x, y) = 1.
 \]
-and $\sum_x \sum_y f_{X,Y}(x, y) = 1$.
 By the sum rule, the joint pmf gives every probability involving the random variables. In two dimensions,
 \begin{equation}\label{eq:joint-pmf-sum-rule}
   \Prob\bigl((X, Y) \in B\bigr) = \sum_{(x,y) \in B} \Prob(X = x, Y = y)
@@ -51,16 +53,18 @@ By the sum rule, the joint pmf gives every probability involving the random vari
 for any set $B$ of possible values of $(X, Y)$.
 
 \begin{definition}[Marginal distribution]\label{def:marginal}
-The distributions of the individual random variables $X_1, \ldots, X_n$ are their \emph{marginal} distributions. The marginal pmf of $X$ is found by summing the joint pmf over all values of the other variables:
+We define the \emph{marginal distributions} of a joint pmf by the distributions of each of the random variables $X_1, \ldots, X_n$. In two dimensions, the marginal pmf of $X$ is
 \[
   f_X(x) = \Prob(X = x) = \sum_y \Prob(X = x, Y = y) = \sum_y f_{X,Y}(x, y).
 \]
 \end{definition}
 
-The converse is not true: from the marginal distributions we cannot in general reconstruct the joint distribution, because we are missing the information on the dependence between the variables. The exception is when the random variables are independent (\cref{sec:independent-rvs}).
+\begin{remark}
+The converse is not true: given the marginal distributions of random variables, we cannot generally reconstruct the joint pmf. This is because we lack information on the dependence of the variables. The converse only holds if the random variables are independent (\cref{sec:independent-rvs}).
+\end{remark}
 
 \begin{example}[A joint pmf]\label{ex:joint-pmf-table}
-Let $X$ take the values $1, 2, 3$ and $Y$ the values $1, 2$, with joint pmf
+An example of a joint pmf of $X \in \set{1, 2, 3}$ and $Y \in \set{1, 2}$ is given in the table below, and drawn in \cref{fig:joint-pmf-stems}. The marginal distributions are the column and row totals:
 \begin{center}
 \begin{tabular}{@{}c|ccc|c@{}}
  & $x = 1$ & $x = 2$ & $x = 3$ & $f_Y(y)$ \\
@@ -71,40 +75,44 @@ $y = 2$ & 0.2 & 0.1 & 0.1 & 0.4 \\
 $f_X(x)$ & 0.3 & 0.4 & 0.3 & 1 \\
 \end{tabular}
 \end{center}
-The marginal pmfs are the row and column totals: $f_X = (0.3, 0.4, 0.3)$ on $\set{1,2,3}$ and $f_Y = (0.6, 0.4)$ on $\set{1, 2}$.
+That is, $f_X = (0.3, 0.4, 0.3)$ on $\set{1, 2, 3}$ and $f_Y = (0.6, 0.4)$ on $\set{1, 2}$.
 \end{example}
 
-\begin{example}[Box with different dice]\label{ex:box-different-dice}
-A box contains three dice. Die 1 is an ordinary die; die 2 has no 6 face, but two 5 faces; die 3 has no 5 face, but two 6 faces. A die is selected at random and tossed. Let $X$ be the number of the selected die and $Y$ its face value. The joint pmf, in units of $\tfrac{1}{18}$, is
-\begin{center}
-\begin{tabular}{@{}c|cccccc|c@{}}
- & $y = 1$ & 2 & 3 & 4 & 5 & 6 & $\sum$ \\
-\hline
-$x = 1$ & 1 & 1 & 1 & 1 & 1 & 1 & 6 \\
-$x = 2$ & 1 & 1 & 1 & 1 & 2 & 0 & 6 \\
-$x = 3$ & 1 & 1 & 1 & 1 & 0 & 2 & 6 \\
-\hline
-$\sum$ & 3 & 3 & 3 & 3 & 3 & 3 & 18 \\
-\end{tabular}
-\end{center}
-So $X$ is uniform on $\set{1, 2, 3}$ and $Y$ is uniform on $\set{1, \ldots, 6}$. It is more convenient to specify the joint probabilities $\Prob(X = x, Y = y)$ than the joint CDF, which follows from them by the sum rule. For example,
-\[
-  \Prob(X \le 2, Y \le 3) = \Prob(X = 1, Y = 1) + \cdots + \Prob(X = 2, Y = 3) = \tfrac{6}{18} = \tfrac13.
-\]
-We cannot reconstruct the inside of this table from the row and column totals alone.
-\end{example}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[view={-35}{25}, width=0.55\textwidth, height=5.5cm, xmin=0.5, xmax=3.5, ymin=0.5, ymax=2.5, zmin=0, zmax=0.35,
+  xtick={1,2,3}, ytick={1,2}, ztick={0,0.1,0.2,0.3}, xlabel={$x$}, ylabel={$y$}, zlabel={$f(x,y)$},
+  tick label style={font=\small}, label style={font=\small}, grid=major]
+  \addplot3[thick, color=thmcolor] coordinates {(1,1,0) (1,1,0.1)};
+  \addplot3[only marks, mark=*, mark size=1.5pt, color=thmcolor] coordinates {(1,1,0.1)};
+  \addplot3[thick, color=thmcolor] coordinates {(2,1,0) (2,1,0.3)};
+  \addplot3[only marks, mark=*, mark size=1.5pt, color=thmcolor] coordinates {(2,1,0.3)};
+  \addplot3[thick, color=thmcolor] coordinates {(3,1,0) (3,1,0.2)};
+  \addplot3[only marks, mark=*, mark size=1.5pt, color=thmcolor] coordinates {(3,1,0.2)};
+  \addplot3[thick, color=thmcolor] coordinates {(1,2,0) (1,2,0.2)};
+  \addplot3[only marks, mark=*, mark size=1.5pt, color=thmcolor] coordinates {(1,2,0.2)};
+  \addplot3[thick, color=thmcolor] coordinates {(2,2,0) (2,2,0.1)};
+  \addplot3[only marks, mark=*, mark size=1.5pt, color=thmcolor] coordinates {(2,2,0.1)};
+  \addplot3[thick, color=thmcolor] coordinates {(3,2,0) (3,2,0.1)};
+  \addplot3[only marks, mark=*, mark size=1.5pt, color=thmcolor] coordinates {(3,2,0.1)};
+\end{axis}
+\end{tikzpicture}
+\caption{The joint pmf of \cref{ex:joint-pmf-table}. The height of each stem is $\Prob(X = x, Y = y)$.}
+\label{fig:joint-pmf-stems}
+\end{figure}
 
 \subsection{Continuous joint distributions}\label{sec:continuous-joint}
 
 \begin{definition}[Joint pdf]\label{def:joint-pdf}
-Continuous random variables $X_1, \ldots, X_n$ have \emph{joint probability density function} $f$ if
+The continuous random variables $X_1, \ldots, X_n$ have a \emph{joint probability density function} $f$ if
 \[
   \Prob(a_1 \le X_1 \le b_1, \ldots, a_n \le X_n \le b_n) = \int_{a_1}^{b_1} \cdots \int_{a_n}^{b_n} f(x_1, \ldots, x_n) \dd x_n \cdots \dd x_1
 \]
-for all $a_1, \ldots, a_n, b_1, \ldots, b_n$. The total integral of $f$ over $\R^n$ is 1. We write $f_{X_1, \ldots, X_n}$ or $f_{\vect{X}}$ when needed.
+for all $a_1, \ldots, a_n, b_1, \ldots, b_n$. We write $f_{X_1, \ldots, X_n}$ or $f_{\vect{X}}$ when needed.
 \end{definition}
 
-The joint pdf is a continuous analogue of the joint pmf: $f(x_1, \ldots, x_n)$ is the ``density'' that $X_1 = x_1, \ldots, X_n = x_n$. In two dimensions, for small $h$,
+Extending the pdf into multiple variables (dimensions), the total integral is equal to 1. The joint pdf is the continuous analogue of the joint pmf: $f(x_1, \ldots, x_n)$ is the ``density'' that $X_1 = x_1, \ldots, X_n = x_n$. In two dimensions, for small $h$,
 \[
   \Prob(x \le X \le x + h, \, y \le Y \le y + h) = \int_x^{x+h} \int_y^{y+h} f(u, v) \dd v \dd u \approx h^2 f(x, y).
 \]
@@ -112,11 +120,32 @@ Given the joint pdf, every probability can be calculated by integration. In two 
 \begin{equation}\label{eq:joint-pdf-integral-rule}
   \Prob\bigl((X, Y) \in B\bigr) = \iint_{B} f(x, y) \dd x \dd y
 \end{equation}
-for any subset $B$ of $\R^2$. Instead of the area under a curve, we now evaluate a volume under a surface. As in the discrete case, the marginal pdf of each $X_i$ is found by integrating $f$ over all the other variables; in two dimensions,
+for any subset $B$ of $\R^2$. Instead of the area under a curve, we now evaluate a volume under a surface (\cref{fig:joint-pdf-volume}). As in the discrete case, the marginal pdf of each $X_i$ is found by integrating $f$ over all the other variables; in two dimensions,
 \[
   f_X(x) = \int_{-\infty}^\infty f(x, y) \dd y.
 \]
-Again, we usually cannot reconstruct the joint pdf from the marginal pdfs unless the random variables are independent.
+Again, we usually cannot reconstruct the joint pdf from the marginal pdfs, unless the random variables are independent.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.2cm}, view={-30}{30}, width=0.5\textwidth, height=5cm,
+  xmin=-3, xmax=3, ymin=-3, ymax=3, zmin=0, zmax=0.17, xtick={-2,0,2}, ytick={-2,0,2}, ztick=\empty,
+  xlabel={$x$}, ylabel={$y$}, tick label style={font=\small}, label style={font=\small}]
+  \nextgroupplot[zlabel={$f(x,y)$}]
+  \addplot3[surf, shader=faceted interp, colormap/blackwhite, faceted color=thmcolor!60, opacity=0.8, domain=-3:3, y domain=-3:3, samples=25]
+    {exp(-(x^2+y^2)/2)/(2*pi)};
+  \nextgroupplot
+  \addplot3[mesh, color=remcolor!50, domain=-3:3, y domain=-3:3, samples=19] {exp(-(x^2+y^2)/2)/(2*pi)};
+  \addplot3[surf, shader=flat, color=thmcolor, fill=thmcolor!35, opacity=0.9, domain=0:1.5, y domain=-1:0.5, samples=8]
+    {exp(-(x^2+y^2)/2)/(2*pi)};
+  \addplot3[thick, color=thmcolor, fill=thmcolor!20] coordinates {(0,-1,0) (1.5,-1,0) (1.5,0.5,0) (0,0.5,0) (0,-1,0)};
+  \node[font=\small] at (axis cs:2.4,-1.8,0) {$B$};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Left: a two-dimensional joint pdf of random variables $X$ and $Y$. Right: $\Prob((X, Y) \in B)$ is the volume under the pdf over the region $B$.}
+\label{fig:joint-pdf-volume}
+\end{figure}
 
 % ==========================================================================
 \section{Independent random variables}\label{sec:independent-rvs}
@@ -125,90 +154,64 @@ Again, we usually cannot reconstruct the joint pdf from the marginal pdfs unless
 Random variables are independent if information about one of them does not affect our knowledge of the others.
 
 \begin{definition}[Independent random variables]\label{def:independent-rvs}
-Random variables $X_1, \ldots, X_n$ are \emph{independent} if, for all $A_1, \ldots, A_n \subseteq \R$,
+The random variables $X_1, \ldots, X_n$ are \emph{independent} if, for all $A_i \subseteq \R$, $i = 1, \ldots, n$,
 \[
   \Prob(X_1 \in A_1, \ldots, X_n \in A_n) = \Prob(X_1 \in A_1) \cdots \Prob(X_n \in A_n).
 \]
-That is, the events $\set{X_1 \in A_1}, \ldots, \set{X_n \in A_n}$ are independent for any choice of the sets $A_i$. An infinite sequence $X_1, X_2, \ldots$ is independent if, for any finite choice of distinct indices $i_1, \ldots, i_n$, the random variables $X_{i_1}, \ldots, X_{i_n}$ are independent.
+An infinite sequence $X_1, X_2, \ldots$ is independent if, for any finite choice of distinct indices $i_1, \ldots, i_n$, the random variables $X_{i_1}, \ldots, X_{i_n}$ are independent.
 \end{definition}
 
 \begin{theorem}[Independent discrete random variables]\label{thm:independent-discrete}
-Discrete random variables $X_1, \ldots, X_n$ are independent if and only if
+The discrete random variables $X_1, \ldots, X_n$ are independent if and only if
 \begin{equation}\label{eq:independence-pmf}
   \Prob(X_1 = x_1, \ldots, X_n = x_n) = \Prob(X_1 = x_1) \cdots \Prob(X_n = x_n)
 \end{equation}
-for all $x_1, \ldots, x_n$. That is, $f_{X_1, \ldots, X_n}(x_1, \ldots, x_n) = f_{X_1}(x_1) \cdots f_{X_n}(x_n)$.
+for all $x_1, \ldots, x_n$; that is, $f_{X_1, \ldots, X_n}(x_1, \ldots, x_n) = f_{X_1}(x_1) \cdots f_{X_n}(x_n)$.
 \end{theorem}
 
 \begin{proof}
-If $X_1, \ldots, X_n$ are independent, then the events $\set{X_1 = x_1}, \ldots, \set{X_n = x_n}$ are independent, which gives \eqref{eq:independence-pmf}. Conversely, write
+If $X_1, \ldots, X_n$ are independent, then the events $\set{X_1 = x_1}, \ldots, \set{X_n = x_n}$ are independent, which gives \eqref{eq:independence-pmf}. Conversely,
 \[
-  \Prob(X_1 \in A_1, \ldots, X_n \in A_n) = \sum_{x_1 \in A_1} \cdots \sum_{x_n \in A_n} \Prob(X_1 = x_1, \ldots, X_n = x_n).
+  \Prob(X_1 \in A_1, \ldots, X_n \in A_n) = \sum_{x_1 \in A_1} \cdots \sum_{x_n \in A_n} \Prob(X_1 = x_1, \ldots, X_n = x_n),
 \]
-If \eqref{eq:independence-pmf} holds, the multiple sum factorises as
+and if \eqref{eq:independence-pmf} holds, the multiple sum factorises as
 \[
   \sum_{x_1 \in A_1} \Prob(X_1 = x_1) \cdots \sum_{x_n \in A_n} \Prob(X_n = x_n) = \Prob(X_1 \in A_1) \cdots \Prob(X_n \in A_n). \qedhere
 \]
 \end{proof}
 
 \begin{theorem}[Independent continuous random variables]\label{thm:independent-continuous}
-Let $X_1, \ldots, X_n$ be continuous random variables with joint pdf $f$ and marginal pdfs $f_{X_1}, \ldots, f_{X_n}$. Then $X_1, \ldots, X_n$ are independent if and only if
+The continuous random variables $X_1, \ldots, X_n$, with joint pdf $f$ and marginal pdfs $f_{X_1}, \ldots, f_{X_n}$, are independent if and only if
 \[
   f(x_1, \ldots, x_n) = f_{X_1}(x_1) \cdots f_{X_n}(x_n) \qquad \text{for all } x_1, \ldots, x_n.
 \]
 \end{theorem}
 
-\begin{example}[Box with ordinary dice]\label{ex:box-same-dice}
-Repeat \cref{ex:box-different-dice} with three ordinary fair dice. Now the events $\set{X = x}$ and $\set{Y = y}$ are independent, so each entry of the joint pmf table is $\tfrac13 \times \tfrac16$. In the original experiment, not all of these events are independent.
-\end{example}
-
-\begin{example}[Coin flips]\label{ex:coin-flips-independent}
-Flip a coin $n$ times. For $i = 1, \ldots, n$, let $X_i = 1$ if the $i$th toss is Heads and $X_i = 0$ if Tails, with $\Prob(X_i = 1) = p = 1 - \Prob(X_i = 0)$, and assume $X_1, \ldots, X_n$ are independent. This completely specifies the model. For example, let $X = X_1 + \cdots + X_n$ be the total number of Heads, and let $A$ be the set of binary vectors $\vect{x} = (x_1, \ldots, x_n)$ with $\sum_i x_i = k$, which has $\binom{n}{k}$ elements. Then
-\begin{align*}
-  \Prob(X = k) &= \sum_{\vect{x} \in A} \Prob(X_1 = x_1, \ldots, X_n = x_n) = \sum_{\vect{x} \in A} \Prob(X_1 = x_1) \cdots \Prob(X_n = x_n) \\
-  &= \sum_{\vect{x} \in A} p^k (1-p)^{n-k} = \binom{n}{k} p^k (1-p)^{n-k}.
-\end{align*}
-So $X \sim \Bin(n, p)$ (compare \cref{ex:binomial-law}).
-\end{example}
-
-Many statistical models involve random variables $X_1, X_2, \ldots$ that are independent and identically distributed (iid, \cref{def:iid}). We write the model as
+Many statistical models involve random variables $X_1, X_2, \ldots$ that are independent and identically distributed (i.i.d., \cref{def:iid}). We write this as
 \[
   X_1, X_2, \ldots \iid \text{Dist} \qquad \text{or} \qquad X_1, X_2, \ldots \iid f \qquad \text{or} \qquad X_1, X_2, \ldots \iid F,
 \]
 where Dist is the common distribution, with pdf $f$ and CDF $F$.
 
 \begin{remark}[Random sample]\label{rem:random-sample}
-The model in which $X_1, \ldots, X_n$ are independent and all have the same distribution is the most widely used model in statistics. We say $X_1, \ldots, X_n$ is a \emph{random sample} of size $n$ from the given distribution, which is sometimes called the \emph{sampling distribution}. In \cref{ex:coin-flips-independent}, $X_1, \ldots, X_n$ is a random sample from the $\Bern(p)$ distribution.
+The model in which $X_1, \ldots, X_n$ are independent and all have the same distribution is the most widely used model in statistics. We say that $X_1, \ldots, X_n$ is a \emph{random sample} of size $n$ from the given distribution, which is sometimes called the \emph{sampling distribution}.
 \end{remark}
 
-\begin{example}[Uniform numbers]\label{ex:uniform-numbers}
-Select $n$ points randomly and independently from $[0, 1]$, for example with a computer's random number generator. A model is: $X_1, \ldots, X_n$ are independent, each $\Unif[0, 1]$. The joint pdf is simply
-\[
-  f(x_1, \ldots, x_n) = 1, \qquad 0 \le x_1 \le 1, \ldots, 0 \le x_n \le 1
-\]
-(and 0 elsewhere). In principle we can now calculate any probability involving the $X_i$. For example, for $n = 2$, by \eqref{eq:joint-pdf-integral-rule},
-\[
-  \Prob\Bigl(\frac{X_1 + X_2^2}{X_1 X_2} > \sin(X_1 - X_2)\Bigr) = \iint_A 1 \dd x_1 \dd x_2 = \operatorname{Area}(A),
-\]
-where
-\[
-  A = \Bigl\{(x_1, x_2) \in [0, 1]^2 : \frac{x_1 + x_2^2}{x_1 x_2} > \sin(x_1 - x_2)\Bigr\}.
-\]
-On a computer we can generate random samples from many distributions. The R code below draws two random samples of size 1000, one from $\Unif[0, 1]$ and one from $\Normal(\tfrac12, \tfrac{1}{12})$, and plots their histograms with 20 bins. The two distributions have the same expectation and variance, but the ``density'' of points in the two samples is clearly different, and follows the shape of the corresponding pdfs.
-\begin{rcode}
-x <- runif(1000)                         # U[0, 1] sample
-hist(x, breaks = 20)
-y <- 0.5 + rnorm(1000) * sqrt(1/12)      # N(1/2, 1/12) sample
-hist(y, breaks = 20)
-\end{rcode}
+\begin{example}[Coin flips]\label{ex:coin-flips-independent}
+Flip a coin $n$ times. For $i = 1, \ldots, n$, let $X_i = 1$ if the $i$th toss is Heads and $X_i = 0$ otherwise, with $\Prob(X_i = 1) = p = 1 - \Prob(X_i = 0)$, and assume that $X_1, \ldots, X_n$ are independent. That is, $X_1, \ldots, X_n$ is a random sample from the $\Bern(p)$ distribution. This completely specifies the model. For example, let $X = X_1 + \cdots + X_n$ be the total number of Heads, and let $A$ be the set of binary vectors $\vect{x} = (x_1, \ldots, x_n)$ with $\sum_i x_i = k$. $A$ has $\binom{n}{k}$ elements, so
+\begin{align*}
+  \Prob(X = k) &= \sum_{\vect{x} \in A} \Prob(X_1 = x_1, \ldots, X_n = x_n) = \sum_{\vect{x} \in A} \Prob(X_1 = x_1) \cdots \Prob(X_n = x_n) \\
+  &= \sum_{\vect{x} \in A} p^k (1-p)^{n-k} = \binom{n}{k} p^k (1-p)^{n-k}.
+\end{align*}
+So $X \sim \Bin(n, p)$.
 \end{example}
 
 \begin{example}[Bivariate standard normal distribution]\label{ex:bivariate-standard-normal}
-Suppose $X$ and $Y$ are independent, both with a standard normal distribution. Then $(X, Y)$ has a \emph{bivariate standard normal distribution}, with joint pdf
+Suppose $X$ and $Y$ are independent, and both have a standard normal distribution. Then $(X, Y)$ has a \emph{bivariate standard normal distribution}, with joint pdf
 \[
   f(x, y) = f_X(x) f_Y(y) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2} \cdot \frac{1}{\sqrt{2\pi}} e^{-y^2/2} = \frac{1}{2\pi} e^{-(x^2 + y^2)/2}.
 \]
-Its graph is a hat-shaped surface. The contour lines of the joint pdf are circles, and a scatter plot of simulated pairs shows a ``spherical'' pattern:
+The graph of this joint pdf is the hat-shaped surface in the left pane of \cref{fig:joint-pdf-volume}. Its contour lines are circles, so a scatter plot of simulated pairs shows a ``spherical'' pattern (\cref{fig:bivariate-normal-scatter}):
 \begin{rcode}
 x <- rnorm(2000)
 y <- rnorm(2000)
@@ -216,11 +219,26 @@ plot(y ~ x, xlim = c(-3, 3), ylim = c(-3, 3))
 \end{rcode}
 \end{example}
 
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{axis}[bookplot, width=6.5cm, height=6.5cm, xmin=-3.5, xmax=3.5, ymin=-3.5, ymax=3.5, xlabel={$x$}, ylabel={$y$}, axis lines=box, enlarge x limits=false]
+  \addplot[only marks, mark=*, mark size=0.5pt, color=thmcolor, opacity=0.6] table[x=x, y=y] {figures/data/bivariate-normal-2000.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{Scatter plot of 2000 points from the bivariate standard normal distribution.}
+\label{fig:bivariate-normal-scatter}
+\end{figure}
+
 % ==========================================================================
 \section{Expectation}\label{sec:joint-expectation}
 % ==========================================================================
 
-As in the one-dimensional case, the expected value of a real-valued function of $X_1, \ldots, X_n$ is the weighted average of all the values the function can take. If $Z = h(X_1, \ldots, X_n)$, then
+We similarly extend the concept of the expectation to multiple variables. In two dimensions, we define
+\[
+  \E h(X, Y) = \sum_x \sum_y h(x, y) f_{X,Y}(x, y)
+\]
+for discrete $X$ and $Y$, where $h \colon \R^2 \to \R$. In short, the random vector $(X, Y)$ maps $\Omega$ into $\R^2$, and $h$ maps $\R^2$ into $\R$ (\cref{fig:omega-to-r2-to-r}). More generally, if $Z = h(X_1, \ldots, X_n)$, then
 \[
   \E Z = \sum_{x_1} \cdots \sum_{x_n} h(x_1, \ldots, x_n) f(x_1, \ldots, x_n)
 \]
@@ -228,52 +246,70 @@ in the discrete case, where $f$ is the joint pmf, and
 \[
   \E Z = \int_{-\infty}^\infty \cdots \int_{-\infty}^\infty h(x_1, \ldots, x_n) f(x_1, \ldots, x_n) \dd x_1 \cdots \dd x_n
 \]
-in the continuous case, where $f$ is the joint pdf. Here $h \colon \R^n \to \R$: the random vector maps $\Omega$ into $\R^n$, and $h$ maps $\R^n$ into $\R$.
+in the continuous case, where $f$ is the joint pdf.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \draw[thick] (0,0) circle (0.7); \node at (0,1.0) {$\Omega$};
+  \draw[-{Stealth}, thick] (1.0,0.2) to[bend left=20] node[above, font=\small] {$(X, Y)$} (2.8,0.2);
+  \draw[thick] (3.2,0) -- (5.0,0); \draw[thick] (4.1,-0.9) -- (4.1,0.9); \node at (4.6,0.7) {$\R^2$};
+  \draw[-{Stealth}, thick] (5.3,0.2) to[bend left=20] node[above, font=\small] {$h$} (6.6,0.2);
+  \draw[{Stealth}-{Stealth}, thick] (6.9,0) -- (8.9,0); \node at (8.6,0.3) {$\R$};
+\end{tikzpicture}
+\caption{The random vector $(X, Y)$ maps $\Omega$ into $\R^2$, and $h$ maps $\R^2$ into $\R$.}
+\label{fig:omega-to-r2-to-r}
+\end{figure}
 
 \begin{theorem}[Properties of the expectation]\label{thm:joint-expectation-properties}
-Let $X_1, \ldots, X_n$ be discrete or continuous random variables with expectations $\mu_1, \ldots, \mu_n$, and let $Y = a + b_1 X_1 + \cdots + b_n X_n$ for constants $a, b_1, \ldots, b_n$. Then
+Let $X_1, \ldots, X_n$ be discrete or continuous random variables with expectations $\mu_1, \ldots, \mu_n$, and let $Y = a + b_1 X_1 + \cdots + b_n X_n$, where $a, b_1, \ldots, b_n$ are constants. Then
 \[
   \E Y = a + b_1 \E X_1 + \cdots + b_n \E X_n = a + b_1 \mu_1 + \cdots + b_n \mu_n.
 \]
-In particular, $\E(X + Y) = \E X + \E Y$. This holds whether or not the random variables are independent. If $X_1, \ldots, X_n$ are independent, then also
+In particular, $\E(X + Y) = \E X + \E Y$. Note that this holds regardless of independence. If $X_1, \ldots, X_n$ are independent, then also
 \[
   \E X_1 X_2 \cdots X_n = \E X_1 \, \E X_2 \cdots \E X_n.
 \]
 \end{theorem}
 
 \begin{proof}
-For the sum of two discrete random variables with joint pmf $f$,
+For the sum of two discrete random variables,
 \begin{align*}
   \E(X + Y) &= \sum_x \sum_y (x + y) f_{X,Y}(x, y) = \sum_x \sum_y x f_{X,Y}(x, y) + \sum_x \sum_y y f_{X,Y}(x, y) \\
   &= \sum_x x \sum_y f_{X,Y}(x, y) + \sum_y y \sum_x f_{X,Y}(x, y) = \sum_x x f_X(x) + \sum_y y f_Y(y) = \E X + \E Y.
 \end{align*}
 The continuous case is the same with integrals, and the general linear case follows in the same way. For the product, take two independent continuous random variables, so that $f(x, y) = f_X(x) f_Y(y)$. Then
 \[
-  \E XY = \iint x y f(x, y) \dd x \dd y = \iint x y f_X(x) f_Y(y) \dd x \dd y = \int x f_X(x) \dd x \int y f_Y(y) \dd y = \E X \, \E Y.
+  \E XY = \iint x y f_X(x) f_Y(y) \dd x \dd y = \int x f_X(x) \dd x \int y f_Y(y) \dd y = \E X \, \E Y.
 \]
 The generalisation to $n$ variables, and to the discrete case, is obvious.
 \end{proof}
 
 \begin{example}[Expectation of the binomial and hypergeometric distributions]\label{ex:binomial-hypergeometric-expectation}
-If $X \sim \Bin(n, p)$, then $X$ is a sum $X_1 + \cdots + X_n$ of iid $\Bern(p)$ random variables (\cref{ex:coin-flips-independent}). So
+We can use \cref{thm:joint-expectation-properties} for the binomial distribution. If $X \sim \Bin(n, p)$, then $X = X_1 + \cdots + X_n$ is a sum of i.i.d.\ $\Bern(p)$ random variables (\cref{ex:coin-flips-independent}), so
 \[
   \E X = \E X_1 + \cdots + \E X_n = p + \cdots + p = np.
 \]
-This did not use the independence of the $X_i$. Now let $X \sim \Hyp(n, r, N)$ and $p = r/N$: $X$ is the number of red balls when $n$ balls are drawn from an urn with $r$ red and $N - r$ other balls. Without loss of generality the balls are drawn one by one; let $X_i = 1$ if the $i$th ball is red and 0 otherwise. Then again $X = X_1 + \cdots + X_n$ with each $X_i \sim \Bern(p)$, but now the $X_i$ are dependent. This does not affect the calculation, so $\E X = np = nr/N$.
+This did not use the independence of the $X_i$. Now let $X \sim \Hyp(n, r, N)$ and $p = r/N$: $X$ is the number of red balls when $n$ balls are drawn from an urn with $r$ red and $N - r$ other balls. Without loss of generality the balls are drawn one by one; let $X_i = 1$ if the $i$th ball is red and 0 otherwise. Again $X = X_1 + \cdots + X_n$ with each $X_i \sim \Bern(p)$, but now the $X_i$ are dependent. This does not affect the calculation, so $\E X = np = nr/N$.
 \end{example}
 
-The product rule for independent random variables is particularly handy in combination with transforms.
+\subsection{Sums of independent random variables}\label{sec:sums-transforms}
+
+The product rule for the expectation of independent random variables is particularly handy in combination with transforms. If $X$ and $Y$ are independent, then
+\[
+  G_{X+Y}(z) = \E z^{X+Y} = \E z^X \, \E z^Y = G_X(z) G_Y(z), \qquad M_{X+Y}(s) = M_X(s) M_Y(s).
+\]
 
 \begin{example}[Sum of Poisson random variables]\label{ex:sum-poisson-pgf}
 Let $X \sim \Pois(\lambda)$ and $Y \sim \Pois(\mu)$ be independent. Their PGFs are $e^{-\lambda(1-z)}$ and $e^{-\mu(1-z)}$ (\cref{ex:pgf-poisson}), so the PGF of $X + Y$ is
 \[
-  \E z^{X+Y} = \E z^X \, \E z^Y = e^{-\lambda(1-z)} e^{-\mu(1-z)} = e^{-(\lambda + \mu)(1-z)}.
+  \E z^{X+Y} = e^{-\lambda(1-z)} e^{-\mu(1-z)} = e^{-(\lambda + \mu)(1-z)}.
 \]
-By the uniqueness property of the PGF, $X + Y \sim \Pois(\lambda + \mu)$. In general, if $X$ and $Y$ are independent, then $G_{X+Y}(z) = G_X(z) G_Y(z)$ and $M_{X+Y}(s) = M_X(s) M_Y(s)$.
+By the uniqueness property of the PGF, $X + Y \sim \Pois(\lambda + \mu)$.
 \end{example}
 
 \begin{example}[Sum of exponential random variables]\label{ex:sum-exponential-mgf}
-The MGF of $X \sim \GammaDist(\alpha, \lambda)$ is $\bigl(\lambda/(\lambda - s)\bigr)^\alpha$ (\cref{thm:gamma-properties}), so the MGF of the $\Expo(\lambda)$ distribution is $\lambda/(\lambda - s)$. Let $X_1, \ldots, X_n$ be iid $\Expo(\lambda)$ and $S_n = X_1 + \cdots + X_n$. Then
+The MGF of $X \sim \GammaDist(\alpha, \lambda)$ is $\bigl(\lambda/(\lambda - s)\bigr)^\alpha$ (\cref{thm:gamma-properties}), so the MGF of the $\Expo(\lambda)$ distribution is $\lambda/(\lambda - s)$. Let $X_1, \ldots, X_n \iid \Expo(\lambda)$ and $S_n = X_1 + \cdots + X_n$. Then
 \[
   \E e^{sS_n} = \E\bigl[e^{sX_1} \cdots e^{sX_n}\bigr] = \E e^{sX_1} \cdots \E e^{sX_n} = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^n,
 \]
@@ -285,13 +321,13 @@ so $S_n \sim \GammaDist(n, \lambda)$.
 % ==========================================================================
 
 \begin{definition}[Covariance]\label{def:covariance}
-The \emph{covariance} of random variables $X$ and $Y$, with $\E X = \mu_X$ and $\E Y = \mu_Y$, is
+We define the \emph{covariance} of two random variables $X$ and $Y$ by
 \[
-  \Cov(X, Y) \coloneqq \E\bigl[(X - \mu_X)(Y - \mu_Y)\bigr].
+  \Cov(X, Y) = \E\bigl[(X - \E X)(Y - \E Y)\bigr].
 \]
 \end{definition}
 
-The covariance measures the amount of \emph{linear} dependence between the variables. If small values of $X$ (below its expectation) tend to go with small values of $Y$, and large values of $X$ with large values of $Y$, then $\Cov(X, Y)$ is positive. If small values of $X$ go with large values of $Y$, and large with small, then $\Cov(X, Y)$ is negative.
+The covariance measures the amount of \emph{linear} dependency between the variables. If small values of $X$ (smaller than its expectation) tend to go with small values of $Y$, and large values of $X$ with large values of $Y$, then $\Cov(X, Y)$ is positive. If small values of $X$ go with large values of $Y$, and large with small, then $\Cov(X, Y)$ is negative.
 
 \begin{theorem}[Properties of variance and covariance]\label{thm:covariance-properties}
 For random variables $X$, $Y$ and $Z$ and constants $a$ and $b$:
@@ -332,12 +368,12 @@ which by properties 4 and 6 equals $\Var(X) + \Var(Y) + 2\Cov(X, Y)$.
 8. If $X$ and $Y$ are independent, then $\E XY = \E X\,\E Y$ (\cref{thm:joint-expectation-properties}), so $\Cov(X, Y) = 0$ by property 3.
 \end{proof}
 
-A scaled version of the covariance is the correlation coefficient.
+A scaled version of the covariance is given by the correlation coefficient.
 
 \begin{definition}[Correlation coefficient]\label{def:correlation}
-The \emph{correlation coefficient} of $X$ and $Y$, with standard deviations $\sigma_X$ and $\sigma_Y$, is
+We define the \emph{correlation coefficient} of $X$ and $Y$, with standard deviations $\sigma_X$ and $\sigma_Y$, by
 \[
-  \Corr(X, Y) \coloneqq \frac{\Cov(X, Y)}{\sqrt{\Var(X)}\sqrt{\Var(Y)}} = \frac{\Cov(X, Y)}{\sigma_X \sigma_Y}.
+  \Corr(X, Y) = \frac{\Cov(X, Y)}{\sqrt{\Var(X)}\sqrt{\Var(Y)}} = \frac{\Cov(X, Y)}{\sigma_X \sigma_Y}.
 \]
 \end{definition}
 
@@ -361,10 +397,35 @@ Similarly, $\Var(aX + Y) = a^2\sigma_X^2 + \sigma_Y^2 + 2a\Cov(X, Y) \ge 0$ give
 Choosing $a = \sigma_Y/\sigma_X$ makes the bracket equal to $2$, so $-1 \le \Corr(X, Y) \le 1$.
 \end{proof}
 
-Combining properties 2, 5 and 7 gives the variance of a linear combination.
+\Cref{fig:correlation-illustration} illustrates the correlation coefficient. Each panel shows a sample of size 40 from a different two-dimensional distribution, in each case with $\E X = \E Y = 0$ and $\Var(X) = \Var(Y) = 1$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=3 by 2, horizontal sep=0.5cm, vertical sep=0.9cm},
+  width=4.6cm, height=4.6cm, xmin=-3, xmax=3, ymin=-3, ymax=3, xtick=\empty, ytick=\empty, axis lines=box, title style={font=\small, yshift=-1ex}]
+  \nextgroupplot[title={$\Corr(X, Y) = 0$}]
+  \addplot[only marks, mark=*, mark size=1pt, color=thmcolor] table[x=x1, y=y1] {figures/data/correlation-samples.dat};
+  \nextgroupplot[title={$\Corr(X, Y) = 0.4$}]
+  \addplot[only marks, mark=*, mark size=1pt, color=thmcolor] table[x=x2, y=y2] {figures/data/correlation-samples.dat};
+  \nextgroupplot[title={$\Corr(X, Y) = 0.7$}]
+  \addplot[only marks, mark=*, mark size=1pt, color=thmcolor] table[x=x3, y=y3] {figures/data/correlation-samples.dat};
+  \nextgroupplot[title={$\Corr(X, Y) = 0.9$}]
+  \addplot[only marks, mark=*, mark size=1pt, color=thmcolor] table[x=x4, y=y4] {figures/data/correlation-samples.dat};
+  \nextgroupplot[title={$\Corr(X, Y) = -0.8$}]
+  \addplot[only marks, mark=*, mark size=1pt, color=thmcolor] table[x=x5, y=y5] {figures/data/correlation-samples.dat};
+  \nextgroupplot[title={$\Corr(X, Y) = -0.98$}]
+  \addplot[only marks, mark=*, mark size=1pt, color=thmcolor] table[x=x6, y=y6] {figures/data/correlation-samples.dat};
+\end{groupplot}
+\end{tikzpicture}
+\caption{Illustration of the correlation coefficient. Each panel is a sample of size 40 from a bivariate distribution with standard normal marginals and the given correlation.}
+\label{fig:correlation-illustration}
+\end{figure}
+
+As a consequence of properties 2 and 7, we have the following theorem.
 
 \begin{theorem}[Variance of a linear combination]\label{thm:variance-linear-combination}
-Let $X_1, \ldots, X_n$ be independent random variables with variances $\sigma_1^2, \ldots, \sigma_n^2$, and let $Y = a + b_1 X_1 + \cdots + b_n X_n$ for constants $a, b_1, \ldots, b_n$. Then
+Let $X_1, \ldots, X_n$ be discrete or continuous independent random variables with variances $\sigma_1^2, \ldots, \sigma_n^2$, and let $Y = a + b_1 X_1 + \cdots + b_n X_n$, where $a, b_1, \ldots, b_n$ are constants. Then
 \[
   \Var(Y) = b_1^2 \Var(X_1) + \cdots + b_n^2 \Var(X_n) = b_1^2\sigma_1^2 + \cdots + b_n^2\sigma_n^2.
 \]
@@ -379,7 +440,7 @@ Here $\Cov(b_i X_i, b_i X_i) = b_i^2 \Var(X_i)$, and all the covariance terms wi
 \end{proof}
 
 \begin{example}[Variance of the binomial and hypergeometric distributions]\label{ex:binomial-hypergeometric-variance}
-As in \cref{ex:binomial-hypergeometric-expectation}, write $X = X_1 + \cdots + X_n$ with each $X_i \sim \Bern(p)$; the $X_i$ are independent in the binomial case and dependent in the hypergeometric case, where $p = r/N$. For the binomial distribution, \cref{thm:variance-linear-combination} gives directly
+As in \cref{ex:binomial-hypergeometric-expectation}, write $X = X_1 + \cdots + X_n$ with each $X_i \sim \Bern(p)$; the $X_i$ are independent in the binomial case, and dependent in the hypergeometric case, where $p = r/N$. For the binomial distribution, \cref{thm:variance-linear-combination} gives directly
 \[
   \Var(X) = \Var(X_1) + \cdots + \Var(X_n) = n\Var(X_1) = np(1-p).
 \]
@@ -402,30 +463,31 @@ Simplifying gives $\Var(X) = np(1-p)\dfrac{N - n}{N - 1}$.
 \section{Expectation vectors and covariance matrices}\label{sec:covariance-matrix}
 % ==========================================================================
 
-For a random vector $\vect{X} = (X_1, \ldots, X_n)\T$ it is convenient to write expectations and covariances in vector notation. The expectation of a vector or matrix of random variables is the vector or matrix of their expectations.
-
 \begin{definition}[Expectation vector, covariance matrix]\label{def:covariance-matrix}
-The \emph{expectation vector} of a random vector $\vect{X}$ is
+Let $\vect{X} = (X_1, \ldots, X_n)\T$ be a random vector. We define the \emph{expectation vector} by
 \[
-  \vect{\mu} = (\mu_1, \ldots, \mu_n)\T \coloneqq (\E X_1, \ldots, \E X_n)\T = \E\vect{X} \in \R^n.
+  \vect{\mu} = (\mu_1, \ldots, \mu_n)\T = (\E X_1, \ldots, \E X_n)\T \in \R^n.
 \]
-The \emph{covariance matrix} $\mat{\Sigma} = \Cov(\vect{X}) \in \R^{n \times n}$ is the matrix with $(i,j)$th element
+The \emph{covariance matrix} $\mat{\Sigma} = \Cov(\vect{X}) \in \R^{n \times n}$ is defined by
 \[
-  \Sigma_{ij} = \Cov(X_i, X_j) = \E(X_i - \mu_i)(X_j - \mu_j) = \sigma_i\sigma_j\Corr(X_i, X_j),
+  \Sigma_{ij} = \Cov(X_i, X_j) = \sigma_i\sigma_j\Corr(X_i, X_j),
 \]
-where $\sigma_i^2 = \Var(X_i)$. In matrix form, $\mat{\Sigma} = \E(\vect{X} - \vect{\mu})(\vect{X} - \vect{\mu})\T$. We write $\vect{\mu}_{\vect{X}}$ and $\mat{\Sigma}_{\vect{X}}$ to emphasise the random vector.
+where $\sigma_i^2 = \Var(X_i)$. In matrix form,
+\[
+  \vect{\mu} = \E\vect{X}, \qquad \mat{\Sigma} = \E(\vect{X} - \vect{\mu})(\vect{X} - \vect{\mu})\T.
+\]
 \end{definition}
 
-$\vect{\mu}$ and $\mat{\Sigma}$ play the same roles as $\mu$ and $\sigma^2$ in the one-dimensional case. The covariance matrix has the following properties.
+These take the same role as $\mu$ and $\sigma^2$, respectively, in the one-dimensional case. The covariance matrix has the following properties.
 
 \begin{theorem}[Properties of covariance matrices]\label{thm:covariance-matrix-properties}
 Let $\vect{X}, \vect{Y} \in \R^n$ be random vectors and $\vect{b} \in \R^n$ a constant vector.
 \begin{enumerate}
-  \item $\Cov(\vect{X}) = \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T$. (Compare $\Var(X) = \E X^2 - (\E X)^2$ and $\Cov(X, Y) = \E XY - \E X\,\E Y$.)
+  \item $\Cov(\vect{X}) = \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T$. (Compare $\Var(X) = \E X^2 - (\E X)^2$ in 1D and $\Cov(X, Y) = \E XY - \E X\,\E Y$ in 2D.)
   \item $\mat{\Sigma}$ is symmetric: $\mat{\Sigma}\T = \mat{\Sigma}$.
-  \item $\mat{\Sigma}$ is positive semidefinite: $\vect{u}\T\mat{\Sigma}\vect{u} \ge 0$ for every vector $\vect{u} \in \R^n$.
+  \item $\mat{\Sigma}$ is positive semidefinite: $\vect{u}\T\mat{\Sigma}\vect{u} \ge 0$ for every $\vect{u} \in \R^n$.
   \item If $X_1, \ldots, X_n$ are independent, then $\mat{\Sigma}$ is a diagonal matrix.
-  \item $\bigl[\Cov(\vect{X} + \vect{Y})\bigr]_{ij} = \bigl[\Cov(\vect{X})\bigr]_{ij} + \bigl[\Cov(\vect{Y})\bigr]_{ij} + \Cov(X_i, Y_j) + \Cov(Y_i, X_j)$. So $\Cov(\vect{X} + \vect{Y}) = \Cov(\vect{X}) + \Cov(\vect{Y})$ if and only if $X_i$ and $Y_j$ are uncorrelated for all $i$ and $j$.
+  \item $\bigl[\Cov(\vect{X} + \vect{Y})\bigr]_{ij} = \bigl[\Cov(\vect{X})\bigr]_{ij} + \bigl[\Cov(\vect{Y})\bigr]_{ij} + \Cov(X_i, Y_j) + \Cov(Y_i, X_j)$. So $\Cov(\vect{X} + \vect{Y}) = \Cov(\vect{X}) + \Cov(\vect{Y})$ if and only if $X_i$ and $Y_j$ are uncorrelated for all $i, j$.
   \item $\Cov(\vect{X} + \vect{b}) = \Cov(\vect{X})$.
   \item If $\mat{A}$ is an $m \times n$ matrix and $\vect{Y} = \mat{A}\vect{X}$, then $\Cov(\vect{Y}) = \mat{A}\Cov(\vect{X})\mat{A}\T$.
 \end{enumerate}
@@ -433,10 +495,11 @@ Let $\vect{X}, \vect{Y} \in \R^n$ be random vectors and $\vect{b} \in \R^n$ a co
 
 \begin{proof}
 1. Writing $\mu_i = \E X_i$,
-\[
-  \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T = \E\begin{pmatrix} X_1X_1 & X_1X_2 & \cdots \\ X_2X_1 & X_2X_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} - \begin{pmatrix} \mu_1\mu_1 & \mu_1\mu_2 & \cdots \\ \mu_2\mu_1 & \mu_2\mu_2 & \cdots \\ \vdots & & \ddots \end{pmatrix},
-\]
-whose $(i,j)$th element is $\E X_iX_j - \mu_i\mu_j = \Cov(X_i, X_j)$ by \cref{thm:covariance-properties}(3).
+\begin{align*}
+  \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T &= \E\begin{pmatrix} X_1X_1 & X_1X_2 & \cdots \\ X_2X_1 & X_2X_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} - \begin{pmatrix} \mu_1\mu_1 & \mu_1\mu_2 & \cdots \\ \mu_2\mu_1 & \mu_2\mu_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} \\
+  &= \begin{pmatrix} \Var(X_1) & \Cov(X_1, X_2) & \cdots \\ \Cov(X_2, X_1) & \Var(X_2) & \cdots \\ \vdots & & \ddots \end{pmatrix},
+\end{align*}
+since the $(i,j)$th element is $\E X_iX_j - \mu_i\mu_j = \Cov(X_i, X_j)$ by \cref{thm:covariance-properties}(3).
 
 2. $\Cov(X_i, X_j) = \Cov(X_j, X_i)$.
 
@@ -451,7 +514,7 @@ whose $(i,j)$th element is $\E X_iX_j - \mu_i\mu_j = \Cov(X_i, X_j)$ by \cref{th
 
 6. Adding a constant does not change $\vect{X} - \E\vect{X}$.
 
-7. By linearity, $\E\vect{Y} = \mat{A}\E\vect{X}$, so
+7. Let $\vect{Y} = \mat{A}\vect{X}$. By linearity, $\E\vect{Y} = \mat{A}\E\vect{X}$, so
 \begin{align*}
   \Cov(\vect{Y}) &= \E\bigl[(\vect{Y} - \E\vect{Y})(\vect{Y} - \E\vect{Y})\T\bigr] = \E\bigl[(\mat{A}\vect{X} - \mat{A}\E\vect{X})(\mat{A}\vect{X} - \mat{A}\E\vect{X})\T\bigr] \\
   &= \E\bigl[\mat{A}(\vect{X} - \E\vect{X})(\vect{X} - \E\vect{X})\T\mat{A}\T\bigr] \\
@@ -460,27 +523,44 @@ whose $(i,j)$th element is $\E X_iX_j - \mu_i\mu_j = \Cov(X_i, X_j)$ by \cref{th
 \end{proof}
 
 \begin{remark}
-Since $\mat{\Sigma}$ is symmetric and positive semidefinite, its eigenvalues are real and non-negative.
+Since $\mat{\Sigma}$ is symmetric and positive semidefinite, its eigenvalues (which are real) are all non-negative.
 \end{remark}
 
 % ==========================================================================
 \section{The multinomial distribution}\label{sec:multinomial}
 % ==========================================================================
 
-An important discrete joint distribution is the multinomial distribution, a generalisation of the binomial distribution.
+We independently throw $n$ balls into $k$ urns, such that each ball is thrown in urn $i$ with probability $p_i$, $i = 1, \ldots, k$ (\cref{fig:balls-into-urns}). Let $X_i$ be the number of balls in urn $i$. The probability that the first $x_1$ balls fall in the first urn, the next $x_2$ in the second urn, and so on, is $p_1^{x_1} p_2^{x_2} \cdots p_k^{x_k}$. To find the probability that there are $x_1$ balls in urn 1, $x_2$ balls in urn 2, and so on, we multiply by the number of ways to fill the urns with $x_1, \ldots, x_k$ balls,
+\[
+  \frac{n!}{x_1!\,x_2! \cdots x_k!},
+\]
+which gives us the following distribution.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \foreach \i/\lab in {0/1, 1.6/2, 3.2/3, 5.8/k} {
+    \draw[very thick] (\i,1.1) -- (\i,0.2) arc (180:360:0.5 and 0.15) -- (\i+1,1.1);
+    \node[font=\small] at (\i+0.5,-0.35) {urn $\lab$};
+  }
+  \node at (4.95,0.6) {$\cdots$};
+  \foreach \x/\y in {0.3/0.4, 0.65/0.45, 0.5/0.75, 1.95/0.45, 3.45/0.4, 3.8/0.45, 6.25/0.4} \fill[thmcolor] (\x,\y) circle (0.12);
+  \foreach \x in {1.5, 2.5, 3.5, 4.5, 5.5} \fill[thmcolor] (\x,2.1) circle (0.12);
+  \foreach \x/\t in {1.5/0.8, 3.5/3.7, 5.5/6.3} \draw[-{Stealth}, thin, remcolor] (\x,1.9) -- (\t,1.2);
+  \node[font=\small, anchor=west] at (6.3,2.1) {$n$ balls};
+\end{tikzpicture}
+\caption{Throwing $n$ balls into $k$ urns, each ball landing in urn $i$ with probability $p_i$.}
+\label{fig:balls-into-urns}
+\end{figure}
 
 \begin{definition}[Multinomial distribution]\label{def:multinomial}
-$(X_1, \ldots, X_k)$ has a \emph{multinomial distribution} with parameters $n$ and $p_1, \ldots, p_k$, written $(X_1, \ldots, X_k) \sim \Mnom(n, p_1, \ldots, p_k)$, if
+We say $(X_1, \ldots, X_k)$ has a \emph{multinomial distribution} with parameters $n$ and $p_1, \ldots, p_k$, written $(X_1, \ldots, X_k) \sim \Mnom(n, p_1, \ldots, p_k)$, if
 \[
   \Prob(X_1 = x_1, \ldots, X_k = x_k) = \frac{n!}{x_1!\,x_2! \cdots x_k!}\,p_1^{x_1} p_2^{x_2} \cdots p_k^{x_k}
 \]
 for all $x_1, \ldots, x_k \in \set{0, 1, \ldots, n}$ with $x_1 + \cdots + x_k = n$.
 \end{definition}
 
-\begin{example}[Balls in urns]\label{ex:multinomial-urns}
-Throw $n$ balls independently into $k$ urns, so that each ball lands in urn $i$ with probability $p_i$. Let $X_i$ be the number of balls in urn $i$. Then $(X_1, \ldots, X_k) \sim \Mnom(n, p_1, \ldots, p_k)$. Indeed, let $x_1, \ldots, x_k$ be integers between 0 and $n$ summing to $n$. The probability that the first $x_1$ balls fall in urn 1, the next $x_2$ in urn 2, and so on, is $p_1^{x_1} p_2^{x_2} \cdots p_k^{x_k}$. To get the probability of $x_1$ balls in urn 1, $x_2$ in urn 2, and so on, multiply this by the number of ways to fill the urns with $x_1, \ldots, x_k$ balls, which is $n!/(x_1! \cdots x_k!)$.
-\end{example}
-
 \begin{remark}
-The binomial distribution is the case of only two urns. For each $i$, $X_i \sim \Bin(n, p_i)$.
+We can think of the multinomial distribution as an extension of the binomial distribution: the binomial distribution is limited to two urns. In particular, $X_i \sim \Bin(n, p_i)$ for each $i$.
 \end{remark}
