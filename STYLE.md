@@ -15,7 +15,8 @@ This is a living document. It will be revised after the pilot chapter, based on 
 ## Voice
 - Aim between lecture notes and a textbook: precise, but readable. Write in full sentences, and don't pad.
 - Use "we" in arguments ("we show that…"). Never use "the student" or "the reader will…".
-- Open each chapter with 2–4 sentences of motivation: what the topic is for, and where it gets used later.
+- This is a personal reference book, so don't write as if the reader is seeing the material for the first time. Keep chapter and section introductions short.
+- Open each chapter with 1–2 sentences: what the chapter covers.
 - Before a hard proof, give one sentence on the idea.
 - Use Australian/British spelling: optimisation, modelling, behaviour, parametrise.
 

@@ -5,35 +5,22 @@
 % Sources: STAT2003 handwritten notes (pp. 1-7, 84); STAT2003 course notes, Chapter 1;
 % STAT1301 course notes (2026), Sections 1.3-1.7.
 
-The purpose of this chapter is to introduce the language of probability, which is an indispensable tool for understanding randomness. We describe random experiments by probability models, which consist of three building blocks: a sample space, a collection of events and a probability. We then show how to calculate probabilities by counting, and finish with conditional probability and independence.
+A probability model for a random experiment has three parts: a sample space, a collection of events and a probability. This chapter sets these up, then covers counting, conditional probability and independence.
 
 % ==========================================================================
 \section{Random experiments}\label{sec:random-experiments}
 % ==========================================================================
 
-The basic notion in probability is that of a \emph{random experiment}: an experiment whose outcome cannot be determined in advance, but which is nevertheless still subject to analysis. Examples of random experiments are:
-\begin{enumerate}
-  \item tossing a die;
-  \item measuring the amount of rainfall in Brisbane in January;
-  \item counting the number of calls arriving at a telephone exchange during a fixed time period;
-  \item selecting a random sample of fifty people and observing the number of left-handers;
-  \item choosing at random ten people and measuring their heights.
-\end{enumerate}
-The word \emph{experiment} often means a planned scientific study, but here it is used in a broader sense, with the focus on an outcome or set of outcomes that is treated as random.
-
-The goal of probability is to understand the behaviour of random experiments by analysing the corresponding mathematical models. Given a mathematical model for a random experiment, one can calculate quantities of interest such as probabilities and expectations. Mathematical models for random experiments are also the basis of statistics, where one fits an appropriate model to observed data.
+A \emph{random experiment} is an experiment whose outcome cannot be determined in advance, for example tossing a die or counting the calls arriving at a telephone exchange in a fixed period. Probability analyses a mathematical model of the experiment to calculate quantities such as probabilities and expectations. Statistics goes the other way, fitting a model to observed data.
 
 \begin{example}[Coin tossing]\label{ex:coin-tossing-simulation}
-The most fundamental random experiment is the one where a coin is tossed a number of times. Indeed, much of probability theory can be based on this simple experiment. To better understand how it behaves, we can carry it out on a computer. The following R program simulates a sequence of 100 tosses with a fair coin (that is, Heads and Tails are equally likely), and plots the results in a bar chart. It then plots the average number of Heads against the number of tosses.
+The R program below simulates 100 tosses of a fair coin and plots the running average number of Heads (\cref{fig:coin-running-average}). The average approaches $\tfrac12$, with a lot of random fluctuation.
 \begin{rcode}
 x <- sample(c(0, 1), size = 100, replace = TRUE)  # simulate coin tosses
-barplot(x)                    # plot the results in a bar chart
-y <- cumsum(x) / 1:100        # cumulative sum, divided elementwise by 1:100
-plot(y, type = "l")           # plot the result in a line graph
+y <- cumsum(x) / 1:100                            # running average
+plot(y, type = "l")
 \end{rcode}
-The result of three such experiments is shown in \cref{fig:coin-running-average}. The average number of Heads seems to converge to $\tfrac12$, but there is a lot of random fluctuation. Similar results hold for a biased coin, with probability $p$ of Heads.
-
-Typical \emph{probability} questions about this experiment are: what is the probability of $x$ Heads in 100 tosses? How many Heads would you expect to come up? What is the probability of waiting more than 4 tosses before the first Head comes up? A \emph{statistical} analysis would instead start from observed data, for example the outcomes of 100 tosses, with $p$ unknown. Typical statistics questions are: is the coin fair? How can $p$ best be estimated from the data? How accurate or reliable would such an estimate be?
+A probability question: with $\Prob(\text{Heads}) = p$, what is the probability of $x$ Heads in 100 tosses? A statistics question: given 100 observed tosses with $p$ unknown, is the coin fair, and how well can $p$ be estimated?
 \end{example}
 
 \begin{figure}[ht]
@@ -50,13 +37,11 @@ Typical \emph{probability} questions about this experiment are: what is the prob
 \label{fig:coin-running-average}
 \end{figure}
 
-To answer these types of questions, we need to look more closely at the models that are used to describe random experiments.
-
 % ==========================================================================
 \section{Sample spaces and events}\label{sec:sample-spaces-events}
 % ==========================================================================
 
-Although we cannot predict the outcome of a random experiment with certainty, we can usually specify a set of possible outcomes. This gives the first ingredient in our model for a random experiment.
+We can usually specify the set of possible outcomes, even if we cannot predict which one will occur.
 
 \begin{definition}[Sample space]\label{def:sample-space}
 The \emph{sample space} $\Omega$ of a random experiment is the set of all possible outcomes of the experiment.
