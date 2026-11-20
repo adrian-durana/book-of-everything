@@ -91,7 +91,7 @@ These came from the author's review of Chapter 25. Apply them to every chapter, 
 - Drop figures that only illustrate an analogy already clear in words (e.g. the triangles for the area measure).
 
 ### Tables
-- Probability mass tables are a cross: values in the first row, probabilities in the second, a vertical rule after the label column and a horizontal rule between the rows, no top or bottom rules (`\begin{tabular}{c|ccc…}` … `\hline` …). Joint pmf tables use the same style. Pad them: `\renewcommand{\arraystretch}{1.9}\setlength{\tabcolsep}{7pt}` inside the `center` environment, so fractions aren't squashed against the rules.
+- Probability mass tables are a cross: values in the first row, probabilities in the second, a vertical rule after the label column and a horizontal rule between the rows, no top or bottom rules (`\begin{tabular}{c|ccc…}` … `\hline` …). Joint pmf tables use the same style. Pad them lightly: `\renewcommand{\arraystretch}{1.25}` inside the `center` environment.
 
 ### Boxes and headers
 - "Builds on: nothing" in the chapter box (lower case, no full stop).
@@ -100,7 +100,9 @@ These came from the author's review of Chapter 25. Apply them to every chapter, 
 - `solution` ends with ◀.
 
 ### Notation
-- Expectation is written $\E(X)$, $\E(X^2)$, $\E(g(X))$, with $\E\bigl((X - \mu)^2\bigr)$ for powers of brackets. $\E[X]$ and $\E X$ are mentioned once, as alternatives, in the definition.
+- Expectation is written $\E(X)$, $\E(X^2)$, $\E(g(X))$, with $\E\bigl((X - \mu)^2\bigr)$ for powers of brackets. $\E[X]$ and $\E X$ are mentioned once, as alternatives, in the definition. Use $\E X$ only where brackets would clutter, e.g. $(\E X)^2$.
+- Alternative symbols for a quantity go in its definition ("written $\Var(X)$ or $\sigma_X^2$"), not in the surrounding text.
+- State facts as formulas where that is clearer: $\sigma_{aX+b} = \abs{a}\,\sigma_X$, not "the standard deviation of $aX + b$ is $\abs{a}$ times …".
 - Name results plainly: "Markov inequality", "Chebyshev inequality", "Generalised Markov inequality" (not "Markov's inequality, general form"). Give a colloquial name alongside the formal one where it is common, e.g. "Law of the unconscious statistician, LOTUS".
 - Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
 - Elementary probabilities: $p_i = \Prob(\set{a_i})$.

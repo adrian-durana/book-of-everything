@@ -66,7 +66,7 @@ The converse is not true: given the marginal distributions of random variables, 
 \begin{example}[A joint pmf]\label{ex:joint-pmf-table}
 An example of a joint pmf of $X \in \set{1, 2, 3}$ and $Y \in \set{1, 2}$ is given in the table below, and drawn in \cref{fig:joint-pmf-stems}. The marginal distributions are the column and row totals:
 \begin{center}
-\renewcommand{\arraystretch}{1.9}\setlength{\tabcolsep}{7pt}
+\renewcommand{\arraystretch}{1.25}
 \begin{tabular}{@{}c|ccc|c@{}}
  & $x = 1$ & $x = 2$ & $x = 3$ & $f_Y(y)$ \\
 \hline
@@ -334,7 +334,7 @@ The covariance measures the amount of \emph{linear} dependency between the varia
 \begin{theorem}[Properties of variance and covariance]\label{thm:covariance-properties}
 For random variables $X$, $Y$ and $Z$ and constants $a$ and $b$:
 \begin{enumerate}
-  \item $\Var(X) = \E(X^2) - (\E(X))^2$
+  \item $\Var(X) = \E(X^2) - (\E X)^2$
   \item $\Var(aX + b) = a^2 \Var(X)$
   \item $\Cov(X, Y) = \E(XY) - \E(X) \, \E(Y)$
   \item $\Cov(X, Y) = \Cov(Y, X)$
@@ -482,7 +482,7 @@ These take the same role as $\mu$ and $\sigma^2$, respectively, in the one-dimen
 \begin{theorem}[Properties of covariance matrices]\label{thm:covariance-matrix-properties}
 Let $\vect{X}, \vect{Y} \in \R^n$ be random vectors and $\vect{b} \in \R^n$ a constant vector.
 \begin{enumerate}
-  \item $\Cov(\vect{X}) = \E(\vect{X}\vect{X}\T) - (\E(\vect{X}))(\E(\vect{X}))\T$. (Compare $\Var(X) = \E(X^2) - (\E(X))^2$ in 1D and $\Cov(X, Y) = \E(XY) - \E(X)\,\E(Y)$ in 2D.)
+  \item $\Cov(\vect{X}) = \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T$. (Compare $\Var(X) = \E(X^2) - (\E X)^2$ in 1D and $\Cov(X, Y) = \E(XY) - \E(X)\,\E(Y)$ in 2D.)
   \item $\mat{\Sigma}$ is symmetric: $\mat{\Sigma}\T = \mat{\Sigma}$.
   \item $\mat{\Sigma}$ is positive semidefinite: $\vect{u}\T\mat{\Sigma}\vect{u} \ge 0$ for every $\vect{u} \in \R^n$.
   \item If $X_1, \ldots, X_n$ are independent, then $\mat{\Sigma}$ is a diagonal matrix.
@@ -496,7 +496,7 @@ Let $\vect{X}, \vect{Y} \in \R^n$ be random vectors and $\vect{b} \in \R^n$ a co
 \begin{enumerate}[leftmargin=*]
   \item[1.] Writing $\mu_i = \E(X_i)$,
 \begin{align*}
-  \E(\vect{X}\vect{X}\T) - (\E(\vect{X}))(\E(\vect{X}))\T &= \E\begin{pmatrix} X_1X_1 & X_1X_2 & \cdots \\ X_2X_1 & X_2X_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} - \begin{pmatrix} \mu_1\mu_1 & \mu_1\mu_2 & \cdots \\ \mu_2\mu_1 & \mu_2\mu_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} \\
+  \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T &= \E\begin{pmatrix} X_1X_1 & X_1X_2 & \cdots \\ X_2X_1 & X_2X_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} - \begin{pmatrix} \mu_1\mu_1 & \mu_1\mu_2 & \cdots \\ \mu_2\mu_1 & \mu_2\mu_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} \\
   &= \begin{pmatrix} \Var(X_1) & \Cov(X_1, X_2) & \cdots \\ \Cov(X_2, X_1) & \Var(X_2) & \cdots \\ \vdots & & \ddots \end{pmatrix},
 \end{align*}
 since the $(i,j)$th element is $\E(X_iX_j) - \mu_i\mu_j = \Cov(X_i, X_j)$ by \cref{thm:covariance-properties}(3).
