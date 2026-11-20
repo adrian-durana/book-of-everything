@@ -5,7 +5,7 @@
 % Sources: STAT2003 handwritten notes (pp. 1-7, 84); STAT2003 course notes, Chapter 1;
 % STAT1301 course notes (2026), Sections 1.3-1.7.
 
-A probability model for a random experiment has three parts: a sample space, a collection of events and a probability. This chapter sets these up, then covers counting, conditional probability and independence.
+The purpose of this chapter is to introduce the language of probability, which is an indispensable tool for understanding randomness. We describe random experiments by probability models, which consist of three building blocks: a sample space, a collection of events and a probability. We then show how to calculate probabilities by counting, and finish with conditional probability and independence.
 
 % ==========================================================================
 \section{Random experiments}\label{sec:random-experiments}
@@ -47,7 +47,7 @@ We can usually specify the set of possible outcomes, even if we cannot predict w
 The \emph{sample space} $\Omega$ of a random experiment is the set of all possible outcomes of the experiment.
 \end{definition}
 
-For example, for the lifetime of a machine (in days) we can take $\Omega = \R_+$, the positive real numbers. For modelling purposes it is often easier to take the sample space larger than necessary: the actual lifetime of a machine would certainly not span the entire positive real axis.
+For example, for the lifetime of a machine (in days) we can take $\Omega = \R^{+}$, the positive real numbers. For modelling purposes it is often easier to take the sample space larger than necessary: the actual lifetime of a machine would almost surely not span the entire positive real axis.
 
 Often we are not interested in a single outcome, but in whether or not one of a group of outcomes occurs.
 
@@ -62,6 +62,10 @@ Since events are sets, we can apply the usual set operations to them:
   \item $A^c$ ($A$ \emph{complement}) is the event that $A$ does not occur;
   \item if $A \subseteq B$ ($A$ is a \emph{subset} of $B$), then event $A$ is said to \emph{imply} event $B$.
 \end{enumerate}
+The usual set laws (commutative, associative and distributive) apply. In particular, De Morgan's laws hold for any collection of events $\set{A_i}$:
+\begin{equation}\label{eq:de-morgan}
+  \Bigl(\bigcup_i A_i\Bigr)^c = \bigcap_i A_i^c, \qquad \Bigl(\bigcap_i A_i\Bigr)^c = \bigcup_i A_i^c.
+\end{equation}
 Two events $A$ and $B$ that have no outcomes in common, that is, $A \cap B = \emptyset$, are called \emph{disjoint} events. It is often useful to depict events in a Venn diagram, such as \cref{fig:venn-diagram}. In this diagram, $A \cap C = \emptyset$, so $A$ and $C$ are disjoint; and $(A \cap B^c) \cap (A^c \cap B) = \emptyset$, so $A \cap B^c$ and $A^c \cap B$ are disjoint.
 
 \begin{figure}[ht]
@@ -84,22 +88,6 @@ Two events $A$ and $B$ that have no outcomes in common, that is, $A \cap B = \em
 \label{fig:venn-diagram}
 \end{figure}
 
-\begin{theorem}[Set properties and laws]\label{thm:set-laws}
-Let $A$, $B$ and $C$ be sets. Then
-\begin{align*}
-  &\text{Commutative laws:} & A \cup B &= B \cup A, & A \cap B &= B \cap A, \\
-  &\text{Associative laws:} & A \cup (B \cup C) &= (A \cup B) \cup C, & A \cap (B \cap C) &= (A \cap B) \cap C, \\
-  &\text{Distributive laws:} & A \cup (B \cap C) &= (A \cup B) \cap (A \cup C), & A \cap (B \cup C) &= (A \cap B) \cup (A \cap C), \\
-  &\text{De Morgan's laws:} & (A \cap B)^c &= A^c \cup B^c, & (A \cup B)^c &= A^c \cap B^c.
-\end{align*}
-\end{theorem}
-
-More generally, De Morgan's laws hold for any collection of events $\set{A_i}$:
-\begin{equation}\label{eq:de-morgan}
-  \Bigl(\bigcup_i A_i\Bigr)^c = \bigcap_i A_i^c, \qquad \Bigl(\bigcap_i A_i\Bigr)^c = \bigcup_i A_i^c.
-\end{equation}
-This is easily proved via Venn diagrams.
-
 \begin{example}[Casting two dice]\label{ex:two-dice-events}
 Suppose we cast two dice consecutively. The sample space is
 \[
@@ -116,51 +104,6 @@ Let $A = \set{(6,1), \ldots, (6,6)}$ be the event that the first die is 6, and l
 is the event that both dice are 6.
 \end{example}
 
-\begin{example}[System reliability]\label{ex:system-reliability-events}
-\Cref{fig:three-systems} depicts three systems, each consisting of 3 unreliable components. The \emph{series} system works if and only if all components work; the \emph{parallel} system works if and only if at least one of the components works; and the \emph{2-out-of-3} system works if and only if at least 2 out of 3 components work. Let $A_i$ be the event that the $i$th component is functioning, $i = 1, 2, 3$, and let $D_a$, $D_b$, $D_c$ be the events that the series, parallel and 2-out-of-3 system is functioning. Then
-\[
-  D_a = A_1 \cap A_2 \cap A_3, \qquad D_b = A_1 \cup A_2 \cup A_3,
-\]
-and
-\begin{align*}
-  D_c &= (A_1 \cap A_2 \cap A_3) \cup (A_1^c \cap A_2 \cap A_3) \cup (A_1 \cap A_2^c \cap A_3) \cup (A_1 \cap A_2 \cap A_3^c) \\
-      &= (A_1 \cap A_2) \cup (A_1 \cap A_3) \cup (A_2 \cap A_3).
-\end{align*}
-If $A_i$ is the event that component $i$ works, then the left-hand side of the first De Morgan law \eqref{eq:de-morgan} is the event that the parallel system is not working, and the right-hand side is the event that all components are not working. Clearly these two events are the same.
-\end{example}
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}[x=1cm, y=1cm]
-  % series
-  \begin{scope}
-    \node[block] (s1) at (0.8,0) {1};
-    \node[block] (s2) at (1.8,0) {2};
-    \node[block] (s3) at (2.8,0) {3};
-    \draw[thick] (0,0) -- (s1) -- (s2) -- (s3) -- (3.6,0);
-    \node at (1.8,-1.6) {Series};
-  \end{scope}
-  % parallel
-  \begin{scope}[xshift=4.6cm]
-    \foreach \i/\y in {1/0.8, 2/0, 3/-0.8} { \node[block] (p\i) at (1.2,\y) {\i}; \draw[thick] (0.5,\y) -- (p\i) -- (1.9,\y); }
-    \draw[thick] (0,0) -- (0.5,0) (0.5,0.8) -- (0.5,-0.8) (1.9,0.8) -- (1.9,-0.8) (1.9,0) -- (2.4,0);
-    \node at (1.2,-1.6) {Parallel};
-  \end{scope}
-  % 2-out-of-3
-  \begin{scope}[xshift=8.0cm]
-    \foreach \a/\b/\y in {1/2/0.8, 1/3/0, 2/3/-0.8} {
-      \node[block] (q\a\b a) at (1.0,\y) {\a};
-      \node[block] (q\a\b b) at (1.9,\y) {\b};
-      \draw[thick] (0.5,\y) -- (q\a\b a) -- (q\a\b b) -- (2.4,\y);
-    }
-    \draw[thick] (0,0) -- (0.5,0) (0.5,0.8) -- (0.5,-0.8) (2.4,0.8) -- (2.4,-0.8) (2.4,0) -- (2.9,0);
-    \node at (1.45,-1.6) {2-out-of-3};
-  \end{scope}
-\end{tikzpicture}
-\caption{Three systems of unreliable components. A system works if there is a path of working components from left to right.}
-\label{fig:three-systems}
-\end{figure}
-
 % ==========================================================================
 \section{Probability}\label{sec:probability}
 % ==========================================================================
@@ -171,7 +114,7 @@ The third ingredient in the model for a random experiment is the specification o
 A \emph{probability space} is a triple $(\Omega, \mathcal{F}, \Prob)$, where
 \begin{itemize}
   \item $\Omega$ is the sample space;
-  \item $\mathcal{F} \subseteq 2^\Omega$ is the collection of events, where $2^\Omega$ is the set of all subsets of $\Omega$;
+  \item $\mathcal{F} \subseteq \powerset(\Omega)$ is the collection of events, where $\powerset(\Omega)$ is the set of all subsets of $\Omega$;
   \item $\Prob \colon \mathcal{F} \to [0, 1]$ is the probability (also called the probability law or probability measure).
 \end{itemize}
 \end{definition}
@@ -194,22 +137,10 @@ A \emph{probability} $\Prob$ is a rule (function) which assigns a number to each
 
 Axiom 2 just states that the probability of the ``certain'' event $\Omega$ is 1. Property \eqref{eq:sum-rule} is the crucial property of a probability, and is sometimes referred to as the \emph{sum rule}. It states that if an event can happen in a number of different ways that cannot happen at the same time, then the probability of this event is simply the sum of the probabilities of the composing events.
 
-Note that a probability rule $\Prob$ has exactly the same properties as the common ``area measure''. For example, the total area of the union of the triangles in \cref{fig:area-measure} is equal to the sum of the areas of the individual triangles. This is how you should interpret property \eqref{eq:sum-rule}. But instead of measuring areas, $\Prob$ measures probabilities.
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}
-  \fill[thmcolor, opacity=0.2] (0,0) -- (2,0) -- (1,1.5) -- cycle;
-  \fill[defcolor, opacity=0.2] (2,0) -- (3.5,1.2) -- (1,1.5) -- cycle;
-  \fill[excolor, opacity=0.2] (2,0) -- (4,0) -- (3.5,1.2) -- cycle;
-  \draw[thick] (0,0) -- (2,0) -- (1,1.5) -- cycle (2,0) -- (3.5,1.2) -- (1,1.5) (2,0) -- (4,0) -- (3.5,1.2);
-\end{tikzpicture}
-\caption{The probability measure has the same properties as the area measure: the total area of the triangles is the sum of the areas of the individual triangles.}
-\label{fig:area-measure}
-\end{figure}
+Note that a probability rule $\Prob$ has exactly the same properties as the common ``area measure'': the total area of a union of non-overlapping triangles is the sum of the areas of the individual triangles. This is how you should interpret property \eqref{eq:sum-rule}. But instead of measuring areas, $\Prob$ measures probabilities.
 
 \begin{example}[An unfair coin]\label{ex:unfair-coin}
-A coin with Heads worse than Tails can be modelled by $\Omega = \set{H, T}$, $\mathcal{F} = 2^\Omega = \set{\emptyset, \set{H}, \set{T}, \set{H, T}}$ and
+A coin with Heads worse than Tails can be modelled by $\Omega = \set{H, T}$, $\mathcal{F} = \powerset(\Omega) = \set{\emptyset, \set{H}, \set{T}, \set{H, T}}$ and
 \[
   \Prob(\set{H}) = 0.45, \qquad \Prob(\set{T}) = 0.55, \qquad \Prob(\emptyset) = 0, \qquad \Prob(\Omega) = 1.
 \]
@@ -223,8 +154,8 @@ Let $A$ and $B$ be events. Then
   \item $\Prob(\emptyset) = 0$;
   \item $A \subseteq B \implies \Prob(A) \le \Prob(B)$;
   \item $\Prob(A) \le 1$;
-  \item $\Prob(A^c) = 1 - \Prob(A)$ (complement rule);
-  \item $\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)$ (addition rule).
+  \item $\Prob(A^c) = 1 - \Prob(A)$;
+  \item $\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)$.
 \end{enumerate}
 \end{theorem}
 
@@ -240,7 +171,7 @@ Let $A$ and $B$ be events. Then
 5. Write $A \cup B$ as the disjoint union of $A$ and $B \cap A^c$. Then $\Prob(A \cup B) = \Prob(A) + \Prob(B \cap A^c)$. Also, $B = (A \cap B) \cup (B \cap A^c)$, so that $\Prob(B) = \Prob(A \cap B) + \Prob(B \cap A^c)$. Combining these two equations gives $\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)$.
 \end{proof}
 
-The addition rule extends to $n$ events.
+Property 5 extends to $n$ events.
 
 \begin{theorem}[Inclusion--exclusion principle]\label{thm:inclusion-exclusion}
 For events $E_1, \ldots, E_n$,
@@ -296,7 +227,7 @@ where $\abs{A}$ denotes the number of elements in $A$. For example, the probabil
 
 \subsection{Continuous sample spaces}\label{sec:continuous-sample-spaces}
 
-When the sample space is not countable, for example $\Omega = \R_+$, it is said to be \emph{continuous}.
+When the sample space is not countable, for example $\Omega = \R^{+}$, it is said to be \emph{continuous}.
 
 \begin{example}[Drawing a point in an interval]\label{ex:point-in-interval}
 We draw at random a point in the interval $[0, 1]$, each point being equally likely to be drawn. How do we specify the model for this experiment? The sample space is obviously $\Omega = [0, 1]$, which is a continuous sample space. We cannot define $\Prob$ via the elementary events $\set{x}$, $x \in [0, 1]$, because each of these events must have probability 0. However, we can define $\Prob$ as follows: for each $0 \le a \le b \le 1$, let
@@ -310,14 +241,7 @@ This completely specifies $\Prob$. In particular, the probability that the point
 \section{Counting}\label{sec:counting}
 % ==========================================================================
 
-Counting is not always easy. Let us first look at some examples:
-\begin{enumerate}
-  \item A multiple-choice form has 20 questions; each question has 3 choices. In how many possible ways can the exam be completed?
-  \item Consider a horse race with 8 horses. How many ways are there to gamble on the placings (1st, 2nd, 3rd)?
-  \item Jessica has a collection of 20 CDs, and she wants to take 3 of them to work. How many possibilities does she have?
-  \item How many different throws are possible with 3 dice?
-\end{enumerate}
-To be able to comfortably solve a multitude of counting problems requires a lot of experience and practice, and even then, some counting problems remain exceedingly hard. Fortunately, many counting problems can be cast into the simple framework of drawing balls from an urn (\cref{fig:urn}).
+Counting is not always easy. Fortunately, many counting problems can be cast into the simple framework of drawing balls from an urn (\cref{fig:urn}).
 
 \begin{figure}[ht]
 \centering
@@ -334,12 +258,12 @@ To be able to comfortably solve a multitude of counting problems requires a lot 
 \label{fig:urn}
 \end{figure}
 
-Consider an urn with $n$ different balls, numbered $1, \ldots, n$, from which $k$ balls are drawn. This can be done in a number of different ways. First, the balls can be drawn one by one, or one could draw all the $k$ balls at the same time. In the first case the order in which the balls are drawn can be noted; in the second case that is not possible. In the latter case we can (and will) still assume the balls are drawn one by one, but that the order is not noted. Second, once a ball is drawn, it can either be put back into the urn (after the number is recorded), or left out. This is called, respectively, drawing \emph{with} and \emph{without replacement}. All in all there are 4 possible experiments: (ordered, with replacement), (ordered, without replacement), (unordered, without replacement) and (unordered, with replacement). The art is to recognise a seemingly unrelated counting problem as one of these four urn problems. For the four examples above:
+Consider an urn with $n$ different balls, numbered $1, \ldots, n$, from which $k$ balls are drawn. This can be done in a number of different ways. First, the balls can be drawn one by one, or one could draw all the $k$ balls at the same time. In the first case the order in which the balls are drawn can be noted; in the second case that is not possible. In the latter case we can (and will) still assume the balls are drawn one by one, but that the order is not noted. Second, once a ball is drawn, it can either be put back into the urn (after the number is recorded), or left out. This is called, respectively, drawing \emph{with} and \emph{without replacement}. All in all there are 4 possible experiments: (ordered, with replacement), (ordered, without replacement), (unordered, without replacement) and (unordered, with replacement). The art is to recognise a seemingly unrelated counting problem as one of these four urn problems. For example:
 \begin{enumerate}
-  \item Example 1 can be viewed as drawing 20 balls from an urn containing 3 balls, noting the order, and with replacement.
-  \item Example 2 is equivalent to drawing 3 balls from an urn containing 8 balls, noting the order, and without replacement.
-  \item In Example 3 we take 3 balls from an urn containing 20 balls, not noting the order, and without replacement.
-  \item Example 4 is a case of drawing 3 balls from an urn containing 6 balls, not noting the order, and with replacement.
+  \item A multiple-choice form has 20 questions, each with 3 choices. Completing the form is drawing 20 balls from an urn containing 3 balls, noting the order, and with replacement.
+  \item Betting on the placings (1st, 2nd, 3rd) in a race with 8 horses is drawing 3 balls from an urn containing 8 balls, noting the order, and without replacement.
+  \item Choosing 3 of 20 CDs to take to work is drawing 3 balls from an urn containing 20 balls, not noting the order, and without replacement.
+  \item A throw of 3 dice is drawing 3 balls from an urn containing 6 balls, not noting the order, and with replacement.
 \end{enumerate}
 We denote ordered arrangements by vectors, for example $(1, 2, 3) \ne (3, 2, 1)$, and unordered arrangements by sets, for example $\set{1, 2, 3} = \set{3, 2, 1}$. For each of the four cases we consider how the counting works for $n = 4$ and $k = 3$, and then state the general situation.
 

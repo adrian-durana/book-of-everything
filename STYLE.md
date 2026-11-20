@@ -15,8 +15,9 @@ This is a living document. It will be revised after the pilot chapter, based on 
 ## Voice
 - Aim between lecture notes and a textbook: precise, but readable. Write in full sentences, and don't pad.
 - Use "we" in arguments ("we show that…"). Never use "the student" or "the reader will…".
-- This is a personal reference book, so don't write as if the reader is seeing the material for the first time. Keep chapter and section introductions short.
-- Open each chapter with 1–2 sentences: what the chapter covers.
+- This is a personal reference book, so don't write as if the reader is seeing the material for the first time. Keep section introductions short. The exception is the harder third-year courses, where the expanded, first-encounter style of introduction is kept.
+- Open each chapter with one short explanatory paragraph: what the topic is for, its main building blocks, and what the chapter covers. Model it on the Chapter 25 opening.
+- Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
 - Before a hard proof, give one sentence on the idea.
 - Use Australian/British spelling: optimisation, modelling, behaviour, parametrise.
 
