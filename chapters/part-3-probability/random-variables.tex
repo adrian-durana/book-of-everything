@@ -1,11 +1,11 @@
 \chapter{Random Variables and Distribution Functions}\label{ch:random-variables}
 
-\chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces}.}
+\chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces}}
 
 % Sources: STAT2003 handwritten notes (pp. 7-9); STAT2003 course notes, Sections 2.1-2.2;
 % STAT1301 course notes (2026), Section 1.8.
 
-Formally, a random variable is a function from the sample space $\Omega$ to $\R$. This chapter defines random variables and their probability distributions. A distribution can be specified by its cumulative distribution function (CDF), which works for every random variable. In the two common special cases, discrete and continuous random variables, it can also be specified by a probability mass function or a probability density function.
+Specifying a model for a random experiment via a complete description of $\Omega$ and $\Prob$ is not always convenient or necessary. In practice we are only interested in certain observations (numerical measurements) of the experiment, and we include these in the model via random variables. This chapter defines random variables and their distributions, which are specified by a cumulative distribution function or, in the discrete and continuous cases, by a mass or density function.
 
 % ==========================================================================
 \section{Random variables}\label{sec:random-variables}
@@ -27,9 +27,9 @@ Toss two dice one after the other and note their sum. The sample space is $\Omeg
   \Prob(X = 8) = \frac{5}{36}.
 \]
 In the same way,
-\begin{equation}\label{eq:sum-two-dice-pmf}
+\[
   \Prob(X = x) = \frac{6 - \abs{7 - x}}{36}, \qquad x = 2, \ldots, 12,
-\end{equation}
+\]
 which in table form is
 \begin{center}
 \begin{tabular}{@{}l*{11}{c}@{}}
@@ -59,14 +59,13 @@ $\Prob(X = x)$ & $\frac{1}{36}$ & $\frac{2}{36}$ & $\frac{3}{36}$ & $\frac{4}{36
 \label{fig:rv-sum-two-dice}
 \end{figure}
 
-Although random variables are, mathematically speaking, functions, it is often convenient to view a random variable as an observation of a random experiment that has not yet been carried out. It is a measurement that becomes available once we carry out the experiment, for example tomorrow. All the thinking about the experiment and the measurement can be done today. In particular, we can specify today exactly the probabilities pertaining to the random variable.
+Although random variables are, mathematically speaking, functions, it is often convenient to view a random variable as an observation of a random experiment that has not yet been carried out: a measurement that becomes available once we carry out the experiment, say tomorrow. The probabilities pertaining to it can be specified today.
 
 \begin{example}[Coin flips]\label{ex:number-of-heads}
-Flip a coin $n$ times, where each flip lands heads with probability $p$. Suppose we are not interested in the complete outcome, such as $(0, 1, 0, 1, 1, 0, \ldots)$, but only in the total number of heads (1s). Let $X$ be the function that assigns to each outcome $\omega = (x_1, \ldots, x_n)$ the number $x_1 + \cdots + x_n$. Then $X$ is a random variable, and the event that there are exactly $k$ heads in $n$ flips is $\set{X = k}$. With the probability model for independent coin flips (\cref{ch:probability-spaces}),
+Flip a coin $n$ times, where each flip lands heads with probability $p$. Suppose we are not interested in the complete outcome, such as $(0, 1, 0, 1, 1, 0, \ldots)$, but only in the total number of heads (1s). Let $X$ be the function that assigns to each outcome $\omega = (x_1, \ldots, x_n)$ the number $x_1 + \cdots + x_n$. Then $X$ is a random variable, and the event that there are exactly $k$ heads in $n$ flips is $\set{X = k}$. With the coin-tossing model (\cref{sec:coin-tossing-models}),
 \[
   \Prob(X = k) = \binom{n}{k} p^k (1 - p)^{n-k}, \qquad k = 0, 1, \ldots, n.
 \]
-This contains all the information about $X$ that we could wish to know.
 \end{example}
 
 Other examples of random variables are the number of bugs in a computer program and the amount of rain in Brisbane in June.
@@ -74,7 +73,7 @@ Other examples of random variables are the number of bugs in a computer program 
 The set of all values a random variable can take is its \emph{range}. We distinguish between two kinds of random variable:
 \begin{itemize}
   \item \emph{discrete} random variables, which can only take isolated (countably many) values. For example, a count can only take non-negative integer values.
-  \item \emph{continuous} random variables, which can take any value in an interval or a union of disjoint intervals, such as the positive real line, and have $\Prob(X = c) = 0$ for every possible value $c$. For example, rainfall, lifetimes of components and lengths are, at least in principle, continuous.
+  \item \emph{continuous} random variables, which can take any value in an interval or a union of disjoint intervals, such as the positive real line, and have $\Prob(X = c) = 0$ for every possible value $c$. For example, rainfall, lifetimes and lengths are, at least in principle, continuous.
 \end{itemize}
 
 % ==========================================================================
@@ -133,12 +132,12 @@ Let $F$ be the CDF of a random variable $X$. Then
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-(i) Suppose $x \le y$, and let $A = \set{X \le x}$ and $B = \set{X \le y}$. Then $A \subseteq B$, so $\Prob(A) \le \Prob(B)$ by monotonicity of $\Prob$ (\cref{ch:probability-spaces}).
-
-(ii) $0 \le \Prob(A) \le 1$ for every event $A$, in particular for $A = \set{X \le x}$.
-
-(iii) and (iv) are not proved in this course.
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[(i)] If $x \le y$, then $A = \set{X \le x} \subseteq B = \set{X \le y}$, so $\Prob(A) \le \Prob(B)$ (\cref{thm:probability-properties}).
+  \item[(ii)] $0 \le \Prob(A) \le 1$ for every event $A$, in particular for $A = \set{X \le x}$.
+\end{enumerate}
+Properties (iii) and (iv) are not proved in this course.
 \end{proof}
 
 CDFs are useful because they apply to both discrete and continuous distributions. Any function $F$ with the above properties can be used to specify the distribution of a random variable.
@@ -152,12 +151,15 @@ Let $X$ have CDF $F$, and let $a < b$. Then
 \end{enumerate}
 \end{proposition}
 
-\begin{proof}
-(a) $\set{X \le b} = \set{X \le a} \cup \set{a < X \le b}$, and these two events are disjoint. By the sum rule, $F(b) = F(a) + \Prob(a < X \le b)$.
-
-(b) This is stated without proof in the course.
-
-(c) $\Prob(a \le X \le b) = \Prob(a < X \le b) + \Prob(X = a) = F(b) - F(a) + F(a) - \lim_{h \downarrow 0} F(a - h)$, by (a) and (b).
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[(a)] $\set{X \le b} = \set{X \le a} \cup \set{a < X \le b}$, and these two events are disjoint. By the sum rule, $F(b) = F(a) + \Prob(a < X \le b)$.
+  \item[(b)] Not proved in this course.
+  \item[(c)] By (a) and (b),
+  \[
+    \Prob(a \le X \le b) = \Prob(a < X \le b) + \Prob(X = a) = F(b) - \lim_{h \downarrow 0} F(a - h). \qedhere
+  \]
+\end{enumerate}
 \end{proof}
 
 % ==========================================================================
@@ -176,18 +178,19 @@ The easiest way to specify the distribution of a discrete random variable is to 
 \begin{equation}\label{eq:pmf-sum-rule}
   \Prob(X \in B) = \sum_{x \in B} f(x)
 \end{equation}
-for any subset $B$ of the range of $X$ (say an interval $(a, b)$), as illustrated in \cref{fig:pmf-sum-rule}. Read $\set{X \in B}$ as ``$X$ is an element of the region $B$''.
+for any subset $B$ of the range of $X$ (say an interval $(a, b)$), as illustrated in \cref{fig:pmf-sum-rule}.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=0, xmax=11, ymax=0.25, xtick=\empty, ytick=\empty, xlabel={$x$}, ylabel={$f(x)$}]
-  \addplot+[color=remcolor] coordinates {(1,0.05) (2,0.12) (3,0.18) (8,0.08) (9,0.06) (10,0.03)};
-  \addplot+[color=thmcolor] coordinates {(4,0.2) (5,0.15) (6,0.1) (7,0.03)};
-  \draw[decorate, decoration={brace, mirror, amplitude=5pt}, thick] (axis cs:3.7,-0.01) -- node[below=5pt] {$B$} (axis cs:7.3,-0.01);
+\begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=0, xmax=11, ymin=0, ymax=0.25, xtick=\empty, ytick=\empty, xlabel={$x$}, ylabel={$f(x)$}, clip=false, xlabel style={at={(1,0)}, anchor=north east, yshift=-2pt}]
+  \fill[defcolor, opacity=0.12] (axis cs:3.5,0) rectangle (axis cs:7.5,0.24);
+  \addplot[ycomb, mark=*, mark size=1.5pt, color=remcolor] coordinates {(1,0.05) (2,0.12) (3,0.18) (8,0.08) (9,0.06) (10,0.03)};
+  \addplot[ycomb, mark=*, mark size=1.8pt, color=defcolor, very thick] coordinates {(4,0.2) (5,0.15) (6,0.1) (7,0.03)};
+  \draw[decorate, decoration={brace, mirror, amplitude=5pt}, thick, defcolor] (axis cs:3.6,-0.008) -- node[below=5pt] {$B$} (axis cs:7.4,-0.008);
 \end{axis}
 \end{tikzpicture}
-\caption{A probability mass function. $\Prob(X \in B)$ is the sum of the masses $f(x)$ for $x$ in $B$ (highlighted).}
+\caption{A probability mass function. $\Prob(X \in B)$ is the total of the highlighted masses $f(x)$, $x \in B$.}
 \label{fig:pmf-sum-rule}
 \end{figure}
 
@@ -243,9 +246,9 @@ The function $f$ is the \emph{probability density function} (pdf) of $X$.
 \end{definition}
 
 We write $X \sim f$ or $X \sim F$ to indicate that $X$ is distributed according to the pdf $f$ or the CDF $F$. The same notation is used for a pmf. Once we know the pdf, we can calculate the probability that $X$ lies in a set $B$ by integration, in analogy with \eqref{eq:pmf-sum-rule}:
-\begin{equation}\label{eq:pdf-integral-rule}
+\[
   \Prob(X \in B) = \int_B f(x) \dd x,
-\end{equation}
+\]
 as illustrated in \cref{fig:pdf-integral-rule}.
 
 \begin{figure}[H]
@@ -275,7 +278,7 @@ We can interpret $f(x)$ as the ``density'' that $X = x$. More precisely,
 \]
 
 \begin{remark}\label{rem:density-not-probability}
-$f(x)$ is not a probability: it is a probability \emph{density}. In particular, if $X$ is continuous, then
+$f(x)$ is not a probability: it is a probability density. In particular, if $X$ is continuous, then
 \[
   \Prob(X = x) = 0 \qquad \text{for all } x.
 \]
@@ -303,7 +306,7 @@ Let $X$ be a continuous random variable with CDF $F$ and pdf $f$, and let $0 < p
 \[
   p = F\bigl(q(p)\bigr) = \int_{-\infty}^{q(p)} f(u) \dd u.
 \]
-If $F$ can be inverted, this can be written $q(p) = F^{-1}(p)$, which is called the \emph{quantile function}.
+If $F$ can be inverted, this can be written $q(p) = F^{-1}(p)$, which is called the quantile function.
 \end{definition}
 
 Describing an experiment through a random variable and its pmf, pdf or CDF is usually much easier than specifying the probability space $(\Omega, \mathcal{F}, \Prob)$ explicitly. In the examples above, no probability space was needed.
