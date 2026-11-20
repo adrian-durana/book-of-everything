@@ -1,10 +1,10 @@
 \chapter{Generating Functions and Transforms}\label{ch:generating-functions}
 
-\chapterinfo{STAT2003}{\cref{ch:random-variables,ch:expectation-moments}.}
+\chapterinfo{STAT2003}{\cref{ch:random-variables,ch:expectation-moments}}
 
 % Sources: STAT2003 handwritten notes (pp. 26-27); STAT2003 course notes, Section 2.4.
 
-Many calculations and manipulations involving probability distributions are made easier by transforms. This chapter covers two of them: the probability generating function, for non-negative integer-valued random variables, and the moment generating function. Both determine the distribution uniquely, and both give the moments of a random variable by differentiation. They are particularly useful for sums of independent random variables (\cref{ch:transformations}).
+Many calculations and manipulations involving probability distributions are made easier by transforms. This chapter covers two of them: the probability generating function, for non-negative integer-valued random variables, and the moment generating function. Both determine the distribution uniquely, and both give the moments of a random variable by differentiation. They are particularly useful for sums of independent random variables (\cref{sec:sums-transforms}).
 
 % ==========================================================================
 \section{Probability generating functions}\label{sec:pgf}
@@ -47,26 +47,32 @@ Substituting $z = 0$ gives $G(0) = \Prob(X = 0)$. Differentiating once,
 so $G'(0) = \Prob(X = 1)$. Differentiating again gives $G''(0) = 2 \Prob(X = 2)$, and in general the $x$th derivative of $G$ at zero is $G^{(x)}(0) = x! \, \Prob(X = x)$.
 \end{proof}
 
-So the PGF has the \emph{uniqueness property}: two pmfs are the same if and only if their PGFs are the same.
+So the PGF has the \emph{uniqueness property}: two distributions are the same if and only if their PGFs are the same. The moments of $X$ follow from the derivatives of $G$ at $z = 1$.
 
-The moments of $X$ can be obtained by differentiating $G$ and evaluating at $z = 1$. Differentiating $G(z) = \E(z^X)$ with respect to $z$ gives
+\begin{theorem}[Moments from the PGF]\label{thm:pgf-moments}
+If $X$ has PGF $G$, then
+\[
+  \E(X) = G'(1), \qquad \E(X(X-1)) = G''(1), \qquad \E(X^k) = \Bigl(z \frac{\dd}{\dd z}\Bigr)^k G(z) \Big|_{z = 1^-}.
+\]
+Consequently,
+\[
+  \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2.
+\]
+\end{theorem}
+
+\begin{proof}
+Differentiating $G(z) = \E(z^X)$ with respect to $z$ gives
 \begin{align*}
   G'(z) &= \E\bigl(X z^{X-1}\bigr), \\
   G''(z) &= \E\bigl(X(X-1) z^{X-2}\bigr), \\
   G'''(z) &= \E\bigl(X(X-1)(X-2) z^{X-3}\bigr),
 \end{align*}
-and so on. (To check this, write the expectation as a sum and differentiate term by term; some care is needed with infinite sums.) In particular,
-\[
-  \E(X) = G'(1), \qquad \E(X(X-1)) = G''(1),
-\]
-and therefore, since $\E(X^2) = \E(X(X-1)) + \E(X)$,
+and so on (write the expectation as a sum and differentiate term by term; some care is needed with infinite sums). Setting $z = 1$ gives $\E(X)$ and $\E(X(X-1))$. Since $\E(X^2) = \E(X(X-1)) + \E(X)$,
 \[
   \Var(X) = \E(X^2) - (\E X)^2 = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2.
 \]
-More generally, the moments can be found by repeatedly applying the operator $z \frac{\dd}{\dd z}$:
-\[
-  \E(X^k) = \Bigl(z \frac{\dd}{\dd z}\Bigr)^k G(z) \Big|_{z = 1^-}.
-\]
+The general formula for $\E(X^k)$ is not proved in this course.
+\end{proof}
 
 % ==========================================================================
 \section{Moment generating functions}\label{sec:mgf}
@@ -83,10 +89,10 @@ The \emph{moment generating function} (MGF) of a random variable $X$ is the func
 Here $I$ is an open interval containing $0$ on which the sum or integral is finite for all $s \in I$.
 \end{definition}
 
-Like the PGF, the MGF has the \emph{uniqueness property}: two MGFs are the same if and only if the corresponding distributions are the same. The moments of $X$ follow from the derivatives of $M$, which explains the name.
+The MGF also has the uniqueness property: two distributions are the same if and only if their MGFs are the same. As the name suggests, the derivatives of $M$ at $s = 0$ give the moments of $X$.
 
 \begin{theorem}[Moments from the MGF]\label{thm:mgf-moments}
-If $\E(X^n)$ exists, then $M$ is $n$ times differentiable, and
+If $\E(X^n)$ exists, then $M$ has $n$ derivatives, and
 \[
   \E(X^n) = M^{(n)}(0).
 \]
