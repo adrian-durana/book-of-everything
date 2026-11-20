@@ -5,7 +5,7 @@
 % Sources: STAT2003 handwritten notes (pp. 10-13, 63); STAT2003 course notes, Section 2.3;
 % STAT1301 course notes (2026), Section 1.9.
 
-All the probability information about a random variable is contained in its CDF, or in its pmf or pdf. Even so, it is often useful to consider numerical characteristics of a random variable. This chapter covers the most important ones: the expectation, the variance and the moments. It ends with two inequalities that bound probabilities in terms of these numbers.
+All the probability information about a random variable is contained in its CDF, or in its pmf or pdf. Even so, it is often useful to consider numerical characteristics of a random variable. This chapter covers the most important ones --- the expectation, the variance and the moments --- and ends with two inequalities that bound probabilities in terms of these characteristics.
 
 % ==========================================================================
 \section{Expectation}\label{sec:expectation}
@@ -50,7 +50,7 @@ Another interpretation of the expectation is as a centre of mass. Imagine point 
 \[
   x_1 p_1 + \cdots + x_n p_n,
 \]
-which is exactly the expectation of a discrete random variable taking the values $x_1, \ldots, x_n$ with probabilities $p_1, \ldots, p_n$ (compare moments in physics). This interpretation gives the following.
+which is exactly the expectation of a discrete random variable taking the values $x_1, \ldots, x_n$ with probabilities $p_1, \ldots, p_n$ (compare to moments in physics). This interpretation gives the following.
 
 \begin{figure}[H]
 \centering
@@ -172,7 +172,6 @@ The number $\E(X^r)$ is the \emph{$r$th moment} of $X$. With $\mu = \E(X)$, the 
 
 Here $\E(X)$ is the mean, and $\E(X^2)$ is related to the variance. The first central moments are
 \begin{align*}
-  \text{0th:} \quad & \E\bigl((X - \mu)^0\bigr) = \E(1) = 1, \\
   \text{1st:} \quad & \E(X - \mu) = \E(X) - \mu = \mu - \mu = 0, \\
   \text{2nd:} \quad & \E\bigl((X - \mu)^2\bigr) = \Var(X).
 \end{align*}
