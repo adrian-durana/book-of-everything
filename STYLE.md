@@ -46,6 +46,12 @@ This is a living document. It will be revised after the pilot chapter, based on 
 - A proof of an enumerated list of statements is itself a list: "Proof." on its own line, then `\item[1.]`, `\item[2.]`, …, with `\qedhere` at the end of the last item.
 - `solution` ends with ◀.
 - Coins: "heads" and "tails" in lower case.
+- Lists (`itemize`, `enumerate`) of short points have no punctuation between or after items. Lists of full sentences keep their full stops.
+- In a definition, italicise only the term named in the title (e.g. *event*, not *occurs*). Don't read symbols out in words ("$A \cup B$ ($A$ union $B$)") outside the chapter that introduces them.
+- Long equations broken over lines use `align*`: the continuation starts with `&\qquad +`, a little right of the `=`, not right-aligned like `multline`.
+- Avoid paragraphs whose last line holds only a word or two: reword slightly. If a line inside a box has stretched word spacing (usually from long inline maths), put `\raggedright` at the start of that paragraph rather than leave the gaps.
+- Inline fractions of probabilities get light spacing: `\Prob(A \cap B) \mkern2mu / \mkern2mu \Prob(B)`.
+- Odd-page headers show the section title only, without its number.
 
 ## Labels and cross-references
 - Use `\cref{...}` only, never "Theorem~\ref{...}".

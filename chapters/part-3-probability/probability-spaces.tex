@@ -5,24 +5,24 @@
 % Sources: STAT2003 handwritten notes (pp. 1-7, 84); STAT2003 course notes, Chapter 1;
 % STAT1301 course notes (2026), Sections 1.3-1.7.
 
-The purpose of this chapter is to introduce the language of probability, which is an indispensable tool for understanding randomness. We describe random experiments by probability models, which consist of three building blocks: a sample space, a collection of events and a probability. We then show how to calculate probabilities by counting, and finish with conditional probability and independence.
+The purpose of this chapter is to introduce the language of probability, which is an indispensable tool for understanding randomness. We describe random experiments by probability models, which consist of three building blocks: a sample space, a collection of events and a probability. We then calculate probabilities by counting, and finish with conditional probability and independence.
 
 % ==========================================================================
 \section{Random experiments}\label{sec:random-experiments}
 % ==========================================================================
 
-A \emph{random experiment} is an experiment whose outcome cannot be determined in advance. Examples are:
+A \emph{random experiment} is an experiment whose outcome cannot be determined in advance. Examples of random experiments are:
 \begin{enumerate}
-  \item tossing a die;
-  \item measuring the amount of rainfall in Brisbane in January;
-  \item counting the number of calls arriving at a telephone exchange during a fixed time period;
-  \item selecting a random sample of fifty people and observing the number of left-handers;
-  \item choosing at random ten people and measuring their heights.
+  \item tossing a die
+  \item measuring the amount of rainfall in Brisbane in January
+  \item counting the number of calls arriving at a telephone exchange during a fixed time period
+  \item selecting a random sample of fifty people and observing the number of left-handers
+  \item choosing at random ten people and measuring their heights
 \end{enumerate}
 The goal of probability is to understand the behaviour of random experiments by analysing the corresponding mathematical models. Mathematical models for random experiments are also the basis of statistics, where one fits an appropriate model to observed data.
 
 \begin{example}[Coin tossing]\label{ex:coin-tossing-simulation}
-The R program below simulates 100 tosses of a fair coin and plots the running average number of heads (\cref{fig:coin-running-average}). The average approaches $\tfrac12$, with a lot of random fluctuation. Similar results hold for a biased coin, with probability $p$ of heads.
+The R program below simulates 100 tosses of a fair coin and plots the running average number of heads (\cref{fig:coin-running-average}). The average approaches 0.5, with a lot of random fluctuation. Similar results hold for a biased coin, with probability $p$ of heads.
 \begin{rcode}
 x <- sample(c(0, 1), size = 100, replace = TRUE)  # simulate coin tosses
 y <- cumsum(x) / 1:100                            # running average
@@ -49,32 +49,32 @@ Typical probability questions about this experiment are: what is the probability
 \section{Sample spaces and events}\label{sec:sample-spaces-events}
 % ==========================================================================
 
-We can usually specify the set of possible outcomes, even if we cannot predict which one will occur.
+We can usually specify a set of possible outcomes, even if we cannot predict which will occur.
 
 \begin{definition}[Sample space]\label{def:sample-space}
 The \emph{sample space} $\Omega$ of a random experiment is the set of all possible outcomes of the experiment.
 \end{definition}
 
-For example, for the lifetime of a machine (in days) we can take $\Omega = \R^{+}$, the positive real numbers. For modelling purposes it is often easier to take the sample space larger than necessary: the actual lifetime of a machine would almost surely not span the entire positive real axis.
+For example, for the lifetime of a machine we can take $\Omega = \R^{+}$, the positive real numbers. For modelling purposes it is often easier to take the sample space larger than necessary: the actual lifetime of a machine would almost surely not span the entire positive real axis.
 
-Often we are not interested in a single outcome, but in whether or not one of a group of outcomes occurs.
+Often we are not interested in a single outcome, but in whether or not one of a group of outcomes occurs, that is, in an event.
 
 \begin{definition}[Event]\label{def:event}
-An \emph{event} is a subset of the sample space. Events are denoted by capital letters $A, B, C, \ldots$. We say that event $A$ \emph{occurs} if the outcome of the experiment is one of the elements of $A$.
+An \emph{event} is a subset of the sample space. Events are denoted by capital letters $A, B, C, \ldots$. We say that event $A$ occurs if the outcome of the experiment is one of the elements of $A$.
 \end{definition}
 
-Since events are sets, we can apply the usual set operations to them:
+Since events are sets, we can apply the usual set laws and operations to them:
 \begin{enumerate}
-  \item $A \cup B$ ($A$ \emph{union} $B$) is the event that $A$ or $B$ or both occur;
-  \item $A \cap B$ ($A$ \emph{intersection} $B$) is the event that $A$ and $B$ both occur;
-  \item $A^c$ ($A$ \emph{complement}) is the event that $A$ does not occur;
-  \item if $A \subseteq B$ ($A$ is a \emph{subset} of $B$), then event $A$ is said to \emph{imply} event $B$.
+  \item $A \cup B$ is the event that $A$ or $B$ or both occur
+  \item $A \cap B$ is the event that $A$ and $B$ both occur
+  \item $A^c$ is the event that $A$ does not occur
+  \item if $A \subseteq B$, then event $A$ is said to \emph{imply} event $B$
 \end{enumerate}
-The usual set laws (commutative, associative and distributive) apply. In particular, De Morgan's laws hold for any collection of events $\set{A_i}$:
+In particular, De Morgan's laws hold for any collection of events $\set{A_i}$:
 \begin{equation}\label{eq:de-morgan}
   \Bigl(\bigcup_i A_i\Bigr)^c = \bigcap_i A_i^c, \qquad \Bigl(\bigcap_i A_i\Bigr)^c = \bigcup_i A_i^c.
 \end{equation}
-Two events $A$ and $B$ that have no outcomes in common, that is, $A \cap B = \emptyset$, are called \emph{disjoint} events. It is often useful to depict events in a Venn diagram, such as \cref{fig:venn-diagram}. In this diagram, $A \cap C = \emptyset$, so $A$ and $C$ are disjoint; and $(A \cap B^c) \cap (A^c \cap B) = \emptyset$, so $A \cap B^c$ and $A^c \cap B$ are disjoint.
+Two events $A$ and $B$ that have no outcomes in common, that is, $A \cap B = \emptyset$, are called \emph{disjoint} events. It is often useful to depict events in a Venn diagram, such as \cref{fig:venn-diagram}.
 
 \begin{figure}[H]
 \centering
@@ -121,9 +121,9 @@ The third ingredient in the model for a random experiment is the specification o
 \begin{definition}[Probability space]\label{def:probability-space}
 A \emph{probability space} is a triple $(\Omega, \mathcal{F}, \Prob)$, where
 \begin{itemize}
-  \item $\Omega$ is the sample space;
-  \item $\mathcal{F} \subseteq \powerset(\Omega)$ is the collection of events, where $\powerset(\Omega)$ is the set of all subsets of $\Omega$;
-  \item $\Prob \colon \mathcal{F} \to [0, 1]$ is the probability measure.
+  \item $\Omega$ is the sample space
+  \item $\mathcal{F} \subseteq \powerset(\Omega)$ is the collection of events, where $\powerset(\Omega)$ is the set of all subsets of $\Omega$
+  \item $\Prob \colon \mathcal{F} \to [0, 1]$ is the probability measure
 \end{itemize}
 \end{definition}
 
@@ -132,20 +132,20 @@ If $\Omega$ is infinite, $\mathcal{F}$ is infinite too. In that case $\mathcal{F
 \end{remark}
 
 \begin{definition}[Probability measure]\label{def:probability-measure}
-A \emph{probability measure} $\Prob$ is a rule (function) which assigns a number to each event, and which satisfies the following axioms (Kolmogorov, 1933):
+A \emph{probability measure} $\Prob$ is a rule (function) which assigns a number to each event, and which satisfies the following Kolmogorov axioms:
 \begin{enumerate}[label=\textbf{Axiom \arabic*:}, leftmargin=*, widest=3]
-  \item $\Prob(A) \ge 0$;
-  \item $\Prob(\Omega) = 1$;
+  \item $\Prob(A) \ge 0$
+  \item $\Prob(\Omega) = 1$
   \item for any sequence $A_1, A_2, \ldots$ of disjoint events,
-  \begin{equation}\label{eq:sum-rule}
+  \[
     \Prob\Bigl(\bigcup_i A_i\Bigr) = \sum_i \Prob(A_i).
-  \end{equation}
+  \]
 \end{enumerate}
 \end{definition}
 
-Axiom 2 just states that the probability of the ``certain'' event $\Omega$ is 1. Property \eqref{eq:sum-rule} is the crucial property of a probability, and is sometimes referred to as the \emph{sum rule}. It states that if an event can happen in a number of different ways that cannot happen at the same time, then the probability of this event is simply the sum of the probabilities of the composing events.
+Axiom 3 is the crucial property of a probability, and is sometimes referred to as the \emph{sum rule}. It states that if an event can happen in a number of different ways that cannot happen at the same time, then its probability is the sum of the probabilities of the composing events.
 
-Note that a probability rule $\Prob$ has exactly the same properties as the common ``area measure'': the total area of a union of non-overlapping triangles is the sum of the areas of the individual triangles. This is how you should interpret property \eqref{eq:sum-rule}. But instead of measuring areas, $\Prob$ measures probabilities.
+Note that a probability rule $\Prob$ has exactly the same properties as the common ``area measure'': the total area of a union of non-overlapping triangles is the sum of the areas of the individual triangles. This is how to interpret Axiom 3, with $\Prob$ measuring probabilities instead of areas.
 
 \begin{example}[An unfair coin]\label{ex:unfair-coin}
 A coin with heads worse than tails can be modelled by $\Omega = \set{H, T}$, $\mathcal{F} = \powerset(\Omega) = \set{\emptyset, \set{H}, \set{T}, \set{H, T}}$ and
@@ -159,11 +159,11 @@ As a direct consequence of the axioms we have the following properties for $\Pro
 \begin{theorem}[Properties of a probability measure]\label{thm:probability-properties}
 Let $A$ and $B$ be events. Then
 \begin{enumerate}
-  \item $\Prob(\emptyset) = 0$;
-  \item $A \subseteq B \implies \Prob(A) \le \Prob(B)$;
-  \item $\Prob(A) \le 1$;
-  \item $\Prob(A^c) = 1 - \Prob(A)$;
-  \item $\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)$.
+  \item $\Prob(\emptyset) = 0$
+  \item $A \subseteq B \implies \Prob(A) \le \Prob(B)$
+  \item $\Prob(A) \le 1$
+  \item $\Prob(A^c) = 1 - \Prob(A)$
+  \item $\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)$
 \end{enumerate}
 \end{theorem}
 
@@ -177,14 +177,14 @@ Let $A$ and $B$ be events. Then
 \end{enumerate}
 \end{proof}
 
-Property 5 extends to $n$ events.
+The inclusion--exclusion principle extends to $n$ events.
 
 \begin{theorem}[Inclusion--exclusion principle]\label{thm:inclusion-exclusion}
 For events $E_1, \ldots, E_n$,
-\begin{multline*}
-  \Prob\Bigl(\bigcup_{i=1}^n E_i\Bigr) = \sum_i \Prob(E_i) - \sum_{i<j} \Prob(E_i \cap E_j) + \sum_{i<j<k} \Prob(E_i \cap E_j \cap E_k) - \cdots \\
-  + (-1)^{n+1} \Prob(E_1 \cap \cdots \cap E_n).
-\end{multline*}
+\begin{align*}
+  \Prob\Bigl(\bigcup_{i=1}^n E_i\Bigr) &= \sum_i \Prob(E_i) - \sum_{i<j} \Prob(E_i \cap E_j) + \sum_{i<j<k} \Prob(E_i \cap E_j \cap E_k) - \cdots \\
+  &\qquad + (-1)^{n+1} \Prob(E_1 \cap \cdots \cap E_n).
+\end{align*}
 In particular, $\Prob\bigl(\bigcup_i E_i\bigr) \le \sum_i \Prob(E_i)$.
 \end{theorem}
 
@@ -192,7 +192,7 @@ We have now completed our model for a random experiment. It is up to the modelle
 
 \subsection{Discrete sample spaces}\label{sec:discrete-sample-spaces}
 
-In many applications the sample space is countable, that is, $\Omega = \set{a_1, \ldots, a_n}$ or $\Omega = \set{a_1, a_2, \ldots}$. Such a sample space is called \emph{discrete}. The easiest way to specify a probability $\Prob$ on a discrete sample space is to specify first the probability $p_i$ of each elementary event $\set{a_i}$, and then to define
+In many applications the sample space is countable, that is, $\Omega = \set{a_1, \ldots, a_n}$ or $\Omega = \set{a_1, a_2, \ldots}$. Such a sample space is called \emph{discrete}. The easiest way to specify a probability $\Prob$ on a discrete sample space is to specify first the probability $p_i = \Prob(\set{a_i})$ of each elementary event $\set{a_i}$, and then to define
 \[
   \Prob(A) = \sum_{i : a_i \in A} p_i \qquad \text{for all } A \subseteq \Omega.
 \]
@@ -201,18 +201,23 @@ This idea is represented in \cref{fig:discrete-sample-space}. Each element $a_i$
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-  \draw[thick] (0,0) rectangle (6,3);
-  \node at (0.3,2.7) {$\Omega$};
-  \foreach \x/\y/\s in {0.8/0.6/2.2, 1.5/2.2/1.4, 2.2/1.2/2.6, 3.0/2.4/1.6, 3.4/0.5/2.0, 4.1/1.6/3.0, 4.9/2.5/1.3, 5.3/0.8/2.4, 1.2/1.5/1.8, 4.6/0.4/1.5}
-    \fill (\x,\y) circle (\s pt);
-  \draw[thick, dashed] (3.9,1.3) ellipse (1.3 and 0.95);
-  \node at (5.0,1.9) {$A$};
+  \draw[thick] (0,0) rectangle (8,3.4);
+  \node at (0.35,3.05) {$\Omega$};
+  \fill[thmcolor, opacity=0.12] (4.55,1.65) ellipse (2.05 and 1.25);
+  \draw[thick, dashed, thmcolor] (4.55,1.65) ellipse (2.05 and 1.25);
+  \node[thmcolor] at (4.55,3.12) {$A$};
+  % outcome a_i at (x,y) with weight p
+  \foreach \i/\x/\y/\p in {1/0.9/1.0/0.05, 2/1.7/2.4/0.10, 3/3.4/2.1/0.15, 4/4.5/1.1/0.20, 5/7.3/0.8/0.10, 6/5.6/2.0/0.15, 7/2.3/0.7/0.05, 8/7.2/2.5/0.20} {
+    \fill (\x,\y) circle ({sqrt(\p)*13pt});
+    \node[font=\small, anchor=north] at (\x,\y-0.2) {$a_{\i}$};
+    \node[font=\scriptsize, anchor=south] at (\x,\y+0.2) {$\p$};
+  }
 \end{tikzpicture}
-\caption{A discrete sample space. Each outcome carries a probability weight (dot). The probability of $A$ is the total weight of the outcomes in $A$.}
+\caption{A discrete sample space with outcomes $a_1, \ldots, a_8$. Each outcome $a_i$ carries a probability weight $p_i$ (the number above it; dot area proportional to $p_i$). The probability of $A$ is the total weight of the outcomes in $A$: $\Prob(A) = p_3 + p_4 + p_6 = 0.5$.}
 \label{fig:discrete-sample-space}
 \end{figure}
 
-Again, it is up to the modeller to specify these probabilities properly. Fortunately, in many applications all elementary events are equally likely, and thus the probability of each elementary event is 1 divided by the total number of elements in $\Omega$. Because this ``equally likely'' principle is so important, we formulate it as a theorem.
+Again, it is up to the modeller to specify these probabilities properly. Fortunately, in many applications all elementary events are equally likely, and thus the probability of each elementary event is 1 divided by the total number of elements in $\Omega$.
 
 \begin{theorem}[Equilikely principle]\label{thm:equilikely-principle}
 If $\Omega$ has a finite number of outcomes, and all are equally likely, then the probability of each event $A$ is
@@ -342,7 +347,7 @@ In particular, when $k = n$, the number of ordered arrangements of $n$ items is 
 
 \subsection{Unordered, without replacement}\label{sec:count-unordered-without}
 
-This time we draw $k$ numbers from $\set{1, \ldots, n}$ but do not replace them (no replication), and do not note the order (so we could draw them in one grab). Taking again $n = 4$ and $k = 3$, a possible outcome is $\set{1, 2, 4}$, $\set{1, 2, 3}$, etc. If we noted the order, there would be ${}^nP_k$ outcomes, amongst which would be $(1,2,4)$, $(1,4,2)$, $(2,1,4)$, $(2,4,1)$, $(4,1,2)$ and $(4,2,1)$. These 6 permutations correspond to the single unordered arrangement $\set{1, 2, 4}$. Such unordered arrangements without replication are called \emph{combinations} of size $k$ from the set $\set{1, \ldots, n}$. To determine the number of combinations of size $k$, we simply need to divide ${}^nP_k$ by the number of permutations of $k$ items, which is $k!$. Thus, in our example ($n = 4$, $k = 3$) there are $24/6 = 4$ possible combinations of size 3.
+This time we draw $k$ numbers from $\set{1, \ldots, n}$ but do not replace them (no replication), and do not note the order (so we could draw them in one grab). Taking again $n = 4$ and $k = 3$, a possible outcome is $\set{1, 2, 4}$, $\set{1, 2, 3}$, etc. If we noted the order, there would be ${}^nP_k$ outcomes, amongst which would be $(1,2,4)$, $(1,4,2)$, $(2,1,4)$, $(2,4,1)$, $(4,1,2)$ and $(4,2,1)$. These 6 permutations correspond to the single unordered arrangement $\set{1, 2, 4}$. Such unordered arrangements without replication are called \emph{combinations} of size $k$ from the set $\set{1, \ldots, n}$. To determine the number of combinations of size $k$, we simply need to divide ${}^nP_k$ by the number of permutations of $k$ items, which is $k!$. For $n = 4$, $k = 3$ there are $24/6 = 4$ combinations of size 3.
 
 \begin{theorem}[Arrangements without order and without replacement]\label{thm:count-unordered-without-replacement}
 The number of combinations of size $k$ from the set $\set{1, \ldots, n}$ is
@@ -358,11 +363,25 @@ Taking $n = 4$, $k = 3$, possible outcomes are $\set{3, 3, 4}$, $\set{1, 2, 4}$,
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-  \foreach \i in {1,...,6} { \draw[thick] (\i-1,0) rectangle (\i,0.8); \node[font=\small] at (\i-0.5,-0.3) {\i}; }
-  \foreach \i in {1,2,5} \draw[line width=2pt] (\i-0.5,0.1) -- (\i-0.5,0.7);
-  \foreach \i in {3,4,6} \fill (\i-0.5,0.4) circle (0.2);
+  % top: balls in urns
+  \foreach \u/\x in {1/0, 2/1.5, 3/3, 4/4.5} {
+    \draw[very thick] (\x,1.2) -- (\x,0) -- (\x+1.1,0) -- (\x+1.1,1.2);
+    \node[font=\small] at (\x+0.55,-0.35) {urn \u};
+  }
+  \fill[defcolor] (3.33,0.25) circle (0.2); \fill[defcolor] (3.77,0.25) circle (0.2);
+  \fill[excolor] (5.05,0.25) circle (0.2);
+  \node[font=\small, anchor=west] at (6.0,0.5) {$(0, 0, 2, 1)$};
+  \draw[-{Stealth}, thick] (2.8,-0.75) -- (2.8,-1.35);
+  % bottom: separators and balls in 6 positions
+  \begin{scope}[yshift=-2.4cm, xshift=0.1cm]
+    \foreach \i in {1,...,6} { \draw (\i*0.9-0.9,0) rectangle (\i*0.9,0.8); \node[font=\scriptsize, gray] at (\i*0.9-0.45,-0.25) {\i}; }
+    \foreach \i in {1,2,5} \draw[line width=2.2pt] (\i*0.9-0.45,0.1) -- (\i*0.9-0.45,0.7);
+    \fill[defcolor] (2.25,0.4) circle (0.2); \fill[defcolor] (3.15,0.4) circle (0.2);
+    \fill[excolor] (4.95,0.4) circle (0.2);
+    \node[font=\small, anchor=west] at (5.9,0.4) {$\mid\ \mid \bullet \bullet \mid \bullet$};
+  \end{scope}
 \end{tikzpicture}
-\caption{Distributing $k = 3$ balls over $n = 4$ urns using $n - 1 = 3$ separators in $6$ positions. This arrangement corresponds to $(0, 0, 2, 1)$, that is, to the outcome $\set{3, 3, 4}$.}
+\caption{Top: $k = 3$ balls placed in $n = 4$ urns, giving $(0, 0, 2, 1)$, that is, the outcome $\set{3, 3, 4}$. Bottom: the same arrangement written with $n - 1 = 3$ separators and $k = 3$ balls in $n - 1 + k = 6$ positions. The balls between separators $i - 1$ and $i$ belong to urn $i$.}
 \label{fig:separators}
 \end{figure}
 
@@ -377,7 +396,7 @@ The number of different sets $\set{x_1, \ldots, x_k}$ with $x_i \in \set{1, \ldo
 
 \subsection{Summary}\label{sec:counting-summary}
 
-The urn framework is analogous to putting $k$ balls into $n$ bins. The four cases are summarised below.
+The urn framework is analogous to putting $k$ balls into $n$ bins. The four cases are:
 \begin{center}
 \begin{tabular}{@{}lll@{}}
 \toprule
@@ -422,7 +441,7 @@ What is the probability that, out of a group of 40 people, all have different bi
 \end{example}
 
 \begin{solution}
-Choosing the birthdays is like choosing 40 balls with replacement from an urn containing the balls $1, \ldots, 365$. Thus, our sample space $\Omega$ consists of vectors of length 40, whose components are chosen from $\set{1, \ldots, 365}$. There are $\abs{\Omega} = 365^{40}$ such vectors, and all are equally likely. Let $A$ be the event that all 40 people have different birthdays. Then $\abs{A} = {}^{365}P_{40} = 365!/325!$. It follows that $\Prob(A) = \abs{A}/\abs{\Omega} \approx 0.109$, so not very big!
+Choosing the birthdays is like choosing 40 balls with replacement from an urn containing the balls $1, \ldots, 365$. Thus, our sample space $\Omega$ consists of vectors of length 40, whose components are chosen from $\set{1, \ldots, 365}$. There are $\abs{\Omega} = 365^{40}$ such vectors, and all are equally likely. Let $A$ be the event that all 40 people have different birthdays. Then $\abs{A} = {}^{365}P_{40} = 365!/325!$. It follows that $\Prob(A) = \abs{A}/\abs{\Omega} \approx 0.109$. This is surprisingly small!
 \end{solution}
 
 \begin{example}[Five heads in ten tosses]\label{ex:five-heads}
@@ -437,7 +456,7 @@ Here $\Omega$ consists of vectors of length 10 consisting of 1s (heads) and 0s (
 \section{Conditional probability}\label{sec:conditional-probability}
 % ==========================================================================
 
-How do probabilities change when we know that some event $B \subseteq \Omega$ has occurred? Then we know that the outcome lies in $B$, so $A$ will occur if and only if $A \cap B$ occurs (\cref{fig:conditional-probability}). The relative chance of $A$ occurring is therefore $\Prob(A \cap B)/\Prob(B)$.
+How do probabilities change when we know that some event $B \subseteq \Omega$ has occurred? Then we know that the outcome lies in $B$, so $A$ will occur if and only if $A \cap B$ occurs (\cref{fig:conditional-probability}). The relative chance of $A$ occurring is therefore $\Prob(A \cap B) \mkern2mu / \mkern2mu \Prob(B)$.
 
 \begin{figure}[H]
 \centering
@@ -493,7 +512,7 @@ This is a nice application of conditional probability. Consider a quiz in which 
 \end{example}
 
 \begin{solution}
-The sample space consists of 4 possible outcomes: $Ac$, the prize is behind A and Monty opens C; $Ab$, the prize is behind A and Monty opens B; $Bc$, the prize is behind B and Monty opens C; and $Cb$, the prize is behind C and Monty opens B. Let $A$, $B$, $C$ be the events that the prize is behind A, B and C, respectively. Then $A = \set{Ac, Ab}$, $B = \set{Bc}$ and $C = \set{Cb}$ (\cref{fig:monty-hall}).
+The sample space consists of 4 possible outcomes: $Ac$, the prize is behind A and Monty opens C; $Ab$, the prize is behind A and Monty opens B; $Bc$, the prize is behind B and Monty opens C; and $Cb$, the prize is behind C and Monty opens B. Let $A$, $B$, $C$ be the events that the prize is behind A, B and C, respectively, so $A = \set{Ac, Ab}$, $B = \set{Bc}$ and $C = \set{Cb}$ (\cref{fig:monty-hall}).
 
 \begin{figure}[H]
 \centering
@@ -530,7 +549,7 @@ By the definition of conditional probability we have
 We can generalise this to $n$ intersections $A_1 \cap A_2 \cap \cdots \cap A_n$, which we abbreviate as $A_1 A_2 \cdots A_n$. This gives the \emph{product rule} of probability, also called the chain rule.
 
 \begin{theorem}[Product rule]\label{thm:product-rule}
-Let $A_1, \ldots, A_n$ be a sequence of events with $\Prob(A_1 \cdots A_{n-1}) > 0$. Then
+\raggedright Let $A_1, \ldots, A_n$ be a sequence of events with $\Prob(A_1 \cdots A_{n-1}) > 0$. Then
 \begin{equation}\label{eq:product-rule}
   \Prob(A_1 \cdots A_n) = \Prob(A_1)\,\Prob(A_2 \given A_1)\,\Prob(A_3 \given A_1 A_2) \cdots \Prob(A_n \given A_1 \cdots A_{n-1}).
 \end{equation}
@@ -557,7 +576,7 @@ Now $\Prob(A_k \given A_{k-1}) = (365 - k + 1)/365$, because given that the firs
 \[
   \Prob(A_n) = \frac{365}{365} \times \frac{364}{365} \times \frac{363}{365} \times \cdots \times \frac{365 - n + 1}{365}, \qquad n \ge 1.
 \]
-A graph of $\Prob(A_n)$ against $n$ is given in \cref{fig:birthday}. The probability $\Prob(A_n)$ rapidly decreases to zero. Indeed, for $n = 23$ the probability of having no duplicate birthdays is already less than $1/2$.
+A graph of $\Prob(A_n)$ against $n$ is given in \cref{fig:birthday}. The probability $\Prob(A_n)$ rapidly decreases to zero. For $n = 23$ the probability of no duplicate birthdays is already below $1/2$.
 \end{example}
 
 \begin{figure}[H]
@@ -600,7 +619,7 @@ implying that
 
 \subsection{The law of total probability and Bayes' rule}\label{sec:total-probability-bayes}
 
-Suppose $B_1, B_2, \ldots, B_n$ is a \emph{partition} of $\Omega$; that is, $B_1, B_2, \ldots, B_n$ are disjoint and their union is $\Omega$ (\cref{fig:partition}).
+Suppose $B_1, B_2, \ldots, B_n$ is a \emph{partition} of $\Omega$; that is, the $B_i$ are disjoint with union $\Omega$ (\cref{fig:partition}).
 
 \begin{figure}[H]
 \centering
@@ -628,7 +647,7 @@ Let $B_1, \ldots, B_n$ be a partition of $\Omega$ and $A$ an event. Then
 By the sum rule, $\Prob(A) = \sum_{i=1}^n \Prob(A \cap B_i)$, and hence, by the definition of conditional probability, $\Prob(A) = \sum_{i=1}^n \Prob(A \given B_i)\,\Prob(B_i)$.
 \end{proof}
 
-Combining the law of total probability with the definition of conditional probability gives Bayes' rule.
+Combining the law of total probability with conditional probability gives Bayes' rule.
 
 \begin{theorem}[Bayes' rule]\label{thm:bayes-rule}
 Let $B_1, \ldots, B_n$ be a partition of $\Omega$ and $A$ an event. Then
@@ -665,7 +684,7 @@ Since $\Prob(A \given B) = \Prob(A \cap B)/\Prob(B)$, an alternative definition 
 \[
   A, B \text{ independent} \iff \Prob(A \cap B) = \Prob(A)\,\Prob(B).
 \]
-This definition also covers the case $B = \emptyset$. We can extend the definition to arbitrarily many events.
+This also covers $B = \emptyset$. The definition extends to arbitrarily many events.
 
 \begin{definition}[Independent events]\label{def:independent-events}
 The events $A_1, A_2, \ldots$ are said to be \emph{(mutually) independent} if, for any $k$ and any choice of distinct indices $i_1, \ldots, i_k$,
@@ -675,7 +694,7 @@ The events $A_1, A_2, \ldots$ are said to be \emph{(mutually) independent} if, f
 \end{definition}
 
 \begin{remark}[Independence as a model assumption]\label{rem:independence-model-assumption}
-In most cases, independence of events is a model assumption. That is, we assume that there exists a $\Prob$ such that certain events are independent.
+In most cases, independence is a model assumption: we assume there exists a $\Prob$ under which certain events are independent.
 \end{remark}
 
 \begin{example}[Casting two dice, continued]\label{ex:two-dice-independent}
@@ -687,33 +706,20 @@ We cast two fair dice consecutively. Suppose $A$ is the event that the first die
 
 \subsection{Coin-tossing models}\label{sec:coin-tossing-models}
 
-Independence is the key assumption in the model for repeated coin tosses, from which two important distributions arise.
+Flip a coin $n$ times, and write each outcome as a binary $n$-tuple, with 1 for heads and 0 for tails. Let $A_i$ be the event of heads on the $i$th toss. We assume that $A_1, \ldots, A_n$ are independent, each with probability $p$. This completely specifies $\Prob$, and two important distributions follow.
 
-\begin{example}[A coin toss experiment and the binomial law]\label{ex:binomial-law}
-We flip a coin $n$ times. We can write the sample space as the set of binary $n$-tuples:
-\[
-  \Omega = \set{(0, \ldots, 0), \ldots, (1, \ldots, 1)}.
-\]
-Here 0 represents tails and 1 represents heads. For example, the outcome $(0, 1, 0, 1, \ldots)$ means that the first throw is tails, the second heads, the third tails, the fourth heads, etc.
-
-How should we define $\Prob$? Let $A_i$ denote the event of heads on the $i$th throw, $i = 1, \ldots, n$. Then $\Prob$ should be such that the events $A_1, \ldots, A_n$ are independent, and moreover $\Prob(A_i)$ should be the same for all $i$. We don't know whether the coin is fair or not, but we can call this probability $p$ ($0 \le p \le 1$). These two rules completely specify $\Prob$. For example, the probability that the first $k$ throws are heads and the last $n - k$ are tails is
-\[
-  \Prob(\set{(1, 1, \ldots, 1, 0, 0, \ldots, 0)}) = \Prob(A_1) \cdots \Prob(A_k)\,\Prob(A_{k+1}^c) \cdots \Prob(A_n^c) = p^k (1-p)^{n-k}.
-\]
-Also, let $B_k$ be the event that there are $k$ heads in total. The probability of this event is the sum of the probabilities of the elementary events $\set{(x_1, \ldots, x_n)}$ such that $x_1 + \cdots + x_n = k$. Each of these events has probability $p^k(1-p)^{n-k}$, and there are $\binom{n}{k}$ of them. Thus
+\begin{example}[Binomial law]\label{ex:binomial-law}
+Each outcome with $k$ heads, such as $(1, \ldots, 1, 0, \ldots, 0)$, has probability $p^k(1-p)^{n-k}$ by independence, and there are $\binom{n}{k}$ such outcomes. So the event $B_k$ of $k$ heads in total has probability
 \[
   \Prob(B_k) = \binom{n}{k} p^k (1-p)^{n-k}, \qquad k = 0, 1, \ldots, n.
 \]
-We have thus discovered the \emph{binomial distribution} (\cref{ch:common-distributions}).
+This is the \emph{binomial distribution} (\cref{ch:common-distributions}).
 \end{example}
 
 \begin{example}[Geometric law]\label{ex:geometric-law}
-There is another important law associated with the coin flip experiment. Suppose we flip the coin until heads appears for the first time. Let $C_k$ be the event that heads appears for the first time at the $k$th toss, $k = 1, 2, \ldots$. Then, using the same events $\set{A_i}$ as in \cref{ex:binomial-law}, we can write
+Flip the coin until heads appears for the first time, and let $C_k$ be the event that this happens at the $k$th toss. Then $C_k = A_1^c \cap \cdots \cap A_{k-1}^c \cap A_k$, so by the product rule and independence,
 \[
-  C_k = A_1^c \cap A_2^c \cap \cdots \cap A_{k-1}^c \cap A_k,
+  \Prob(C_k) = \Prob(A_1^c) \cdots \Prob(A_{k-1}^c)\,\Prob(A_k) = (1-p)^{k-1} p, \qquad k = 1, 2, \ldots.
 \]
-so that, with the product rule and the mutual independence of $A_1^c, \ldots, A_{k-1}^c, A_k$, we have the \emph{geometric law}:
-\[
-  \Prob(C_k) = \Prob(A_1^c) \cdots \Prob(A_{k-1}^c)\,\Prob(A_k) = (1-p)^{k-1} p.
-\]
+This is the \emph{geometric law}.
 \end{example}

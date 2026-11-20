@@ -21,12 +21,12 @@ Most of the important discrete distributions are associated with a sequence of i
 \[
   \Prob(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = \Prob(A_{i_1}) \cdots \Prob(A_{i_k})
 \]
-for any distinct indices $i_1, \ldots, i_k$ (\cref{ex:binomial-law}). The distributions differ in what they count:
+for any distinct indices $i_1, \ldots, i_k$ (\cref{sec:coin-tossing-models}). The distributions differ in what they count:
 \begin{itemize}
-  \item Bernoulli: the outcome of a single trial (values 0 and 1);
-  \item binomial: the number of successes in $n$ trials (values $0, 1, \ldots, n$);
-  \item geometric: the number of trials until the first success (values $1, 2, \ldots$);
-  \item negative binomial: the number of trials until the $k$th success (values $k, k+1, \ldots$).
+  \item Bernoulli: the outcome of a single trial (values 0 and 1)
+  \item binomial: the number of successes in $n$ trials (values $0, 1, \ldots, n$)
+  \item geometric: the number of trials until the first success (values $1, 2, \ldots$)
+  \item negative binomial: the number of trials until the $k$th success (values $k, k+1, \ldots$)
 \end{itemize}
 
 \begin{figure}[H]
@@ -79,9 +79,9 @@ Despite its simplicity, this is one of the most important distributions in proba
 \begin{theorem}[Properties of the Bernoulli distribution]\label{thm:bernoulli-properties}
 Let $X \sim \Bern(p)$. Then
 \begin{enumerate}
-  \item $\E X = p$;
-  \item $\Var(X) = p(1-p)$;
-  \item the PGF is $G(z) = 1 - p + zp$.
+  \item $\E X = p$
+  \item $\Var(X) = p(1-p)$
+  \item the PGF is $G(z) = 1 - p + zp$
 \end{enumerate}
 \end{theorem}
 
@@ -130,9 +130,9 @@ Let $X$ be the number of successes in $n$ independent Bernoulli trials (coin tos
 \begin{theorem}[Properties of the binomial distribution]\label{thm:binomial-properties}
 Let $X \sim \Bin(n, p)$. Then
 \begin{enumerate}
-  \item $\E X = np$;
-  \item $\Var(X) = np(1-p)$;
-  \item the PGF is $G(z) = (1 - p + zp)^n$.
+  \item $\E X = np$
+  \item $\Var(X) = np(1-p)$
+  \item the PGF is $G(z) = (1 - p + zp)^n$
 \end{enumerate}
 \end{theorem}
 
@@ -188,10 +188,10 @@ A random variable with pmf $f(x) = (1-p)^{x-1} p$, $x = 1, 2, \ldots$, has a \em
 \begin{theorem}[Properties of the geometric distribution]\label{thm:geometric-properties}
 Let $X \sim \Geom(p)$. Then
 \begin{enumerate}
-  \item the PGF is $G(z) = \dfrac{zp}{1 - z(1-p)}$;
-  \item $\E X = 1/p$;
-  \item $\Var(X) = (1-p)/p^2$;
-  \item $\Prob(X > k) = (1-p)^k$, so the CDF is $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$.
+  \item the PGF is $G(z) = \dfrac{zp}{1 - z(1-p)}$
+  \item $\E X = 1/p$
+  \item $\Var(X) = (1-p)/p^2$
+  \item $\Prob(X > k) = (1-p)^k$, so the CDF is $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$
 \end{enumerate}
 \end{theorem}
 
@@ -295,9 +295,9 @@ As $n \to \infty$, the second and fourth factors go to 1, and the third goes to 
 \begin{theorem}[Properties of the Poisson distribution]\label{thm:poisson-properties}
 Let $X \sim \Pois(\lambda)$. Then
 \begin{enumerate}
-  \item the PGF is $G(z) = e^{-\lambda(1-z)}$;
-  \item $\E X = \lambda$;
-  \item $\Var(X) = \lambda$.
+  \item the PGF is $G(z) = e^{-\lambda(1-z)}$
+  \item $\E X = \lambda$
+  \item $\Var(X) = \lambda$
 \end{enumerate}
 So for the Poisson distribution, the expectation and variance are equal.
 \end{theorem}
@@ -395,8 +395,8 @@ $X \sim \Unif[a, b]$ models a point chosen at random from $[a, b]$, each choice 
 \begin{theorem}[Properties of the uniform distribution]\label{thm:uniform-properties}
 Let $X \sim \Unif[a, b]$. Then
 \begin{enumerate}
-  \item $\E X = (a + b)/2$;
-  \item $\Var(X) = (b - a)^2/12$.
+  \item $\E X = (a + b)/2$
+  \item $\Var(X) = (b - a)^2/12$
 \end{enumerate}
 \end{theorem}
 
@@ -449,11 +449,11 @@ Graphs of the pdf for various values of $\lambda$ are given in \cref{fig:exponen
 \begin{theorem}[Properties of the exponential distribution]\label{thm:exponential-properties}
 Let $X \sim \Expo(\lambda)$. Then
 \begin{enumerate}
-  \item the MGF is $M(s) = \dfrac{\lambda}{\lambda - s}$ for $s < \lambda$;
-  \item $\E X = 1/\lambda$;
-  \item $\Var(X) = 1/\lambda^2$;
-  \item the CDF is $F(x) = 1 - e^{-\lambda x}$ for $x \ge 0$;
-  \item the tail probability decays exponentially: $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$.
+  \item the MGF is $M(s) = \dfrac{\lambda}{\lambda - s}$ for $s < \lambda$
+  \item $\E X = 1/\lambda$
+  \item $\Var(X) = 1/\lambda^2$
+  \item the CDF is $F(x) = 1 - e^{-\lambda x}$ for $x \ge 0$
+  \item the tail probability decays exponentially: $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$
 \end{enumerate}
 \end{theorem}
 
@@ -546,9 +546,9 @@ So any normal random variable is an affine (linear plus constant) transformation
 \begin{theorem}[Properties of the normal distribution]\label{thm:normal-properties}
 Let $X \sim \Normal(\mu, \sigma^2)$. Then
 \begin{enumerate}
-  \item $\E X = \mu$;
-  \item $\Var(X) = \sigma^2$;
-  \item the MGF is $\E e^{sX} = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$.
+  \item $\E X = \mu$
+  \item $\Var(X) = \sigma^2$
+  \item the MGF is $\E e^{sX} = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
 \end{enumerate}
 \end{theorem}
 
@@ -590,9 +590,9 @@ Since $\Phi(3) > \Phi(2)$, a male taller than 2\,m is more unusual than a female
 
 There is no simple formula for areas under the normal density curve. As a rough rule, for $X \sim \Normal(\mu, \sigma^2)$, the probability that $X$ lies within $c$ standard deviations of the mean is
 \begin{itemize}
-  \item about 68\% for $c = 1$;
-  \item about 95\% for $c = 2$;
-  \item about 99.7\% for $c = 3$.
+  \item about 68\% for $c = 1$
+  \item about 95\% for $c = 2$
+  \item about 99.7\% for $c = 3$
 \end{itemize}
 
 \begin{figure}[H]
@@ -650,9 +650,9 @@ The \emph{gamma function} is
 \begin{theorem}[Properties of the gamma function]\label{thm:gamma-function-properties}
 \leavevmode
 \begin{enumerate}
-  \item $\Gamma(a + 1) = a\Gamma(a)$ for $a > 0$;
-  \item $\Gamma(n) = (n - 1)!$ for $n = 1, 2, \ldots$, so the gamma function generalises the factorial;
-  \item $\Gamma(1) = 1$ and $\Gamma(\tfrac12) = \sqrt\pi$.
+  \item $\Gamma(a + 1) = a\Gamma(a)$ for $a > 0$
+  \item $\Gamma(n) = (n - 1)!$ for $n = 1, 2, \ldots$, so the gamma function generalises the factorial
+  \item $\Gamma(1) = 1$ and $\Gamma(\tfrac12) = \sqrt\pi$
 \end{enumerate}
 \end{theorem}
 
@@ -667,9 +667,9 @@ has a \emph{gamma distribution}, written $X \sim \GammaDist(\alpha, \lambda)$. T
 \begin{theorem}[Properties of the gamma distribution]\label{thm:gamma-properties}
 Let $X \sim \GammaDist(\alpha, \lambda)$. Then
 \begin{enumerate}
-  \item the MGF is $M(s) = \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^\alpha$ for $s < \lambda$;
-  \item $\E X = \alpha/\lambda$;
-  \item $\Var(X) = \alpha/\lambda^2$.
+  \item the MGF is $M(s) = \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^\alpha$ for $s < \lambda$
+  \item $\E X = \alpha/\lambda$
+  \item $\Var(X) = \alpha/\lambda^2$
 \end{enumerate}
 \end{theorem}
 
@@ -734,10 +734,10 @@ has a \emph{beta distribution}, written $X \sim \BetaDist(\alpha, \beta)$. Its s
 
 R has four functions for each standard distribution, named with a prefix:
 \begin{itemize}
-  \item \texttt{d} for the pmf or pdf (e.g.\ \texttt{dnorm}, \texttt{dunif});
-  \item \texttt{p} for the CDF, which gives a probability (e.g.\ \texttt{pnorm}, \texttt{punif});
-  \item \texttt{q} for quantiles (e.g.\ \texttt{qnorm}, \texttt{qunif});
-  \item \texttt{r} for generating random numbers (e.g.\ \texttt{rnorm}, \texttt{runif}).
+  \item \texttt{d} for the pmf or pdf (e.g.\ \texttt{dnorm}, \texttt{dunif})
+  \item \texttt{p} for the CDF, which gives a probability (e.g.\ \texttt{pnorm}, \texttt{punif})
+  \item \texttt{q} for quantiles (e.g.\ \texttt{qnorm}, \texttt{qunif})
+  \item \texttt{r} for generating random numbers (e.g.\ \texttt{rnorm}, \texttt{runif})
 \end{itemize}
 The same construction works for other distributions met later, such as the Student $t$, $F$ and chi-squared distributions.
 

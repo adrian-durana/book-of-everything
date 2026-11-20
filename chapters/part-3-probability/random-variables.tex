@@ -126,10 +126,10 @@ We write $F_X$ when the random variable needs naming.
 \begin{theorem}[Properties of a CDF]\label{thm:cdf-properties}
 Let $F$ be the CDF of a random variable $X$. Then
 \begin{enumerate}[label=(\roman*)]
-  \item $F$ is non-decreasing: $x \le y \implies F(x) \le F(y)$;
-  \item $0 \le F(x) \le 1$ for all $x$;
-  \item $\lim_{x \to -\infty} F(x) = 0$ and $\lim_{x \to \infty} F(x) = 1$;
-  \item $F$ is right-continuous: $\lim_{h \downarrow 0} F(x + h) = F(x)$.
+  \item $F$ is non-decreasing: $x \le y \implies F(x) \le F(y)$
+  \item $0 \le F(x) \le 1$ for all $x$
+  \item $\lim_{x \to -\infty} F(x) = 0$ and $\lim_{x \to \infty} F(x) = 1$
+  \item $F$ is right-continuous: $\lim_{h \downarrow 0} F(x + h) = F(x)$
 \end{enumerate}
 \end{theorem}
 
@@ -146,9 +146,9 @@ CDFs are useful because they apply to both discrete and continuous distributions
 \begin{proposition}[Probabilities from the CDF]\label{prop:cdf-interval-probabilities}
 Let $X$ have CDF $F$, and let $a < b$. Then
 \begin{enumerate}[label=(\alph*)]
-  \item $\Prob(a < X \le b) = F(b) - F(a)$;
-  \item $\Prob(X = a) = F(a) - \lim_{h \downarrow 0} F(a - h)$;
-  \item $\Prob(a \le X \le b) = F(b) - \lim_{h \downarrow 0} F(a - h)$.
+  \item $\Prob(a < X \le b) = F(b) - F(a)$
+  \item $\Prob(X = a) = F(a) - \lim_{h \downarrow 0} F(a - h)$
+  \item $\Prob(a \le X \le b) = F(b) - \lim_{h \downarrow 0} F(a - h)$
 \end{enumerate}
 \end{proposition}
 
