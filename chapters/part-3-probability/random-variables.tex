@@ -12,14 +12,14 @@ Specifying a model for a random experiment via a complete description of $\Omega
 % ==========================================================================
 
 \begin{definition}[Random variable]\label{def:random-variable}
-Let $(\Omega, \mathcal{F}, \Prob)$ be a probability space. A \emph{random variable} is a function $X \colon \Omega \to E$, where $E$ is a measurable space, for example $\R$, a subset of $\R$, $\R^n$, or a space of functions. In this chapter, $E = \R$.
+Let $(\Omega, \mathcal{F}, \Prob)$ be a probability space. A \emph{random variable} is a function $X \colon \Omega \to E$, where $E$ is a measurable space. In this chapter, $E = \R$.
 \end{definition}
 
 For a set $A \subseteq \R$, we write
 \[
   \set{X \in A} \coloneqq \set{\omega \in \Omega : X(\omega) \in A},
 \]
-and similarly $\set{X = x}$, $\set{X \le x}$ and $\set{a < X \le b}$. We abbreviate $\Prob(\set{X \in A})$ to $\Prob(X \in A)$. Random variables are usually denoted by capital letters from the end of the alphabet, such as $X, X_1, X_2, \ldots, Y, Z$. They give natural notation for events such as $\set{X = 10}$, $\set{X > 1000}$ and $\set{\max(X, Y) \le Z}$.
+and similarly $\set{X = x}$, $\set{X \le x}$ and $\set{a < X \le b}$. We abbreviate $\Prob(\set{X \in A})$ to $\Prob(X \in A)$. Random variables are usually denoted by capital letters from the end of the alphabet, and give natural notation for events such as $\set{X = 10}$, $\set{X > 1000}$ and $\set{\max(X, Y) \le Z}$.
 
 \begin{example}[Sum of two dice]\label{ex:sum-two-dice}
 Toss two dice one after the other and note their sum. The sample space is $\Omega = \set{(1,1), \ldots, (6,6)}$. The function $X$ defined by $X(i, j) = i + j$ is a random variable, which maps the outcome $(i,j)$ to the sum $i + j$. The set of all outcomes with sum $8$ is $\set{X = 8}$. It contains $5$ outcomes, and all $36$ outcomes are equally likely, so
@@ -167,11 +167,11 @@ Let $X$ have CDF $F$, and let $a < b$. Then
 % ==========================================================================
 
 \begin{definition}[Discrete distribution, probability mass function]\label{def:discrete-distribution}
-A random variable $X$ has a \emph{discrete distribution} if $X$ is a discrete random variable. In particular, for some finite or countable set of values $x_1, x_2, \ldots$,
+A random variable $X$ has a \emph{discrete distribution} if $X$ is a discrete random variable, taking values $x_1, x_2, \ldots$ in a finite or countable set, with $\Prob(X = x_i) > 0$. Its \emph{probability mass function} (pmf) is the function $f \colon \R \to \R$ given by $f(x) = \Prob(X = x)$. Then $f(x) \ge 0$ for all $x$, $\sum_i f(x_i) = 1$, and for all $a \le b$,
 \[
-  \Prob(X = x_i) > 0 \quad (i = 1, 2, \ldots) \qquad \text{and} \qquad \sum_i \Prob(X = x_i) = 1.
+  \Prob(a < X \le b) = F(b) - F(a) = \sum_{a < x_i \le b} f(x_i).
 \]
-The \emph{probability mass function} (pmf) $f$ of $X$ is $f(x) = \Prob(X = x)$. We write $f_X$ to stress that the pmf belongs to $X$.
+We write $f_X$ when the random variable needs naming.
 \end{definition}
 
 The easiest way to specify the distribution of a discrete random variable is to give its pmf. If we know $f(x)$ for all $x$, the sum rule gives every probability involving $X$:
@@ -238,11 +238,11 @@ From the table and \eqref{eq:pmf-sum-rule}, $\Prob(X \ge 3) = \sum_{x=3}^{6} f(x
 % ==========================================================================
 
 \begin{definition}[Continuous distribution, probability density function]\label{def:continuous-distribution}
-A random variable $X$ has a \emph{continuous distribution} if $X$ is a continuous random variable for which there exists a function $f \colon \R \to \R$ with $f(x) \ge 0$ for all $x$ and $\int_{-\infty}^{\infty} f(x) \dd x = 1$, such that for all $a \le b$,
+A random variable $X$ has a \emph{continuous distribution} if $X$ is a continuous random variable, taking values in an interval or a union of intervals, with $\Prob(X = x) = 0$ for all $x$. Its \emph{probability density function} (pdf) is a function $f \colon \R \to \R$ with $f(x) \ge 0$ for all $x$, $\int_{-\infty}^{\infty} f(x) \dd x = 1$, and for all $a \le b$,
 \[
   \Prob(a < X \le b) = F(b) - F(a) = \int_a^b f(u) \dd u.
 \]
-The function $f$ is the \emph{probability density function} (pdf) of $X$.
+We write $f_X$ when the random variable needs naming.
 \end{definition}
 
 We write $X \sim f$ or $X \sim F$ to indicate that $X$ is distributed according to the pdf $f$ or the CDF $F$. The same notation is used for a pmf. Once we know the pdf, we can calculate the probability that $X$ lies in a set $B$ by integration, in analogy with \eqref{eq:pmf-sum-rule}:
@@ -306,7 +306,7 @@ Let $X$ be a continuous random variable with CDF $F$ and pdf $f$, and let $0 < p
 \[
   p = F\bigl(q(p)\bigr) = \int_{-\infty}^{q(p)} f(u) \dd u.
 \]
-If $F$ can be inverted, this can be written $q(p) = F^{-1}(p)$, which is called the quantile function.
+If $F$ is invertible, this can be written $q(p) = F^{-1}(p)$, which is called the quantile function.
 \end{definition}
 
 Describing an experiment through a random variable and its pmf, pdf or CDF is usually much easier than specifying the probability space $(\Omega, \mathcal{F}, \Prob)$ explicitly. In the examples above, no probability space was needed.
