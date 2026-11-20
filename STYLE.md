@@ -120,6 +120,9 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - Don't link to specific theorems or definitions in chapter or section introductions (for now). Links to other chapters are fine there, but don't go out of the way to add them.
 - Don't define standard terms in passing (e.g. no "affine (linear plus constant)").
 - R (or Python) code goes only in the chapter's computing section, not in the main text; examples there use the code heavily, reusing the chapter's own examples. (Applied in Ch 29; other chapters keep their code for now.)
+- In lists of properties, write conditions as implications: "$X$ and $Y$ independent $\implies \Cov(X, Y) = 0$", not "if …, then …".
+- Proofs: say a result "follows from" an earlier one ("Properties 1 and 2 follow from Theorem 27.11"). Skip routine algebra steps that the reader can see at once.
+- Don't add "In particular" special cases that just restate the general result.
 - Name results plainly: "Markov inequality", "Chebyshev inequality", "Generalised Markov inequality" (not "Markov's inequality, general form"). Give a colloquial name alongside the formal one where it is common, e.g. "Law of the unconscious statistician, LOTUS".
 - Distributions: $\Bern(p)$ = Ber, $\Pois(\lambda)$ = Poi, $\Normal(\mu, \sigma^2)$ = $\mathcal{N}$ (may revert later), $\GammaDist(\alpha, \lambda)$ = Gamma (shape, rate; mention the scale form $\GammaDist(\alpha, \beta)$, $\beta = 1/\lambda$), $\BetaDist(\alpha, \beta)$ = Beta. Always use the macros.
 - Generating functions: PGF $\pgf$ ($\mathcal{G}$), MGF $\mgf$ ($\mathcal{M}$), with subscripts $\pgf_X$, $\mgf_X$ when needed.

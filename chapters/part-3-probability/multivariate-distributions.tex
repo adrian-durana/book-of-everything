@@ -102,7 +102,7 @@ That is, $f_X = (0.3, 0.4, 0.3)$ on $\set{1, 2, 3}$ and $f_Y = (0.6, 0.4)$ on $\
 \subsection{Continuous joint distributions}\label{sec:continuous-joint}
 
 \begin{definition}[Joint pdf]\label{def:joint-pdf}
-Continuous random variables $X_1, \ldots, X_n$ have \emph{joint probability density function} $f$ if $f \ge 0$, $\int \cdots \int f(x_1, \ldots, x_n) \dd x_1 \cdots \dd x_n = 1$, and
+Continuous random variables $X_1, \ldots, X_n$ have a \emph{joint probability density function} $f$ if $f \ge 0$, $\int \cdots \int f(x_1, \ldots, x_n) \dd x_1 \cdots \dd x_n = 1$, and
 \[
   \Prob(a_1 \le X_1 \le b_1, \ldots, a_n \le X_n \le b_n) = \int_{a_1}^{b_1} \cdots \int_{a_n}^{b_n} f(x_1, \ldots, x_n) \dd x_n \cdots \dd x_1
 \]
@@ -192,7 +192,7 @@ Many statistical models involve random variables $X_1, X_2, \ldots$ that are ind
 where Dist is the common distribution, with pdf $f$ and CDF $F$.
 
 \begin{remark}[Random sample]\label{rem:random-sample}
-The model in which $X_1, \ldots, X_n$ are independent and all have the same distribution is the most widely used model in statistics. We say that $X_1, \ldots, X_n$ is a \emph{random sample} of size $n$ from the given distribution, which is sometimes called the \emph{sampling distribution}.
+The model in which $X_1, \ldots, X_n$ are independent and identically distributed is the most widely used model in statistics. We say that $X_1, \ldots, X_n$ is a \emph{random sample} of size $n$ from the given distribution, sometimes called the \emph{sampling distribution}.
 \end{remark}
 
 \begin{example}[Coin flips]\label{ex:coin-flips-independent}
@@ -264,7 +264,7 @@ Let $X_1, \ldots, X_n$ be discrete or continuous random variables with expectati
 \[
   \E(Y) = a + b_1 \E(X_1) + \cdots + b_n \E(X_n) = a + b_1 \mu_1 + \cdots + b_n \mu_n.
 \]
-In particular, $\E(X + Y) = \E(X) + \E(Y)$. Note that this holds regardless of independence. If $X_1, \ldots, X_n$ are independent, then also
+This holds regardless of independence. If $X_1, \ldots, X_n$ are independent, then also
 \[
   \E(X_1 X_2 \cdots X_n) = \E(X_1) \, \E(X_2) \cdots \E(X_n).
 \]
@@ -338,14 +338,14 @@ For random variables $X$, $Y$ and $Z$ and $a, b \in \R$,
   \item $\Cov(aX + bY, Z) = a \Cov(X, Z) + b \Cov(Y, Z)$
   \item $\Cov(X, X) = \Var(X)$
   \item $\Var(X + Y) = \Var(X) + \Var(Y) + 2\Cov(X, Y)$
-  \item if $X$ and $Y$ are independent, then $\Cov(X, Y) = 0$
+  \item $X$ and $Y$ independent $\implies \Cov(X, Y) = 0$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-Properties 1 and 2 are \cref{thm:variance-properties}. Write $\mu_X = \E(X)$ and $\mu_Y = \E(Y)$.
+Properties 1 and 2 follow from \cref{thm:variance-properties}. Write $\mu_X = \E(X)$ and $\mu_Y = \E(Y)$.
 \begin{enumerate}[leftmargin=*]
-  \item[3.] $\Cov(X, Y) = \E(XY - Y\mu_X - X\mu_Y + \mu_X\mu_Y) = \E(XY) - \mu_Y\mu_X - \mu_X\mu_Y + \mu_X\mu_Y = \E(XY) - \mu_X\mu_Y$.
+  \item[3.] $\Cov(X, Y) = \E(XY - Y\mu_X - X\mu_Y + \mu_X\mu_Y) = \E(XY) - \mu_X\mu_Y$.
   \item[4.] $\Cov(X, Y) = \E\bigl((X - \mu_X)(Y - \mu_Y)\bigr) = \E\bigl((Y - \mu_Y)(X - \mu_X)\bigr) = \Cov(Y, X)$.
   \item[5.] Using property 3,
 \begin{align*}
