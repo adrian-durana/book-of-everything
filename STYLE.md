@@ -56,7 +56,8 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - Numbers in prose: write "0.5" rather than "½" for values such as limits and probabilities.
 - Don't elaborate on a term that is outside the chapter's scope (e.g. no examples of measurable spaces in the random-variable definition).
 - Distribution definitions all follow one template: "A random variable $X$ has a *… distribution* with parameters …, written $X \sim \ldots$, if its pmf/pdf is [display]. It counts … / It describes …". The motivating story goes in the text before or in that last sentence, not in the "if" clause.
-- Property theorems for distributions all follow one template: "[Properties of the … distribution] For $X \sim \ldots$, 1. $\E(X) = …$, 2. $\Var(X) = …$, 3. The PGF/MGF is …, then The CDF is …, The tail probability is …". The PGF/MGF comes first only when the proofs of the expectation and variance use it. Items that start with a word are capitalised ("The PGF is"). Proofs follow the same order. Paired results (e.g. the two memoryless properties) have the same statement and proof shape.
+- Property theorems for distributions all follow one template: "[Properties of the … distribution] For $X \sim \ldots$, 1. $\E(X) = …$, 2. $\Var(X) = …$, 3. $\pgf(z) = …$ or $\mgf(s) = …$, then $F(x) = …$, $\Prob(X > x) = …$". Items are formulas only, without "The PGF is". The PGF/MGF comes first only when the proofs of the expectation and variance use it. Proofs follow the same order. Paired results (e.g. the two memoryless properties) have the same statement and proof shape.
+- In lists, small fractions are written inline with a slash (e.g. $\pgf(z) = zp/\bigl(1 - z(1-p)\bigr)$); only big ones (e.g. the hypergeometric moments) use \verb|\dfrac|.
 - Results stated without proof in the course are followed by "Not proved in this course." (or "These are not proved in this course.").
 - Paired results mirror each other too: if the MGF has a "Moments from the MGF" theorem, the PGF gets a matching "Moments from the PGF" theorem rather than the same facts in running text.
 - Paired definitions (discrete and continuous, pmf and pdf, …) mirror each other: the same structure and the same items (values taken, positivity, normalisation, how probabilities are computed, notation), so each can be read against the other.
@@ -112,7 +113,7 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - State facts as formulas where that is clearer: $\sigma_{aX+b} = \abs{a}\,\sigma_X$, not "the standard deviation of $aX + b$ is $\abs{a}$ times …".
 - Every theorem box has a name in brackets, and states its result as a formula where possible ("$-1 \le \Corr(X, Y) \le 1$", not "always lies between −1 and 1").
 - Definitions may be phrased "We define the *term* … by …", "The *term* of … is …" or "… has a *term* if …"; all are fine. Avoid "obvious"; say "follows in the same way".
-- Keep theorem names short when the section makes the context clear ("Memoryless property", not "Memoryless property of the exponential distribution"). When a result reappears for another object, say where it was met before.
+- When a result reappears for another object, give it the full name ("Memoryless property of the exponential distribution") and say where it was met before.
 - A proof that ends in a formula gives it in a display: "…, and so [display]", not "Hence $\lim … = …$" inline.
 - In a list of labelled items ("Binomial: the number of …"), capitalise the first word of each item.
 - Chapter and section introductions should be (relatively) self-contained, so they work for a quick review on their own.
@@ -121,6 +122,7 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - R (or Python) code goes only in the chapter's computing section, not in the main text; examples there use the code heavily, reusing the chapter's own examples. (Applied in Ch 29; other chapters keep their code for now.)
 - Name results plainly: "Markov inequality", "Chebyshev inequality", "Generalised Markov inequality" (not "Markov's inequality, general form"). Give a colloquial name alongside the formal one where it is common, e.g. "Law of the unconscious statistician, LOTUS".
 - Distributions: $\Bern(p)$ = Ber, $\Pois(\lambda)$ = Poi, $\Normal(\mu, \sigma^2)$ = $\mathcal{N}$ (may revert later), $\GammaDist(\alpha, \lambda)$ = Gamma (shape, rate; mention the scale form $\GammaDist(\alpha, \beta)$, $\beta = 1/\lambda$), $\BetaDist(\alpha, \beta)$ = Beta. Always use the macros.
+- Generating functions: PGF $\pgf$ ($\mathcal{G}$), MGF $\mgf$ ($\mathcal{M}$), with subscripts $\pgf_X$, $\mgf_X$ when needed.
 - Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
 - Elementary probabilities: $p_i = \Prob(\set{a_i})$.
 

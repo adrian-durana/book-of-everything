@@ -81,7 +81,7 @@ For $X \sim \Bern(p)$,
 \begin{enumerate}
   \item $\E(X) = p$
   \item $\Var(X) = p(1-p)$
-  \item The PGF is $G(z) = 1 - p + zp$
+  \item $\pgf(z) = 1 - p + zp$
 \end{enumerate}
 \end{theorem}
 
@@ -89,7 +89,7 @@ For $X \sim \Bern(p)$,
 \begin{enumerate}[leftmargin=*]
   \item[1.] $\E(X) = 0 \cdot (1-p) + 1 \cdot p = p$.
   \item[2.] Since $X^2 = X$, $\Var(X) = \E(X^2) - (\E X)^2 = \E(X) - (\E X)^2 = p - p^2 = p(1-p)$.
-  \item[3.] $G(z) = z^0 (1-p) + z^1 p = 1 - p + zp$. \qedhere
+  \item[3.] $\pgf(z) = z^0 (1-p) + z^1 p = 1 - p + zp$. \qedhere
 \end{enumerate}
 \end{proof}
 
@@ -99,7 +99,6 @@ Flip a fair coin 100 times and let $X$ be the number of successes (heads). $X$ c
 \[
   \Prob(X = x) = \frac{\binom{100}{x}}{2^{100}}, \qquad x = 0, 1, \ldots, 100.
 \]
-For example, $\Prob(X \ge 60) = \sum_{x=60}^{100} \binom{100}{x} / 2^{100}$.
 
 More generally, if the probability of heads is $p$, the outcomes are no longer equally likely. By the product rule (\cref{thm:product-rule}), each particular sequence with $x$ heads and $n - x$ tails has probability $p^x (1-p)^{n-x}$, and there are $\binom{n}{x}$ such sequences (\cref{ex:binomial-law}).
 
@@ -130,7 +129,7 @@ For $X \sim \Bin(n, p)$,
 \begin{enumerate}
   \item $\E(X) = np$
   \item $\Var(X) = np(1-p)$
-  \item The PGF is $G(z) = (1 - p + zp)^n$
+  \item $\pgf(z) = (1 - p + zp)^n$
 \end{enumerate}
 \end{theorem}
 
@@ -143,11 +142,11 @@ For $X \sim \Bin(n, p)$,
   \end{align*}
   \item[3.] By the binomial theorem $(a + b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k}$,
   \[
-    G(z) = \sum_{k=0}^n z^k \binom{n}{k} p^k (1-p)^{n-k} = \sum_{k=0}^n \binom{n}{k} (zp)^k (1-p)^{n-k} = (1 - p + zp)^n.
+    \pgf(z) = \sum_{k=0}^n z^k \binom{n}{k} p^k (1-p)^{n-k} = \sum_{k=0}^n \binom{n}{k} (zp)^k (1-p)^{n-k} = (1 - p + zp)^n.
   \]
-  The PGF gives the same expectation and variance: $G'(1) = np$, and
+  The PGF gives the same expectation and variance: $\pgf'(1) = np$, and
   \[
-    G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = (n-1)np^2 + np - n^2p^2 = np(1-p). \qedhere
+    \pgf''(1) + \pgf'(1) - \bigl(\pgf'(1)\bigr)^2 = (n-1)np^2 + np - n^2p^2 = np(1-p). \qedhere
   \]
 \end{enumerate}
 \end{proof}
@@ -191,11 +190,11 @@ It counts the Bernoulli trials until the first success.
 \begin{theorem}[Properties of the geometric distribution]\label{thm:geometric-properties}
 For $X \sim \Geom(p)$,
 \begin{enumerate}
-  \item The PGF is $G(z) = \dfrac{zp}{1 - z(1-p)}$
+  \item $\pgf(z) = zp/\bigl(1 - z(1-p)\bigr)$
   \item $\E(X) = 1/p$
   \item $\Var(X) = (1-p)/p^2$
-  \item The CDF is $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$
-  \item The tail probability is $\Prob(X > x) = (1-p)^x$ for $x = 1, 2, \ldots$
+  \item $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$
+  \item $\Prob(X > x) = (1-p)^x$ for $x = 1, 2, \ldots$
 \end{enumerate}
 \end{theorem}
 
@@ -203,12 +202,12 @@ For $X \sim \Geom(p)$,
 \begin{enumerate}[leftmargin=2.6em]
   \item[1.] Using the geometric series $1 + a + a^2 + \cdots = 1/(1-a)$ for $\abs{a} < 1$,
 \[
-  G(z) = \sum_{x=1}^\infty z^x p (1-p)^{x-1} = zp \sum_{k=0}^\infty \bigl(z(1-p)\bigr)^k = \frac{zp}{1 - z(1-p)}.
+  \pgf(z) = \sum_{x=1}^\infty z^x p (1-p)^{x-1} = zp \sum_{k=0}^\infty \bigl(z(1-p)\bigr)^k = \frac{zp}{1 - z(1-p)}.
 \]
-  \item[2.] Differentiating, $\E(X) = G'(1) = 1/p$. This is intuitive: if successes occur with probability $p$, we expect to wait $1/p$ throws for one.
+  \item[2.] Differentiating, $\E(X) = \pgf'(1) = 1/p$. This is intuitive: if successes occur with probability $p$, we expect to wait $1/p$ throws for one.
   \item[3.] Differentiating twice,
 \[
-  \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \frac{2(1-p)}{p^2} + \frac1p - \frac{1}{p^2} = \frac{1-p}{p^2}.
+  \Var(X) = \pgf''(1) + \pgf'(1) - \bigl(\pgf'(1)\bigr)^2 = \frac{2(1-p)}{p^2} + \frac1p - \frac{1}{p^2} = \frac{1-p}{p^2}.
 \]
   \item[4--5.] $\set{X > x}$ is the event of $x$ consecutive failures, which has probability $(1-p)^x$, and $F(x) = 1 - \Prob(X > x)$. \qedhere
 \end{enumerate}
@@ -216,7 +215,7 @@ For $X \sim \Geom(p)$,
 
 The geometric distribution has the \emph{memoryless property}. Suppose we have tossed the coin $x$ times without a success. What is the probability that we need more than $y$ additional tosses? Obviously it is the same as the probability of needing more than $y$ tosses starting from scratch, $\Prob(X > y) = (1-p)^y$, whatever $x$ is. The coin has no memory of what happened.
 
-\begin{theorem}[Memoryless property]\label{thm:geometric-memoryless}
+\begin{theorem}[Memoryless property of the geometric distribution]\label{thm:geometric-memoryless}
 Let $X \sim \Geom(p)$. For all $x, y = 1, 2, \ldots$,
 \[
   \Prob(X > x + y \given X > x) = \Prob(X > y).
@@ -304,7 +303,7 @@ As $n \to \infty$, the second and fourth factors go to 1, and the third goes to 
 \begin{theorem}[Properties of the Poisson distribution]\label{thm:poisson-properties}
 For $X \sim \Pois(\lambda)$,
 \begin{enumerate}
-  \item The PGF is $G(z) = e^{-\lambda(1-z)}$
+  \item $\pgf(z) = e^{-\lambda(1-z)}$
   \item $\E(X) = \lambda$
   \item $\Var(X) = \lambda$
 \end{enumerate}
@@ -313,14 +312,14 @@ For $X \sim \Pois(\lambda)$,
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=*]
   \item[1.] This is \cref{ex:pgf-poisson}.
-  \item[2.] $\E(X) = G'(1) = \lambda$. Directly,
+  \item[2.] $\E(X) = \pgf'(1) = \lambda$. Directly,
 \[
   \E(X) = \sum_{x=0}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=1}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=0}^\infty (x+1) e^{-\lambda} \frac{\lambda^{x+1}}{(x+1)!} = \lambda \sum_{x=0}^\infty e^{-\lambda} \frac{\lambda^x}{x!} = \lambda.
 \]
 Intuitively, the corresponding coin-flip experiment has mean $np = \lambda$.
   \item[3.] The same argument suggests the variance should be $n(\lambda/n)(1 - \lambda/n) \to \lambda$. Indeed,
 \[
-  \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \lambda^2 + \lambda - \lambda^2 = \lambda. \qedhere
+  \Var(X) = \pgf''(1) + \pgf'(1) - \bigl(\pgf'(1)\bigr)^2 = \lambda^2 + \lambda - \lambda^2 = \lambda. \qedhere
   \]
 \end{enumerate}
 \end{proof}
@@ -456,11 +455,11 @@ The exponential distribution can be viewed as a continuous version of the geomet
 \begin{theorem}[Properties of the exponential distribution]\label{thm:exponential-properties}
 For $X \sim \Expo(\lambda)$,
 \begin{enumerate}
-  \item The MGF is $M(s) = \dfrac{\lambda}{\lambda - s}$ for $s < \lambda$
+  \item $\mgf(s) = \lambda/(\lambda - s)$ for $s < \lambda$
   \item $\E(X) = 1/\lambda$
   \item $\Var(X) = 1/\lambda^2$
-  \item The CDF is $F(x) = 1 - e^{-\lambda x}$ for $x \ge 0$
-  \item The tail probability is $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$
+  \item $F(x) = 1 - e^{-\lambda x}$ for $x \ge 0$
+  \item $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$
 \end{enumerate}
 \end{theorem}
 
@@ -468,13 +467,13 @@ For $X \sim \Expo(\lambda)$,
 \begin{enumerate}[leftmargin=*]
   \item[1.] For $s < \lambda$,
 \[
-  M(s) = \int_0^\infty e^{sx} \lambda e^{-\lambda x} \dd x = \lambda \int_0^\infty e^{-(\lambda - s)x} \dd x = \lambda \Bigl[\frac{-e^{-(\lambda - s)x}}{\lambda - s}\Bigr]_{x=0}^\infty = \frac{\lambda}{\lambda - s}.
+  \mgf(s) = \int_0^\infty e^{sx} \lambda e^{-\lambda x} \dd x = \lambda \int_0^\infty e^{-(\lambda - s)x} \dd x = \lambda \Bigl[\frac{-e^{-(\lambda - s)x}}{\lambda - s}\Bigr]_{x=0}^\infty = \frac{\lambda}{\lambda - s}.
 \]
-  \item[2.] $\E(X) = M'(0) = \dfrac{\lambda}{(\lambda - s)^2}\Big|_{s=0} = \dfrac1\lambda$. Alternatively, integrating by parts,
+  \item[2.] $\E(X) = \mgf'(0) = \dfrac{\lambda}{(\lambda - s)^2}\Big|_{s=0} = \dfrac1\lambda$. Alternatively, integrating by parts,
 \[
   \E(X) = \int_0^\infty x \lambda e^{-\lambda x} \dd x = \bigl[-x e^{-\lambda x}\bigr]_0^\infty + \int_0^\infty e^{-\lambda x} \dd x = 0 + \Bigl[\frac{-e^{-\lambda x}}{\lambda}\Bigr]_0^\infty = \frac1\lambda.
 \]
-  \item[3.] The second moment is $\E(X^2) = M''(0) = \dfrac{2\lambda}{(\lambda - s)^3}\Big|_{s=0} = \dfrac{2}{\lambda^2}$, so $\Var(X) = \dfrac{2}{\lambda^2} - \dfrac{1}{\lambda^2} = \dfrac{1}{\lambda^2}$.
+  \item[3.] The second moment is $\E(X^2) = \mgf''(0) = \dfrac{2\lambda}{(\lambda - s)^3}\Big|_{s=0} = \dfrac{2}{\lambda^2}$, so $\Var(X) = \dfrac{2}{\lambda^2} - \dfrac{1}{\lambda^2} = \dfrac{1}{\lambda^2}$.
   \item[4.] $F(x) = \int_0^x \lambda e^{-\lambda u} \dd u = \bigl[-e^{-\lambda u}\bigr]_0^x = 1 - e^{-\lambda x}$.
   \item[5.] $\Prob(X > x) = 1 - F(x) = e^{-\lambda x}$. \qedhere
 \end{enumerate}
@@ -482,7 +481,7 @@ For $X \sim \Expo(\lambda)$,
 
 The most important property of the exponential distribution is the memoryless property, which we met for the geometric distribution (\cref{thm:geometric-memoryless}).
 
-\begin{theorem}[Memoryless property]\label{thm:exponential-memoryless}
+\begin{theorem}[Memoryless property of the exponential distribution]\label{thm:exponential-memoryless}
 Let $X \sim \Expo(\lambda)$. For all $x, y \ge 0$,
 \[
   \Prob(X > x + y \given X > x) = \Prob(X > y).
@@ -555,7 +554,7 @@ For $X \sim \Normal(\mu, \sigma^2)$,
 \begin{enumerate}
   \item $\E(X) = \mu$
   \item $\Var(X) = \sigma^2$
-  \item The MGF is $M(s) = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
+  \item $\mgf(s) = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
 \end{enumerate}
 \end{theorem}
 
@@ -664,7 +663,7 @@ It can also be parametrised as $\GammaDist(\alpha, \beta)$, where $\beta = 1/\la
 \begin{theorem}[Properties of the gamma distribution]\label{thm:gamma-properties}
 For $X \sim \GammaDist(\alpha, \lambda)$,
 \begin{enumerate}
-  \item The MGF is $M(s) = \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^\alpha$ for $s < \lambda$
+  \item $\mgf(s) = \bigl(\lambda/(\lambda - s)\bigr)^\alpha$ for $s < \lambda$
   \item $\E(X) = \alpha/\lambda$
   \item $\Var(X) = \alpha/\lambda^2$
 \end{enumerate}
@@ -674,10 +673,10 @@ For $X \sim \GammaDist(\alpha, \lambda)$,
 \begin{enumerate}[leftmargin=*]
   \item[1.] For $s < \lambda$,
 \[
-  M(s) = \int_0^\infty e^{sx} \frac{e^{-\lambda x} \lambda^\alpha x^{\alpha - 1}}{\Gamma(\alpha)} \dd x = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^\alpha \int_0^\infty \frac{e^{-(\lambda - s)x} (\lambda - s)^\alpha x^{\alpha - 1}}{\Gamma(\alpha)} \dd x = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^\alpha,
+  \mgf(s) = \int_0^\infty e^{sx} \frac{e^{-\lambda x} \lambda^\alpha x^{\alpha - 1}}{\Gamma(\alpha)} \dd x = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^\alpha \int_0^\infty \frac{e^{-(\lambda - s)x} (\lambda - s)^\alpha x^{\alpha - 1}}{\Gamma(\alpha)} \dd x = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^\alpha,
 \]
 since the last integrand is the $\GammaDist(\alpha, \lambda - s)$ pdf.
-  \item[2.] $\E(X) = M'(0) = \dfrac{\alpha}{\lambda} \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^{\alpha + 1}\Big|_{s=0} = \dfrac{\alpha}{\lambda}$. Alternatively, using the $\GammaDist(\alpha + 1, \lambda)$ pdf and $\Gamma(\alpha+1) = \alpha\Gamma(\alpha)$,
+  \item[2.] $\E(X) = \mgf'(0) = \dfrac{\alpha}{\lambda} \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^{\alpha + 1}\Big|_{s=0} = \dfrac{\alpha}{\lambda}$. Alternatively, using the $\GammaDist(\alpha + 1, \lambda)$ pdf and $\Gamma(\alpha+1) = \alpha\Gamma(\alpha)$,
 \[
   \E(X) = \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha + 1)}{\lambda^{\alpha + 1}} \int_0^\infty \frac{\lambda^{\alpha + 1} x^\alpha e^{-\lambda x}}{\Gamma(\alpha + 1)} \dd x = \frac{1}{\lambda} \frac{\Gamma(\alpha + 1)}{\Gamma(\alpha)} = \frac{\alpha}{\lambda}.
 \]

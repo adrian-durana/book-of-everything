@@ -11,9 +11,9 @@ Many calculations and manipulations involving probability distributions are made
 % ==========================================================================
 
 \begin{definition}[Probability generating function]\label{def:pgf}
-Let $X$ be a non-negative, integer-valued random variable. The \emph{probability generating function} (PGF) of $X$ is the function $G \colon [0,1] \to [0,1]$ defined by
+Let $X$ be a non-negative, integer-valued random variable. The \emph{probability generating function} (PGF) of $X$ is the function $\pgf  \colon [0,1] \to [0,1]$ defined by
 \[
-  G(z) \coloneqq \E(z^X) = \sum_{x=0}^\infty z^x \, \Prob(X = x).
+  \pgf(z) \coloneqq \E(z^X) = \sum_{x=0}^\infty z^x \, \Prob(X = x).
 \]
 \end{definition}
 
@@ -24,52 +24,52 @@ Let $X$ have pmf
 \]
 (the Poisson distribution, \cref{ch:common-distributions}). Its PGF is
 \[
-  G(z) = \sum_{x=0}^\infty z^x e^{-\lambda} \frac{\lambda^x}{x!} = e^{-\lambda} \sum_{x=0}^\infty \frac{(\lambda z)^x}{x!} = e^{-\lambda} e^{\lambda z} = e^{-\lambda(1 - z)}.
+  \pgf(z) = \sum_{x=0}^\infty z^x e^{-\lambda} \frac{\lambda^x}{x!} = e^{-\lambda} \sum_{x=0}^\infty \frac{(\lambda z)^x}{x!} = e^{-\lambda} e^{\lambda z} = e^{-\lambda(1 - z)}.
 \]
 \end{example}
 
 \begin{theorem}[The pmf from the PGF]\label{thm:pgf-pmf}
-If $X$ has PGF $G$, then
+If $X$ has PGF $\pgf$, then
 \[
-  \Prob(X = x) = \frac{1}{x!} \frac{\dd^x}{\dd z^x} G(z) \Big|_{z=0}, \qquad x = 0, 1, 2, \ldots
+  \Prob(X = x) = \frac{1}{x!} \frac{\dd^x}{\dd z^x} \pgf(z) \Big|_{z=0}, \qquad x = 0, 1, 2, \ldots
 \]
 \end{theorem}
 
 \begin{proof}
 By definition,
 \[
-  G(z) = z^0 \Prob(X = 0) + z^1 \Prob(X = 1) + z^2 \Prob(X = 2) + \cdots.
+  \pgf(z) = z^0 \Prob(X = 0) + z^1 \Prob(X = 1) + z^2 \Prob(X = 2) + \cdots.
 \]
-Substituting $z = 0$ gives $G(0) = \Prob(X = 0)$. Differentiating once,
+Substituting $z = 0$ gives $\pgf(0) = \Prob(X = 0)$. Differentiating once,
 \[
-  G'(z) = \Prob(X = 1) + 2z \Prob(X = 2) + 3z^2 \Prob(X = 3) + \cdots,
+  \pgf'(z) = \Prob(X = 1) + 2z \Prob(X = 2) + 3z^2 \Prob(X = 3) + \cdots,
 \]
-so $G'(0) = \Prob(X = 1)$. Differentiating again gives $G''(0) = 2 \Prob(X = 2)$, and in general the $x$th derivative of $G$ at zero is $G^{(x)}(0) = x! \, \Prob(X = x)$.
+so $\pgf'(0) = \Prob(X = 1)$. Differentiating again gives $\pgf''(0) = 2 \Prob(X = 2)$, and in general the $x$th derivative of $\pgf$ at zero is $\pgf ^{(x)}(0) = x! \, \Prob(X = x)$.
 \end{proof}
 
-So the PGF has the \emph{uniqueness property}: two distributions are the same if and only if their PGFs are the same. The moments of $X$ follow from the derivatives of $G$ at $z = 1$.
+So the PGF has the \emph{uniqueness property}: two distributions are the same if and only if their PGFs are the same. The moments of $X$ follow from the derivatives of $\pgf$ at $z = 1$.
 
 \begin{theorem}[Moments from the PGF]\label{thm:pgf-moments}
-If $X$ has PGF $G$, then
+If $X$ has PGF $\pgf$, then
 \[
-  \E(X) = G'(1), \qquad \E(X(X-1)) = G''(1), \qquad \E(X^k) = \Bigl(z \frac{\dd}{\dd z}\Bigr)^k G(z) \Big|_{z = 1^-}.
+  \E(X) = \pgf'(1), \qquad \E(X(X-1)) = \pgf''(1), \qquad \E(X^k) = \Bigl(z \frac{\dd}{\dd z}\Bigr)^k \pgf(z) \Big|_{z = 1^-}.
 \]
 Consequently,
 \[
-  \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2.
+  \Var(X) = \pgf''(1) + \pgf'(1) - \bigl(\pgf'(1)\bigr)^2.
 \]
 \end{theorem}
 
 \begin{proof}
-Differentiating $G(z) = \E(z^X)$ with respect to $z$ gives
+Differentiating $\pgf(z) = \E(z^X)$ with respect to $z$ gives
 \begin{align*}
-  G'(z) &= \E\bigl(X z^{X-1}\bigr), \\
-  G''(z) &= \E\bigl(X(X-1) z^{X-2}\bigr), \\
-  G'''(z) &= \E\bigl(X(X-1)(X-2) z^{X-3}\bigr),
+  \pgf'(z) &= \E\bigl(X z^{X-1}\bigr), \\
+  \pgf''(z) &= \E\bigl(X(X-1) z^{X-2}\bigr), \\
+  \pgf'''(z) &= \E\bigl(X(X-1)(X-2) z^{X-3}\bigr),
 \end{align*}
 and so on (write the expectation as a sum and differentiate term by term; some care is needed with infinite sums). Setting $z = 1$ gives $\E(X)$ and $\E(X(X-1))$. Since $\E(X^2) = \E(X(X-1)) + \E(X)$,
 \[
-  \Var(X) = \E(X^2) - (\E X)^2 = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2.
+  \Var(X) = \E(X^2) - (\E X)^2 = \pgf''(1) + \pgf'(1) - \bigl(\pgf'(1)\bigr)^2.
 \]
 The general formula for $\E(X^k)$ is not proved in this course.
 \end{proof}
@@ -79,9 +79,9 @@ The general formula for $\E(X^k)$ is not proved in this course.
 % ==========================================================================
 
 \begin{definition}[Moment generating function]\label{def:mgf}
-The \emph{moment generating function} (MGF) of a random variable $X$ is the function $M \colon I \to [0, \infty)$ given by
+The \emph{moment generating function} (MGF) of a random variable $X$ is the function $\mgf  \colon I \to [0, \infty)$ given by
 \[
-  M(s) = \E(e^{sX}) = \begin{cases}
+  \mgf(s) = \E(e^{sX}) = \begin{cases}
     \displaystyle \sum_x e^{sx} f(x) & \text{if $X$ is discrete with pmf $f$}, \\[10pt]
     \displaystyle \int_{-\infty}^\infty e^{sx} f(x) \dd x & \text{if $X$ is continuous with pdf $f$}.
   \end{cases}
@@ -89,15 +89,15 @@ The \emph{moment generating function} (MGF) of a random variable $X$ is the func
 Here $I$ is an open interval containing $0$ on which the sum or integral is finite for all $s \in I$.
 \end{definition}
 
-The MGF also has the uniqueness property: two distributions are the same if and only if their MGFs are the same. As the name suggests, the derivatives of $M$ at $s = 0$ give the moments of $X$.
+The MGF also has the uniqueness property: two distributions are the same if and only if their MGFs are the same. As the name suggests, the derivatives of $\mgf$ at $s = 0$ give the moments of $X$.
 
 \begin{theorem}[Moments from the MGF]\label{thm:mgf-moments}
-If $\E(X^n)$ exists, then $M$ has $n$ derivatives, and
+If $\E(X^n)$ exists, then $\mgf$ has $n$ derivatives, and
 \[
-  \E(X^n) = M^{(n)}(0).
+  \E(X^n) = \mgf^{(n)}(0).
 \]
 Consequently,
 \[
-  \Var(X) = M''(0) - \bigl(M'(0)\bigr)^2.
+  \Var(X) = \mgf''(0) - \bigl(\mgf'(0)\bigr)^2.
 \]
 \end{theorem}
