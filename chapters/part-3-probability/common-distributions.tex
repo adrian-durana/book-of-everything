@@ -79,17 +79,17 @@ This simple distribution is one of the most important in probability (\cref{fig:
 \begin{theorem}[Properties of the Bernoulli distribution]\label{thm:bernoulli-properties}
 For $X \sim \Bern(p)$,
 \begin{enumerate}
-  \item the PGF is $G(z) = 1 - p + zp$
   \item $\E(X) = p$
   \item $\Var(X) = p(1-p)$
+  \item The PGF is $G(z) = 1 - p + zp$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=*]
-  \item[1.] $G(z) = z^0 (1-p) + z^1 p = 1 - p + zp$.
-  \item[2.] $\E(X) = 0 \cdot (1-p) + 1 \cdot p = p$.
-  \item[3.] Since $X^2 = X$, $\Var(X) = \E(X^2) - (\E X)^2 = \E(X) - (\E X)^2 = p - p^2 = p(1-p)$. \qedhere
+  \item[1.] $\E(X) = 0 \cdot (1-p) + 1 \cdot p = p$.
+  \item[2.] Since $X^2 = X$, $\Var(X) = \E(X^2) - (\E X)^2 = \E(X) - (\E X)^2 = p - p^2 = p(1-p)$.
+  \item[3.] $G(z) = z^0 (1-p) + z^1 p = 1 - p + zp$. \qedhere
 \end{enumerate}
 \end{proof}
 
@@ -99,10 +99,7 @@ Flip a fair coin 100 times and let $X$ be the number of successes (heads). $X$ c
 \[
   \Prob(X = x) = \frac{\binom{100}{x}}{2^{100}}, \qquad x = 0, 1, \ldots, 100.
 \]
-For example, $\Prob(X \ge 60) = \sum_{x=60}^{100} \binom{100}{x} / 2^{100}$, which can be evaluated in R:
-\begin{rcode}
-sum(choose(100, 60:100)) / 2^100    # 0.02844397
-\end{rcode}
+For example, $\Prob(X \ge 60) = \sum_{x=60}^{100} \binom{100}{x} / 2^{100}$.
 
 More generally, if the probability of heads is $p$, the outcomes are no longer equally likely. By the product rule (\cref{thm:product-rule}), each particular sequence with $x$ heads and $n - x$ tails has probability $p^x (1-p)^{n-x}$, and there are $\binom{n}{x}$ such sequences (\cref{ex:binomial-law}).
 
@@ -131,24 +128,24 @@ It counts the successes in $n$ independent Bernoulli trials with success probabi
 \begin{theorem}[Properties of the binomial distribution]\label{thm:binomial-properties}
 For $X \sim \Bin(n, p)$,
 \begin{enumerate}
-  \item the PGF is $G(z) = (1 - p + zp)^n$
   \item $\E(X) = np$
   \item $\Var(X) = np(1-p)$
+  \item The PGF is $G(z) = (1 - p + zp)^n$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=2.6em]
-  \item[1.] By the binomial theorem $(a + b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k}$,
-  \[
-    G(z) = \sum_{k=0}^n z^k \binom{n}{k} p^k (1-p)^{n-k} = \sum_{k=0}^n \binom{n}{k} (zp)^k (1-p)^{n-k} = (1 - p + zp)^n.
-  \]
-  \item[2--3.] One could evaluate $\sum_{x=0}^n x \binom{n}{x} p^x (1-p)^{n-x}$ directly, but this is not elegant. Instead, $X$ can be viewed as a sum $X = X_1 + \cdots + X_n$ of $n$ independent $\Bern(p)$ random variables, where $X_i$ indicates whether the $i$th toss is a success. The expectation of a sum is the sum of the expectations, and for independent random variables the variance of a sum is the sum of the variances (\cref{ch:multivariate-distributions}). So
+  \item[1--2.] $X$ can be viewed as a sum $X = X_1 + \cdots + X_n$ of $n$ independent $\Bern(p)$ random variables, where $X_i$ indicates whether the $i$th toss is a success. The expectation of a sum is the sum of the expectations, and for independent random variables the variance of a sum is the sum of the variances (\cref{ch:multivariate-distributions}). So
   \begin{align*}
     \E(X) &= \E(X_1) + \cdots + \E(X_n) = p + \cdots + p = np, \\
     \Var(X) &= \Var(X_1) + \cdots + \Var(X_n) = p(1-p) + \cdots + p(1-p) = np(1-p).
   \end{align*}
-  The PGF gives the same: $G'(1) = np$, and
+  \item[3.] By the binomial theorem $(a + b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k}$,
+  \[
+    G(z) = \sum_{k=0}^n z^k \binom{n}{k} p^k (1-p)^{n-k} = \sum_{k=0}^n \binom{n}{k} (zp)^k (1-p)^{n-k} = (1 - p + zp)^n.
+  \]
+  The PGF gives the same expectation and variance: $G'(1) = np$, and
   \[
     G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = (n-1)np^2 + np - n^2p^2 = np(1-p). \qedhere
   \]
@@ -194,11 +191,11 @@ It counts the Bernoulli trials until the first success.
 \begin{theorem}[Properties of the geometric distribution]\label{thm:geometric-properties}
 For $X \sim \Geom(p)$,
 \begin{enumerate}
-  \item the PGF is $G(z) = \dfrac{zp}{1 - z(1-p)}$
+  \item The PGF is $G(z) = \dfrac{zp}{1 - z(1-p)}$
   \item $\E(X) = 1/p$
   \item $\Var(X) = (1-p)/p^2$
-  \item the CDF is $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$
-  \item the tail probability is $\Prob(X > x) = (1-p)^x$ for $x = 1, 2, \ldots$
+  \item The CDF is $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$
+  \item The tail probability is $\Prob(X > x) = (1-p)^x$ for $x = 1, 2, \ldots$
 \end{enumerate}
 \end{theorem}
 
@@ -307,7 +304,7 @@ As $n \to \infty$, the second and fourth factors go to 1, and the third goes to 
 \begin{theorem}[Properties of the Poisson distribution]\label{thm:poisson-properties}
 For $X \sim \Pois(\lambda)$,
 \begin{enumerate}
-  \item the PGF is $G(z) = e^{-\lambda(1-z)}$
+  \item The PGF is $G(z) = e^{-\lambda(1-z)}$
   \item $\E(X) = \lambda$
   \item $\Var(X) = \lambda$
 \end{enumerate}
@@ -459,11 +456,11 @@ The exponential distribution can be viewed as a continuous version of the geomet
 \begin{theorem}[Properties of the exponential distribution]\label{thm:exponential-properties}
 For $X \sim \Expo(\lambda)$,
 \begin{enumerate}
-  \item the MGF is $M(s) = \dfrac{\lambda}{\lambda - s}$ for $s < \lambda$
+  \item The MGF is $M(s) = \dfrac{\lambda}{\lambda - s}$ for $s < \lambda$
   \item $\E(X) = 1/\lambda$
   \item $\Var(X) = 1/\lambda^2$
-  \item the CDF is $F(x) = 1 - e^{-\lambda x}$ for $x \ge 0$
-  \item the tail probability is $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$
+  \item The CDF is $F(x) = 1 - e^{-\lambda x}$ for $x \ge 0$
+  \item The tail probability is $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$
 \end{enumerate}
 \end{theorem}
 
@@ -551,33 +548,33 @@ Let $X \sim \Normal(\mu, \sigma^2)$ and $Z = (X - \mu)/\sigma$. Then, with the c
 Conversely, if $Z$ is standard normal and $X = \mu + \sigma Z$, then $F(x) = \Prob(\mu + \sigma Z \le x) = \Phi\bigl((x - \mu)/\sigma\bigr)$. By the chain rule, $f(x) = F'(x) = \phi\bigl((x - \mu)/\sigma\bigr)/\sigma$, which is the $\Normal(\mu, \sigma^2)$ pdf.
 \end{proof}
 
-So any normal random variable is an affine (linear plus constant) transformation of a standard normal random variable. Standardisation expresses the CDF of any normal distribution in terms of $\Phi$, which is why traditional statistics textbooks only tabulate the standard normal distribution.
+So any normal random variable is an affine transformation of a standard normal random variable. Standardisation expresses the CDF of any normal distribution in terms of $\Phi$, which is why traditional statistics textbooks only tabulate the standard normal distribution.
 
 \begin{theorem}[Properties of the normal distribution]\label{thm:normal-properties}
 For $X \sim \Normal(\mu, \sigma^2)$,
 \begin{enumerate}
-  \item the MGF is $M(s) = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
   \item $\E(X) = \mu$
   \item $\Var(X) = \sigma^2$
+  \item The MGF is $M(s) = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=*]
-  \item[1.] First let $Z \sim \Normal(0, 1)$. Completing the square,
+  \item[1.] The pdf is symmetric about $\mu$ (\cref{prop:symmetric-expectation}).
+  \item[2.] Write $X = \mu + \sigma Z$ with $Z$ standard normal. Then $\Var(X) = \sigma^2 \Var(Z)$, so it suffices to show $\Var(Z) = \E(Z^2) = 1$ (the expectation of $Z$ is 0). Integrating by parts,
+\[
+  \E(Z^2) = \int_{-\infty}^\infty z \cdot z \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = \Bigl[z \cdot \frac{-1}{\sqrt{2\pi}} e^{-z^2/2}\Bigr]_{-\infty}^\infty + \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = 0 + 1 = 1,
+\]
+since the last integrand is the standard normal pdf.
+  \item[3.] First let $Z \sim \Normal(0, 1)$. Completing the square,
 \[
   \E(e^{sZ}) = \int_{-\infty}^\infty e^{sz} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = e^{s^2/2} \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-(z - s)^2/2} \dd z = e^{s^2/2},
 \]
 since the last integrand is the $\Normal(s, 1)$ pdf. For general $X = \mu + \sigma Z$,
 \[
-  \E(e^{sX}) = \E(e^{s(\mu + \sigma Z)}) = e^{s\mu} \E(e^{s\sigma Z}) = e^{s\mu} e^{\sigma^2 s^2/2}.
+  \E(e^{sX}) = \E(e^{s(\mu + \sigma Z)}) = e^{s\mu} \E(e^{s\sigma Z}) = e^{s\mu} e^{\sigma^2 s^2/2}. \qedhere
   \]
-  \item[2.] The pdf is symmetric about $\mu$ (\cref{prop:symmetric-expectation}).
-  \item[3.] Write $X = \mu + \sigma Z$ with $Z$ standard normal. Then $\Var(X) = \sigma^2 \Var(Z)$, so it suffices to show $\Var(Z) = \E(Z^2) = 1$ (the expectation of $Z$ is 0). Integrating by parts,
-\[
-  \E(Z^2) = \int_{-\infty}^\infty z \cdot z \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = \Bigl[z \cdot \frac{-1}{\sqrt{2\pi}} e^{-z^2/2}\Bigr]_{-\infty}^\infty + \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = 0 + 1 = 1,
-\]
-since the last integrand is the standard normal pdf. \qedhere
 \end{enumerate}
 \end{proof}
 
@@ -591,11 +588,7 @@ Let $X$ and $Y$ be the heights of a randomly selected woman and man. Then
   \Prob(X \ge 180) &= \Prob\Bigl(\frac{X - 168}{6} \ge \frac{180 - 168}{6}\Bigr) = \Prob(Z \ge 2) = 1 - \Phi(2), \\
   \Prob(Y \ge 200) &= \Prob\Bigl(\frac{Y - 179}{7} \ge \frac{200 - 179}{7}\Bigr) = \Prob(Z \ge 3) = 1 - \Phi(3).
 \end{align*}
-Since $\Phi(3) > \Phi(2)$, a male taller than 2\,m is more unusual than a female taller than 180\,cm. In R, $\Phi$ is \texttt{pnorm}:
-\begin{rcode}
-1 - pnorm(2)    # 0.02275013
-1 - pnorm(3)    # 0.001349898
-\end{rcode}
+Since $\Phi(3) > \Phi(2)$, a male taller than 2\,m is more unusual than a female taller than 180\,cm.
 \end{solution}
 
 There is no simple formula for areas under the normal density curve. As a rough rule, for $X \sim \Normal(\mu, \sigma^2)$, the probability that $X$ lies within $c$ standard deviations of the mean is
@@ -619,9 +612,7 @@ There is no simple formula for areas under the normal density curve. As a rough 
 \end{figure}
 
 
-The function \texttt{pnorm} also evaluates the CDF of a general normal distribution. For example, for $X \sim \Normal(1, 4)$, $\Prob(X \le 3)$ is \texttt{pnorm(3, mean = 1, sd = 2)} $= 0.8413$. Note that R uses the standard deviation as its argument, not the variance.
-
-We can also go the other way: for $X \sim \Normal(1, 4)$, which value $z$ has $\Prob(X \le z) = 0.9$? Such a value is a quantile (\cref{def:quantiles}), here the $0.9$-quantile, and for the normal distribution it is given by \texttt{qnorm}. In statistical inference we often need values that cut off small tail areas under the standard normal curve.
+We can also go the other way: for $X \sim \Normal(1, 4)$, which value $z$ has $\Prob(X \le z) = 0.9$? Such a value is a quantile (\cref{def:quantiles}), here the $0.9$-quantile. In statistical inference we often need values that cut off small tail areas under the standard normal curve.
 
 \begin{definition}[$z_\alpha$]\label{def:z-alpha}
 For $0 < \alpha < 1$, $z_\alpha$ is the value for which the area under the standard normal pdf to the right of $z_\alpha$ is $\alpha$. Equivalently, $\Phi(z_\alpha) = 1 - \alpha$: $z_\alpha$ is the $(1 - \alpha)$-quantile of the standard normal distribution.
@@ -641,12 +632,6 @@ For $0 < \alpha < 1$, $z_\alpha$ is the value for which the area under the stand
 \label{fig:z-alpha}
 \end{figure}
 
-
-\begin{rcode}
-qnorm(0.975)                    # 1.959964  (= z_0.025)
-qnorm(0.90, mean = 1, sd = 2)   # 3.563103
-qnorm(0.5, mean = 2, sd = 1)    # 2
-\end{rcode}
 
 \subsection{Gamma and chi-squared distributions}\label{sec:gamma}
 
@@ -679,7 +664,7 @@ It can also be parametrised as $\GammaDist(\alpha, \beta)$, where $\beta = 1/\la
 \begin{theorem}[Properties of the gamma distribution]\label{thm:gamma-properties}
 For $X \sim \GammaDist(\alpha, \lambda)$,
 \begin{enumerate}
-  \item the MGF is $M(s) = \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^\alpha$ for $s < \lambda$
+  \item The MGF is $M(s) = \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^\alpha$ for $s < \lambda$
   \item $\E(X) = \alpha/\lambda$
   \item $\Var(X) = \alpha/\lambda^2$
 \end{enumerate}
@@ -762,4 +747,32 @@ $\Unif[a, b]$ & \texttt{dunif}, \texttt{punif}, \texttt{qunif}, \texttt{runif} &
 \bottomrule
 \end{tabular}
 \end{center}
-The first argument is a value \texttt{x} for the \texttt{d} and \texttt{p} functions, a probability $\gamma$ for \texttt{q}, and the number \texttt{n} of values to generate for \texttt{r}. For example, \texttt{dbinom(x, size = n, prob = p)}.
+The first argument is a value \texttt{x} for the \texttt{d} and \texttt{p} functions, a probability $\gamma$ for \texttt{q}, and the number \texttt{n} of values to generate for \texttt{r}. For example, \texttt{dbinom(x, size = n, prob = p)}. Note that R parametrises the normal distribution by the standard deviation, not the variance.
+
+\begin{example}[Fair coin, 100 tosses]\label{ex:r-binomial-tail}
+For the number $X$ of heads in 100 tosses of a fair coin (\cref{sec:binomial}), $\Prob(X \ge 60) = \sum_{x=60}^{100} \binom{100}{x} / 2^{100}$:
+\begin{rcode}
+sum(choose(100, 60:100)) / 2^100    # 0.02844397
+\end{rcode}
+\end{example}
+
+\begin{example}[Normal probabilities]\label{ex:r-pnorm}
+In R, $\Phi$ is \texttt{pnorm}. For the heights in \cref{ex:standardisation-heights},
+\begin{rcode}
+1 - pnorm(2)    # 0.02275013
+1 - pnorm(3)    # 0.001349898
+\end{rcode}
+It also gives the CDF of any normal distribution; for $X \sim \Normal(1, 4)$, $\Prob(X \le 3) = 0.8413$:
+\begin{rcode}
+pnorm(3, mean = 1, sd = 2)      # 0.8413447
+\end{rcode}
+\end{example}
+
+\begin{example}[Normal quantiles]\label{ex:r-qnorm}
+Quantiles of the normal distribution are given by \texttt{qnorm}. For example, $z_{0.025} = 1.96$, the $0.9$-quantile of $\Normal(1, 4)$ is $3.56$, and the median of $\Normal(2, 1)$ is $2$:
+\begin{rcode}
+qnorm(0.975)                    # 1.959964  (= z_0.025)
+qnorm(0.90, mean = 1, sd = 2)   # 3.563103
+qnorm(0.5, mean = 2, sd = 1)    # 2
+\end{rcode}
+\end{example}
