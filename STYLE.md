@@ -111,7 +111,7 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - Alternative symbols for a quantity go in its definition ("written $\Var(X)$ or $\sigma_X^2$"), not in the surrounding text.
 - State facts as formulas where that is clearer: $\sigma_{aX+b} = \abs{a}\,\sigma_X$, not "the standard deviation of $aX + b$ is $\abs{a}$ times …".
 - Every theorem box has a name in brackets, and states its result as a formula where possible ("$-1 \le \Corr(X, Y) \le 1$", not "always lies between −1 and 1").
-- Definitions are phrased "The *term* of … is …" or "… has a *term* if …", not "We define the *term* by …". Avoid "obvious"; say "follows in the same way".
+- Definitions may be phrased "We define the *term* … by …", "The *term* of … is …" or "… has a *term* if …"; all are fine. Avoid "obvious"; say "follows in the same way".
 - Keep theorem names short when the section makes the context clear ("Memoryless property", not "Memoryless property of the exponential distribution"). When a result reappears for another object, say where it was met before.
 - A proof that ends in a formula gives it in a display: "…, and so [display]", not "Hence $\lim … = …$" inline.
 - In a list of labelled items ("Binomial: the number of …"), capitalise the first word of each item.
