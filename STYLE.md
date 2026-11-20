@@ -58,6 +58,7 @@ These came from the author's review of Chapter 25. Apply them to every chapter, 
 - Paired definitions (discrete and continuous, pmf and pdf, …) mirror each other: the same structure and the same items (values taken, positivity, normalisation, how probabilities are computed, notation), so each can be read against the other.
 - Use "is invertible" rather than "can be inverted"; prefer the shorter standard phrase.
 - Keep a source's lists of examples when they show different kinds of case (for example discrete and continuous random experiments). Trim the surrounding commentary instead.
+- Go straight to the general result when it is just as easy: don't work a specific case first ("ℙ(X = 8) = 5/36. In the same way, …").
 - Question lists in examples: at most two questions per kind (for example two probability questions and two statistics questions).
 - Reactions to a result should be brief and accurate: "This is surprisingly small!", not "so not very big!".
 
@@ -88,6 +89,9 @@ These came from the author's review of Chapter 25. Apply them to every chapter, 
 - Place each figure with `[H]` directly after the box or paragraph that first mentions it.
 - A figure must explain its idea on its own: label the elements (outcomes, weights, urns, positions) and say in the caption what to read off it. Redraw any figure from the notes that doesn't do this. Examples: Ch 25 Figs 25.3 and 25.7.
 - Drop figures that only illustrate an analogy already clear in words (e.g. the triangles for the area measure).
+
+### Tables
+- Probability mass tables are a cross: values in the first row, probabilities in the second, a vertical rule after the label column and a horizontal rule between the rows, no top or bottom rules (`\begin{tabular}{c|ccc…}` … `\hline` …). Joint pmf tables use the same style.
 
 ### Boxes and headers
 - "Builds on: nothing" in the chapter box (lower case, no full stop).

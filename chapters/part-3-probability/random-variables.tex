@@ -22,22 +22,16 @@ For a set $A \subseteq \R$, we write
 and similarly $\set{X = x}$, $\set{X \le x}$ and $\set{a < X \le b}$. We abbreviate $\Prob(\set{X \in A})$ to $\Prob(X \in A)$. Random variables are usually denoted by capital letters from the end of the alphabet, and give natural notation for events such as $\set{X = 10}$, $\set{X > 1000}$ and $\set{\max(X, Y) \le Z}$.
 
 \begin{example}[Sum of two dice]\label{ex:sum-two-dice}
-Toss two dice one after the other and note their sum. The sample space is $\Omega = \set{(1,1), \ldots, (6,6)}$. The function $X$ defined by $X(i, j) = i + j$ is a random variable, which maps the outcome $(i,j)$ to the sum $i + j$. The set of all outcomes with sum $8$ is $\set{X = 8}$. It contains $5$ outcomes, and all $36$ outcomes are equally likely, so
-\[
-  \Prob(X = 8) = \frac{5}{36}.
-\]
-In the same way,
+Toss two dice one after the other and note their sum. The sample space is $\Omega = \set{(1,1), \ldots, (6,6)}$. The function $X$ defined by $X(i, j) = i + j$ is a random variable, which maps the outcome $(i,j)$ to the sum $i + j$. All 36 outcomes are equally likely, so counting outcomes gives
 \[
   \Prob(X = x) = \frac{6 - \abs{7 - x}}{36}, \qquad x = 2, \ldots, 12,
 \]
 which in table form is
 \begin{center}
-\begin{tabular}{@{}l*{11}{c}@{}}
-\toprule
+\begin{tabular}{c|ccccccccccc}
 $x$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
-\midrule
+\hline
 $\Prob(X = x)$ & $\frac{1}{36}$ & $\frac{2}{36}$ & $\frac{3}{36}$ & $\frac{4}{36}$ & $\frac{5}{36}$ & $\frac{6}{36}$ & $\frac{5}{36}$ & $\frac{4}{36}$ & $\frac{3}{36}$ & $\frac{2}{36}$ & $\frac{1}{36}$ \\
-\bottomrule
 \end{tabular}
 \end{center}
 \Cref{fig:rv-sum-two-dice} depicts $X$ as a function: all outcomes in the encircled set are mapped to 8.
@@ -205,12 +199,10 @@ If $X$ takes only integer values, then $\lim_{u \uparrow x} F(u) = F(x - 1)$ for
 \begin{example}[Tossing a die]\label{ex:tossing-a-die}
 Toss a die and let $X$ be its face value. $X$ is discrete with range $\set{1, 2, \ldots, 6}$. If the die is fair, the pmf is
 \begin{center}
-\begin{tabular}{@{}l*{6}{c}c@{}}
-\toprule
+\begin{tabular}{c|ccccccc}
 $x$ & 1 & 2 & 3 & 4 & 5 & 6 & $\sum$ \\
-\midrule
+\hline
 $f(x)$ & $\frac16$ & $\frac16$ & $\frac16$ & $\frac16$ & $\frac16$ & $\frac16$ & 1 \\
-\bottomrule
 \end{tabular}
 \end{center}
 \end{example}
@@ -218,12 +210,10 @@ $f(x)$ & $\frac16$ & $\frac16$ & $\frac16$ & $\frac16$ & $\frac16$ & $\frac16$ &
 \begin{example}[Largest value of two dice]\label{ex:max-two-dice}
 Toss two dice and let $X$ be the largest face value showing. The pmf of $X$ is
 \begin{center}
-\begin{tabular}{@{}l*{6}{c}c@{}}
-\toprule
+\begin{tabular}{c|ccccccc}
 $x$ & 1 & 2 & 3 & 4 & 5 & 6 & $\sum$ \\
-\midrule
+\hline
 $f(x)$ & $\frac{1}{36}$ & $\frac{3}{36}$ & $\frac{5}{36}$ & $\frac{7}{36}$ & $\frac{9}{36}$ & $\frac{11}{36}$ & 1 \\
-\bottomrule
 \end{tabular}
 \end{center}
 Find the probability that the maximum is at least $3$.

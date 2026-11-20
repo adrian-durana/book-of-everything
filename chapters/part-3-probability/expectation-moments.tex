@@ -1,6 +1,6 @@
 \chapter{Expectation, Variance and Moments}\label{ch:expectation-moments}
 
-\chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces,ch:random-variables}.}
+\chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces,ch:random-variables}}
 
 % Sources: STAT2003 handwritten notes (pp. 10-13, 63); STAT2003 course notes, Section 2.3;
 % STAT1301 course notes (2026), Section 1.9.
@@ -40,17 +40,17 @@ $\Prob(X = 1) = \cdots = \Prob(X = 6) = \tfrac16$, so
 Note that $\E X$ need not be a possible outcome of the experiment.
 \end{solution}
 
-One way to interpret the expectation is as a long-run average payout. Suppose in a game of dice the payout $X$ (dollars) is the largest of the face values of two dice, and a fee of $d$ dollars must be paid to play. What would be a fair amount for $d$? If the game is played many times, the long-run fractions of games in which the maximum face value is $1, 2, \ldots, 6$ are $\Prob(X = 1), \Prob(X = 2), \ldots, \Prob(X = 6)$. Hence the long-run average payout is the weighted sum of $1, 2, \ldots, 6$, with the probabilities as weights (\cref{ex:max-two-dice}):
+One way to interpret the expectation is as a long-run average payout. Suppose a game pays $X$ dollars, the largest face value of two dice, and costs $d$ dollars to play. Over many games, the fraction of games with maximum $1, 2, \ldots, 6$ is $\Prob(X = 1), \ldots, \Prob(X = 6)$, so the long-run average payout is the weighted sum (\cref{ex:max-two-dice})
 \[
   \E X = 1 \times \tfrac{1}{36} + 2 \times \tfrac{3}{36} + 3 \times \tfrac{5}{36} + 4 \times \tfrac{7}{36} + 5 \times \tfrac{9}{36} + 6 \times \tfrac{11}{36} = \tfrac{161}{36} \approx 4.47.
 \]
-The game is ``fair'' if the long-run average profit $\E X - d$ is zero, so you should pay at most $d = \E X$ dollars.
+The game is fair if the long-run average profit $\E X - d$ is zero, so a fair fee is $d = \E X$ dollars.
 
 Another interpretation of the expectation is as a centre of mass. Imagine point masses with weights $p_1, \ldots, p_n$ placed at positions $x_1, \ldots, x_n$ on the real line (\cref{fig:centre-of-mass}). The centre of mass, the place where we can ``balance'' the weights, is
 \[
   x_1 p_1 + \cdots + x_n p_n,
 \]
-which is exactly the expectation of a discrete random variable taking the values $x_1, \ldots, x_n$ with probabilities $p_1, \ldots, p_n$. Compare this with moments in physics, and with the moments defined in \cref{sec:variance-moments}. An obvious consequence of this interpretation is the following.
+which is exactly the expectation of a discrete random variable taking the values $x_1, \ldots, x_n$ with probabilities $p_1, \ldots, p_n$ (compare moments in physics). This interpretation gives the following.
 
 \begin{figure}[H]
 \centering
@@ -120,7 +120,7 @@ So the expectation of $Y$ is
 \end{proof}
 
 \begin{example}[Expected square of a fair die]\label{ex:expected-square-die}
-If $X$ is the outcome of a toss of a fair die, then
+For the outcome $X$ of a toss of a fair die,
 \[
   \E X^2 = 1^2 \cdot \tfrac16 + 2^2 \cdot \tfrac16 + 3^2 \cdot \tfrac16 + \cdots + 6^2 \cdot \tfrac16 = \tfrac{91}{6}.
 \]
@@ -169,16 +169,16 @@ The \emph{standard deviation} of $X$ is $\sqrt{\Var(X)}$.
 The number $\E X^r$ is the \emph{$r$th moment} of $X$. With $\mu = \E X$, the number $\E(X - \mu)^k$ is the \emph{$k$th central moment} of $X$.
 \end{definition}
 
-For example, $\E X$ is the mean, and $\E X^2$ is related to the variance. The first few central moments are
+For example, $\E X$ is the mean, and $\E X^2$ is related to the variance. The first central moments are
 \begin{align*}
   \text{0th:} \quad & \E(X - \mu)^0 = \E 1 = 1, \\
   \text{1st:} \quad & \E(X - \mu) = \E X - \mu = \mu - \mu = 0, \\
   \text{2nd:} \quad & \E(X - \mu)^2 = \Var(X).
 \end{align*}
-So the second central moment is the variance. The third and fourth central moments are related to the \emph{skewness} and \emph{kurtosis} of the distribution.
+So the second central moment is the variance. The third and fourth central moments are related to the skewness and kurtosis of the distribution.
 
 \begin{theorem}[Properties of the variance]\label{thm:variance-properties}
-For any random variable $X$ and real numbers $a$ and $b$,
+For any random variable $X$ and $a, b \in \R$,
 \begin{enumerate}
   \item $\Var(X) = \E X^2 - (\E X)^2$
   \item $\Var(aX + b) = a^2 \Var(X)$
@@ -240,7 +240,7 @@ Let $X$ have mean $\mu$. For every $a > 0$,
 \end{corollary}
 
 \begin{proof}
-Apply \cref{thm:markov-general} with $h(x) = (x - \mu)^2$ at level $b = a^2$:
+Apply \cref{thm:markov-general} with $h(x) = (x - \mu)^2$, and $a^2$ in place of $a$:
 \[
   \Prob(\abs{X - \mu} \ge a) = \Prob\bigl((X - \mu)^2 \ge a^2\bigr) \le \frac{\E(X - \mu)^2}{a^2} = \frac{\Var(X)}{a^2}. \qedhere
 \]
