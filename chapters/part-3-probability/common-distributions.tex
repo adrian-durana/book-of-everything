@@ -5,7 +5,7 @@
 % Sources: STAT2003 handwritten notes (pp. 14-25); STAT2003 course notes, Sections 2.5-2.6;
 % STAT1301 course notes (2026), Sections 2.1-2.5 and Table 2.1.
 
-This chapter lists the most important discrete and continuous distributions (\cref{def:distribution}) and their main properties. The pmf or pdf of each depends on one or more \emph{parameters}, fixed values that determine the shape of the distribution, so each is really a \emph{family} of distributions. Although statistics uses a relatively small collection of families, choosing the parameters gives an infinite number of distributions.
+This chapter lists the most important discrete and continuous probability distributions and their main properties. The pmf or pdf of each depends on one or more \emph{parameters}, fixed values that determine the shape of the distribution, so each is really a \emph{family} of distributions. Although statistics uses a relatively small collection of families, choosing the parameters gives an infinite number of distributions.
 
 % ==========================================================================
 \section{Bernoulli trials}\label{sec:bernoulli-trials}
@@ -673,7 +673,7 @@ A random variable $X$ has a \emph{gamma distribution} with shape $\alpha > 0$ an
 \[
   f(x) = \frac{\lambda^\alpha x^{\alpha - 1} e^{-\lambda x}}{\Gamma(\alpha)}, \qquad x \ge 0.
 \]
-The reciprocal $1/\lambda$ is the scale parameter.
+It can also be parametrised as $\GammaDist(\alpha, \beta)$, where $\beta = 1/\lambda$ is the scale parameter.
 \end{definition}
 
 \begin{theorem}[Properties of the gamma distribution]\label{thm:gamma-properties}

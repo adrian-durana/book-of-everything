@@ -115,8 +115,9 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - Keep theorem names short when the section makes the context clear ("Memoryless property", not "Memoryless property of the exponential distribution"). When a result reappears for another object, say where it was met before.
 - A proof that ends in a formula gives it in a display: "…, and so [display]", not "Hence $\lim … = …$" inline.
 - In a list of labelled items ("Binomial: the number of …"), capitalise the first word of each item.
-- Link a term to its definition in an earlier chapter the first time a chapter relies on it (e.g. "distributions (Definition 26.4)").
+- Don't link to specific theorems or definitions in chapter or section introductions (for now). Links to other chapters are fine there, but don't go out of the way to add them.
 - Name results plainly: "Markov inequality", "Chebyshev inequality", "Generalised Markov inequality" (not "Markov's inequality, general form"). Give a colloquial name alongside the formal one where it is common, e.g. "Law of the unconscious statistician, LOTUS".
+- Distributions: $\Bern(p)$ = Ber, $\Pois(\lambda)$ = Poi, $\Normal(\mu, \sigma^2)$ = $\mathcal{N}$ (may revert later), $\GammaDist(\alpha, \lambda)$ = Gamma (shape, rate; mention the scale form $\GammaDist(\alpha, \beta)$, $\beta = 1/\lambda$), $\BetaDist(\alpha, \beta)$ = Beta. Always use the macros.
 - Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
 - Elementary probabilities: $p_i = \Prob(\set{a_i})$.
 
