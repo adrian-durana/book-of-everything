@@ -1,6 +1,6 @@
 \chapter{Common Distributions}\label{ch:common-distributions}
 
-\chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces,ch:random-variables,ch:expectation-moments,ch:generating-functions}.}
+\chapterinfo{STAT2003, STAT1301}{\cref{ch:probability-spaces,ch:random-variables,ch:expectation-moments,ch:generating-functions}}
 
 % Sources: STAT2003 handwritten notes (pp. 14-25); STAT2003 course notes, Sections 2.5-2.6;
 % STAT1301 course notes (2026), Sections 2.1-2.5 and Table 2.1.
@@ -11,7 +11,7 @@ This chapter lists the most important discrete and continuous distributions, wit
 \section{Bernoulli trials}\label{sec:bernoulli-trials}
 % ==========================================================================
 
-A \emph{Bernoulli trial} is a random experiment with only two possible outcomes, usually labelled ``success'' (1) and ``failure'' (0). Examples are a single coin toss (1 for heads, 0 for tails), or selecting a person at random from a population and asking whether they approve of the prime minister.
+A \emph{Bernoulli trial} is a random experiment with only two possible outcomes, usually labelled ``success'' (1) and ``failure'' (0). Examples are a single coin toss (1 for heads, 0 for tails), or asking a randomly selected person whether they approve of the prime minister.
 
 \begin{definition}[i.i.d.]\label{def:iid}
 Random variables (or trials) are \emph{i.i.d.} if they are \emph{independent and identically distributed}.
@@ -55,14 +55,14 @@ for any distinct indices $i_1, \ldots, i_k$ (\cref{sec:coin-tossing-models}). Th
 \subsection{Bernoulli distribution}\label{sec:bernoulli}
 
 \begin{definition}[Bernoulli distribution]\label{def:bernoulli}
-$X$ has a \emph{Bernoulli distribution} with success probability $p$ if $X$ can only take the values 0 and 1, with
+A random variable $X$ has a \emph{Bernoulli distribution} with success probability $p$, written $X \sim \Bern(p)$, if it takes the values 0 and 1 with pmf
 \[
-  \Prob(X = 1) = p = 1 - \Prob(X = 0).
+  f(1) = p, \qquad f(0) = 1 - p.
 \]
-We write $X \sim \Bern(p)$.
+It describes the outcome of a single Bernoulli trial.
 \end{definition}
 
-Despite its simplicity, this is one of the most important distributions in probability. It models, for example, a single coin toss.
+This simple distribution is one of the most important in probability (\cref{fig:bernoulli-pmf}).
 
 \begin{figure}[H]
 \centering
@@ -77,19 +77,19 @@ Despite its simplicity, this is one of the most important distributions in proba
 
 
 \begin{theorem}[Properties of the Bernoulli distribution]\label{thm:bernoulli-properties}
-Let $X \sim \Bern(p)$. Then
+For $X \sim \Bern(p)$,
 \begin{enumerate}
+  \item the PGF is $G(z) = 1 - p + zp$
   \item $\E(X) = p$
   \item $\Var(X) = p(1-p)$
-  \item the PGF is $G(z) = 1 - p + zp$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=*]
-  \item[1.] $\E(X) = 0 \cdot \Prob(X = 0) + 1 \cdot \Prob(X = 1) = 0 \cdot (1-p) + 1 \cdot p = p$.
-  \item[2.] Since $X^2 = X$, $\Var(X) = \E(X^2) - (\E X)^2 = \E(X) - (\E X)^2 = p - p^2 = p(1-p)$.
-  \item[3.] $G(z) = z^0 (1-p) + z^1 p = 1 - p + zp$. \qedhere
+  \item[1.] $G(z) = z^0 (1-p) + z^1 p = 1 - p + zp$.
+  \item[2.] $\E(X) = 0 \cdot (1-p) + 1 \cdot p = p$.
+  \item[3.] Since $X^2 = X$, $\Var(X) = \E(X^2) - (\E X)^2 = \E(X) - (\E X)^2 = p - p^2 = p(1-p)$. \qedhere
 \end{enumerate}
 \end{proof}
 
@@ -107,10 +107,11 @@ sum(choose(100, 60:100)) / 2^100    # 0.02844397
 More generally, if the probability of heads is $p$, the outcomes are no longer equally likely. By the product rule (\cref{thm:product-rule}), each particular sequence with $x$ heads and $n - x$ tails has probability $p^x (1-p)^{n-x}$, and there are $\binom{n}{x}$ such sequences (\cref{ex:binomial-law}).
 
 \begin{definition}[Binomial distribution]\label{def:binomial}
-Let $X$ be the number of successes in $n$ independent Bernoulli trials (coin tosses) with success probability $p$. Then $X$ has a \emph{binomial distribution} with parameters $n$ and $p$, written $X \sim \Bin(n, p)$, with pmf
+A random variable $X$ has a \emph{binomial distribution} with parameters $n$ and $p$, written $X \sim \Bin(n, p)$, if its pmf is
 \[
-  f(x) = \Prob(X = x) = \binom{n}{x} p^x (1-p)^{n-x}, \qquad x = 0, 1, \ldots, n.
+  f(x) = \binom{n}{x} p^x (1-p)^{n-x}, \qquad x = 0, 1, \ldots, n.
 \]
+It counts the successes in $n$ independent Bernoulli trials with success probability $p$.
 \end{definition}
 
 \Cref{fig:binomial-pmf} shows an example.
@@ -128,32 +129,33 @@ Let $X$ be the number of successes in $n$ independent Bernoulli trials (coin tos
 
 
 \begin{theorem}[Properties of the binomial distribution]\label{thm:binomial-properties}
-Let $X \sim \Bin(n, p)$. Then
+For $X \sim \Bin(n, p)$,
 \begin{enumerate}
+  \item the PGF is $G(z) = (1 - p + zp)^n$
   \item $\E(X) = np$
   \item $\Var(X) = np(1-p)$
-  \item the PGF is $G(z) = (1 - p + zp)^n$
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1--2. One could evaluate $\sum_{x=0}^n x \binom{n}{x} p^x (1-p)^{n-x}$ directly, but this is not elegant. Instead, $X$ can be viewed as a sum $X = X_1 + \cdots + X_n$ of $n$ independent $\Bern(p)$ random variables, where $X_i$ indicates whether the $i$th toss is a success. The expectation of a sum is the sum of the expectations, and for independent random variables the variance of a sum is the sum of the variances (\cref{ch:multivariate-distributions}). So
-\begin{align*}
-  \E(X) &= \E(X_1) + \cdots + \E(X_n) = p + \cdots + p = np, \\
-  \Var(X) &= \Var(X_1) + \cdots + \Var(X_n) = p(1-p) + \cdots + p(1-p) = np(1-p).
-\end{align*}
-
-3. By the binomial theorem $(a + b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k}$,
-\[
-  G(z) = \sum_{k=0}^n z^k \binom{n}{k} p^k (1-p)^{n-k} = \sum_{k=0}^n \binom{n}{k} (zp)^k (1-p)^{n-k} = (1 - p + zp)^n.
-\]
-Once we have the PGF, we can also obtain the expectation and variance from it: $G'(1) = np$, and
-\[
-  G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = (n-1)np^2 + np - n^2p^2 = np(1-p). \qedhere
-\]
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=2.6em]
+  \item[1.] By the binomial theorem $(a + b)^n = \sum_{k=0}^n \binom{n}{k} a^k b^{n-k}$,
+  \[
+    G(z) = \sum_{k=0}^n z^k \binom{n}{k} p^k (1-p)^{n-k} = \sum_{k=0}^n \binom{n}{k} (zp)^k (1-p)^{n-k} = (1 - p + zp)^n.
+  \]
+  \item[2--3.] One could evaluate $\sum_{x=0}^n x \binom{n}{x} p^x (1-p)^{n-x}$ directly, but this is not elegant. Instead, $X$ can be viewed as a sum $X = X_1 + \cdots + X_n$ of $n$ independent $\Bern(p)$ random variables, where $X_i$ indicates whether the $i$th toss is a success. The expectation of a sum is the sum of the expectations, and for independent random variables the variance of a sum is the sum of the variances (\cref{ch:multivariate-distributions}). So
+  \begin{align*}
+    \E(X) &= \E(X_1) + \cdots + \E(X_n) = p + \cdots + p = np, \\
+    \Var(X) &= \Var(X_1) + \cdots + \Var(X_n) = p(1-p) + \cdots + p(1-p) = np(1-p).
+  \end{align*}
+  The PGF gives the same: $G'(1) = np$, and
+  \[
+    G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = (n-1)np^2 + np - n^2p^2 = np(1-p). \qedhere
+  \]
+\end{enumerate}
 \end{proof}
 
-Both the expectation and the variance are $n$ times those of a $\Bern(p)$ random variable. This is no coincidence, since a binomial random variable is a sum of $n$ independent Bernoulli random variables.
+Both the expectation and the variance are $n$ times those of a $\Bern(p)$ random variable. This is no coincidence, as a binomial random variable is a sum of $n$ independent Bernoulli variables.
 
 \begin{remark}[Sampling from a population]\label{rem:binomial-sampling}
 Counting successes in coin flips may seem artificial, but many practical situations can be treated in exactly the same way. Suppose we want to know the proportion $p$ of males in a large population. Surveying everyone is too expensive, so we select $n$ people at random, each with equal probability, and note their sex. If the same person may be selected more than once, this is exactly a coin-flip experiment, and the number $X$ of males in the sample has a $\Bin(n, p)$ distribution. In practice we would not select the same person twice, but in a large population this would rarely happen anyway, so the binomial model is still good. For a small population, we should use a (more complicated) urn model instead, drawing without replacement and without noting the order (\cref{sec:counting}).
@@ -165,10 +167,14 @@ Again consider a sequence of coin tosses, but now let $X$ be the number of tosse
 \[
   \Prob(X = x) = (1 - p)^{x-1} p, \qquad x = 1, 2, 3, \ldots,
 \]
-since the only sequence of the required form is $x - 1$ tails followed by a head, which has probability $(1-p)^{x-1}p$ (\cref{ex:geometric-law}).
+since the only sequence of the required form is $x - 1$ tails followed by a head (\cref{ex:geometric-law}).
 
 \begin{definition}[Geometric distribution]\label{def:geometric}
-A random variable with pmf $f(x) = (1-p)^{x-1} p$, $x = 1, 2, \ldots$, has a \emph{geometric distribution} with parameter $p$. We write $X \sim \Geom(p)$.
+A random variable $X$ has a \emph{geometric distribution} with parameter $p$, written $X \sim \Geom(p)$, if its pmf is
+\[
+  f(x) = (1-p)^{x-1} p, \qquad x = 1, 2, \ldots.
+\]
+It counts the Bernoulli trials until the first success.
 \end{definition}
 
 \Cref{fig:geometric-pmf} shows an example.
@@ -186,17 +192,18 @@ A random variable with pmf $f(x) = (1-p)^{x-1} p$, $x = 1, 2, \ldots$, has a \em
 
 
 \begin{theorem}[Properties of the geometric distribution]\label{thm:geometric-properties}
-Let $X \sim \Geom(p)$. Then
+For $X \sim \Geom(p)$,
 \begin{enumerate}
   \item the PGF is $G(z) = \dfrac{zp}{1 - z(1-p)}$
   \item $\E(X) = 1/p$
   \item $\Var(X) = (1-p)/p^2$
-  \item $\Prob(X > k) = (1-p)^k$, so the CDF is $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$
+  \item the CDF is $F(x) = 1 - (1 - p)^x$ for $x = 1, 2, \ldots$
+  \item the tail probability is $\Prob(X > x) = (1-p)^x$ for $x = 1, 2, \ldots$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}\leavevmode
-\begin{enumerate}[leftmargin=*]
+\begin{enumerate}[leftmargin=2.6em]
   \item[1.] Using the geometric series $1 + a + a^2 + \cdots = 1/(1-a)$ for $\abs{a} < 1$,
 \[
   G(z) = \sum_{x=1}^\infty z^x p (1-p)^{x-1} = zp \sum_{k=0}^\infty \bigl(z(1-p)\bigr)^k = \frac{zp}{1 - z(1-p)}.
@@ -206,7 +213,7 @@ Let $X \sim \Geom(p)$. Then
 \[
   \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \frac{2(1-p)}{p^2} + \frac1p - \frac{1}{p^2} = \frac{1-p}{p^2}.
 \]
-  \item[4.] $\set{X > k}$ is the event of $k$ consecutive failures, which has probability $(1-p)^k$. \qedhere
+  \item[4--5.] $\set{X > x}$ is the event of $x$ consecutive failures, which has probability $(1-p)^x$, and $F(x) = 1 - \Prob(X > x)$. \qedhere
 \end{enumerate}
 \end{proof}
 
@@ -220,13 +227,9 @@ Let $X \sim \Geom(p)$. For all $x, y = 1, 2, \ldots$,
 \end{theorem}
 
 \begin{proof}
-By the definition of conditional probability,
+Since $\set{X > x + y} \subseteq \set{X > x}$,
 \[
-  \Prob(X > x + y \given X > x) = \frac{\Prob(\set{X > x + y} \cap \set{X > x})}{\Prob(X > x)}.
-\]
-The event $\set{X > x + y}$ is a subset of $\set{X > x}$, so their intersection is $\set{X > x + y}$. These events have probabilities $(1-p)^{x+y}$ and $(1-p)^x$, so
-\[
-  \Prob(X > x + y \given X > x) = \frac{(1-p)^{x+y}}{(1-p)^x} = (1-p)^y = \Prob(X > y). \qedhere
+  \Prob(X > x + y \given X > x) = \frac{\Prob(X > x + y)}{\Prob(X > x)} = \frac{(1-p)^{x+y}}{(1-p)^x} = (1-p)^y = \Prob(X > y). \qedhere
 \]
 \end{proof}
 
@@ -235,24 +238,30 @@ The event $\set{X > x + y}$ is a subset of $\set{X > x}$, so their intersection 
 The negative binomial distribution generalises the geometric distribution.
 
 \begin{definition}[Negative binomial distribution]\label{def:negative-binomial}
-Let $X$ be the number of coin tosses needed until there are $k$ successes. Then $X$ has a \emph{negative binomial distribution} with parameters $k$ and $p$, written $X \sim \NegBin(k, p)$, with pmf
+A random variable $X$ has a \emph{negative binomial distribution} with parameters $k$ and $p$, written $X \sim \NegBin(k, p)$, if its pmf is
 \[
-  f(x) = \Prob(X = x) = \binom{x - 1}{k - 1} p^k (1-p)^{x-k}, \qquad x = k, k+1, \ldots
+  f(x) = \binom{x - 1}{k - 1} p^k (1-p)^{x-k}, \qquad x = k, k+1, \ldots.
 \]
+It counts the Bernoulli trials until the $k$th success.
 \end{definition}
 
-\begin{theorem}\label{thm:negative-binomial-properties}
-If $X \sim \NegBin(k, p)$, then $\E(X) = k/p$ and $\Var(X) = k(1-p)/p^2$.
+\begin{theorem}[Properties of the negative binomial distribution]\label{thm:negative-binomial-properties}
+For $X \sim \NegBin(k, p)$,
+\begin{enumerate}
+  \item $\E(X) = k/p$
+  \item $\Var(X) = k(1-p)/p^2$
+\end{enumerate}
 \end{theorem}
+
+These are not proved in this course.
 
 \subsection{Poisson distribution}\label{sec:poisson}
 
 \begin{definition}[Poisson distribution]\label{def:poisson}
-A random variable $X$ with pmf
+A random variable $X$ has a \emph{Poisson distribution} with parameter $\lambda > 0$, written $X \sim \Pois(\lambda)$, if its pmf is
 \[
-  \Prob(X = x) = \frac{\lambda^x}{x!} e^{-\lambda}, \qquad x = 0, 1, 2, \ldots,
+  f(x) = \frac{\lambda^x}{x!} e^{-\lambda}, \qquad x = 0, 1, 2, \ldots.
 \]
-for a fixed $\lambda > 0$, has a \emph{Poisson distribution}. We write $X \sim \Pois(\lambda)$.
 \end{definition}
 
 The pmf sums to 1, since by the Maclaurin series for $e^\lambda$,
@@ -284,7 +293,7 @@ Let $X_n \sim \Bin(n, \lambda/n)$. Then for each $x = 0, 1, 2, \ldots$,
 \end{theorem}
 
 \begin{proof}
-Consider tossing a coin $n$ times with success probability $\lambda/n$, and let $X_n$ be the number of successes. Then
+Let $X_n$ be the number of successes in $n$ coin tosses with success probability $\lambda/n$. Then
 \begin{align*}
   \Prob(X_n = x) &= \binom{n}{x} \Bigl(\frac{\lambda}{n}\Bigr)^x \Bigl(1 - \frac{\lambda}{n}\Bigr)^{n-x} \\
   &= \frac{\lambda^x}{x!} \cdot \frac{n(n-1)\cdots(n-x+1)}{n \cdot n \cdots n} \cdot \Bigl(1 - \frac{\lambda}{n}\Bigr)^n \cdot \Bigl(1 - \frac{\lambda}{n}\Bigr)^{-x}.
@@ -293,13 +302,12 @@ As $n \to \infty$, the second and fourth factors go to 1, and the third goes to 
 \end{proof}
 
 \begin{theorem}[Properties of the Poisson distribution]\label{thm:poisson-properties}
-Let $X \sim \Pois(\lambda)$. Then
+For $X \sim \Pois(\lambda)$,
 \begin{enumerate}
   \item the PGF is $G(z) = e^{-\lambda(1-z)}$
   \item $\E(X) = \lambda$
   \item $\Var(X) = \lambda$
 \end{enumerate}
-So for the Poisson distribution, the expectation and variance are equal.
 \end{theorem}
 
 \begin{proof}\leavevmode
@@ -309,10 +317,10 @@ So for the Poisson distribution, the expectation and variance are equal.
 \[
   \E(X) = \sum_{x=0}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=1}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=0}^\infty (x+1) e^{-\lambda} \frac{\lambda^{x+1}}{(x+1)!} = \lambda \sum_{x=0}^\infty e^{-\lambda} \frac{\lambda^x}{x!} = \lambda.
 \]
-Intuitively, the mean number of successes in the corresponding coin-flip experiment is $np = n(\lambda/n) = \lambda$.
+Intuitively, the corresponding coin-flip experiment has mean $np = \lambda$.
   \item[3.] The same argument suggests the variance should be $n(\lambda/n)(1 - \lambda/n) \to \lambda$. Indeed,
 \[
-  \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \lambda^2 + \lambda - \lambda^2 = \lambda. \qedhere \qedhere
+  \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \lambda^2 + \lambda - \lambda^2 = \lambda. \qedhere
   \]
 \end{enumerate}
 \end{proof}
@@ -320,13 +328,14 @@ Intuitively, the mean number of successes in the corresponding coin-flip experim
 \subsection{Hypergeometric distribution}\label{sec:hypergeometric}
 
 \begin{definition}[Hypergeometric distribution]\label{def:hypergeometric}
-A random variable $X$ has a \emph{hypergeometric distribution} with parameters $n$, $r$ and $N$, written $X \sim \Hyp(n, r, N)$, if
+A random variable $X$ has a \emph{hypergeometric distribution} with parameters $n$, $r$ and $N$, written $X \sim \Hyp(n, r, N)$, if its pmf is
 \[
-  \Prob(X = x) = \frac{\binom{r}{x} \binom{N - r}{n - x}}{\binom{N}{n}}, \qquad \max\set{0, r + n - N} \le x \le \min\set{n, r}.
+  f(x) = \frac{\binom{r}{x} \binom{N - r}{n - x}}{\binom{N}{n}}, \qquad \max\set{0, r + n - N} \le x \le \min\set{n, r}.
 \]
+It counts the red balls when $n$ balls are drawn without replacement from an urn of $N$ balls, $r$ of them red.
 \end{definition}
 
-The hypergeometric distribution arises as follows. An urn contains $N$ balls, $r$ of which are red. We draw $n$ balls at random, without replacement. The number of red balls among the $n$ drawn has a $\Hyp(n, r, N)$ distribution. To see this, number the red balls $1, \ldots, r$ and the others $r + 1, \ldots, N$. The total number of outcomes is $\binom{N}{n}$, all equally likely. The number of outcomes with $x$ red balls is $\binom{r}{x} \binom{N - r}{n - x}$, because the $x$ red balls must be drawn from the $r$ red balls, and the other $n - x$ from the $N - r$ non-red balls. In table form:
+To see this, number the red balls $1, \ldots, r$ and the others $r + 1, \ldots, N$. The total number of outcomes is $\binom{N}{n}$, all equally likely. The number of outcomes with $x$ red balls is $\binom{r}{x} \binom{N - r}{n - x}$, because the $x$ red balls must be drawn from the $r$ red balls, and the other $n - x$ from the $N - r$ non-red balls. In table form:
 \begin{center}
 \begin{tabular}{@{}lccc@{}}
 \toprule
@@ -352,13 +361,14 @@ $\Prob(X = k)$ & 0.659 & 0.299 & 0.040 & 0.002 & 0.000 & 1 \\
 \end{example}
 
 \begin{theorem}[Properties of the hypergeometric distribution]\label{thm:hypergeometric-properties}
-If $X \sim \Hyp(n, r, N)$, then
-\[
-  \E(X) = n \frac{r}{N}, \qquad \Var(X) = n \frac{r}{N} \Bigl(1 - \frac{r}{N}\Bigr) \frac{N - n}{N - 1}.
-\]
+For $X \sim \Hyp(n, r, N)$,
+\begin{enumerate}
+  \item $\E(X) = n \dfrac{r}{N}$
+  \item $\Var(X) = n \dfrac{r}{N} \Bigl(1 - \dfrac{r}{N}\Bigr) \dfrac{N - n}{N - 1}$
+\end{enumerate}
 \end{theorem}
 
-These closely resemble the expectation and variance of the binomial distribution with $p = r/N$. The proofs use multiple random variables (\cref{ch:multivariate-distributions}). Indeed, as $N \to \infty$ with $r/N \to p$, the hypergeometric distribution converges to the binomial distribution.
+These closely resemble the expectation and variance of the binomial distribution with $p = r/N$. The proofs use multiple random variables (\cref{ex:binomial-hypergeometric-expectation,ex:binomial-hypergeometric-variance}). Indeed, as $N \to \infty$ with $r/N \to p$, the hypergeometric distribution converges to the binomial distribution.
 
 % ==========================================================================
 \section{Continuous distributions}\label{sec:continuous-families}
@@ -371,11 +381,12 @@ Recall that a pdf is a function $f(x; \theta) \colon \R \to \R$, where $x$ repre
 \begin{definition}[Uniform distribution]\label{def:uniform}
 A random variable $X$ has a \emph{uniform distribution} on the interval $[a, b]$, written $X \sim \Unif[a, b]$, if its pdf is
 \[
-  f(x) = \frac{1}{b - a}, \quad a \le x \le b \qquad (\text{and } f(x) = 0 \text{ otherwise}).
+  f(x) = \frac{1}{b - a}, \qquad a \le x \le b.
 \]
+It describes a point chosen at random from $[a, b]$, each choice being equally likely.
 \end{definition}
 
-$X \sim \Unif[a, b]$ models a point chosen at random from $[a, b]$, each choice being equally likely. The total area under the pdf is 1.
+\Cref{fig:uniform-pdf} shows the pdf; the total area under it is 1.
 
 \begin{figure}[H]
 \centering
@@ -392,7 +403,7 @@ $X \sim \Unif[a, b]$ models a point chosen at random from $[a, b]$, each choice 
 
 
 \begin{theorem}[Properties of the uniform distribution]\label{thm:uniform-properties}
-Let $X \sim \Unif[a, b]$. Then
+For $X \sim \Unif[a, b]$,
 \begin{enumerate}
   \item $\E(X) = (a + b)/2$
   \item $\Var(X) = (b - a)^2/12$
@@ -412,7 +423,7 @@ Alternatively, the expectation is finite (it lies between $a$ and $b$) and the p
 \]
 By \cref{thm:variance-properties}, $\Var(X) = \Var\bigl(a + (b-a)U\bigr) = (b-a)^2 \Var(U)$. Finally,
 \[
-  \Var(U) = \E(U^2) - (\E U)^2 = \int_0^1 u^2 \dd u - \Bigl(\frac12\Bigr)^2 = \frac13 - \frac14 = \frac{1}{12}. \qedhere \qedhere
+  \Var(U) = \E(U^2) - (\E U)^2 = \int_0^1 u^2 \dd u - \Bigl(\frac12\Bigr)^2 = \frac13 - \frac14 = \frac{1}{12}. \qedhere
   \]
 \end{enumerate}
 \end{proof}
@@ -420,16 +431,13 @@ By \cref{thm:variance-properties}, $\Var(X) = \Var\bigl(a + (b-a)U\bigr) = (b-a)
 \subsection{Exponential distribution}\label{sec:exponential}
 
 \begin{definition}[Exponential distribution]\label{def:exponential}
-A random variable $X$ with pdf
+A random variable $X$ has an \emph{exponential distribution} with rate $\lambda > 0$, written $X \sim \Expo(\lambda)$, if its pdf is
 \[
-  f(x) = \lambda e^{-\lambda x}, \qquad x \ge 0,
+  f(x) = \lambda e^{-\lambda x}, \qquad x \ge 0.
 \]
-has an \emph{exponential distribution} with parameter (rate) $\lambda > 0$. We write $X \sim \Expo(\lambda)$.
 \end{definition}
 
-The exponential distribution can be viewed as a continuous version of the geometric distribution.
-
-Graphs of the pdf for various values of $\lambda$ are given in \cref{fig:exponential-pdfs}.
+The exponential distribution can be viewed as a continuous version of the geometric distribution. \Cref{fig:exponential-pdfs} shows the pdf for various $\lambda$.
 
 \begin{figure}[H]
 \centering
@@ -446,13 +454,13 @@ Graphs of the pdf for various values of $\lambda$ are given in \cref{fig:exponen
 
 
 \begin{theorem}[Properties of the exponential distribution]\label{thm:exponential-properties}
-Let $X \sim \Expo(\lambda)$. Then
+For $X \sim \Expo(\lambda)$,
 \begin{enumerate}
   \item the MGF is $M(s) = \dfrac{\lambda}{\lambda - s}$ for $s < \lambda$
   \item $\E(X) = 1/\lambda$
   \item $\Var(X) = 1/\lambda^2$
   \item the CDF is $F(x) = 1 - e^{-\lambda x}$ for $x \ge 0$
-  \item the tail probability decays exponentially: $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$
+  \item the tail probability is $\Prob(X > x) = e^{-\lambda x}$ for $x \ge 0$
 \end{enumerate}
 \end{theorem}
 
@@ -474,28 +482,28 @@ Let $X \sim \Expo(\lambda)$. Then
 
 The most important property of the exponential distribution is the following.
 
-\begin{theorem}[Memoryless property]\label{thm:exponential-memoryless}
-Let $X \sim \Expo(\lambda)$. Then
+\begin{theorem}[Memoryless property of the exponential distribution]\label{thm:exponential-memoryless}
+Let $X \sim \Expo(\lambda)$. For all $x, y \ge 0$,
 \[
-  \Prob(X > x + y \given X > x) = \Prob(X > y) \qquad \text{for all } x, y \ge 0.
+  \Prob(X > x + y \given X > x) = \Prob(X > y).
 \]
 \end{theorem}
 
 \begin{proof}
-The event $\set{X > x + y}$ is contained in $\set{X > x}$, so their intersection is $\set{X > x + y}$. Hence
+Since $\set{X > x + y} \subseteq \set{X > x}$,
 \[
-  \Prob(X > x + y \given X > x) = \frac{\Prob(X > x + y, X > x)}{\Prob(X > x)} = \frac{\Prob(X > x + y)}{\Prob(X > x)} = \frac{e^{-\lambda(x+y)}}{e^{-\lambda x}} = e^{-\lambda y} = \Prob(X > y). \qedhere
+  \Prob(X > x + y \given X > x) = \frac{\Prob(X > x + y)}{\Prob(X > x)} = \frac{e^{-\lambda(x+y)}}{e^{-\lambda x}} = e^{-\lambda y} = \Prob(X > y). \qedhere
 \]
 \end{proof}
 
-For example, if $X$ is the lifetime of a machine, then given that the machine is alive at time $x$, its remaining lifetime $X - x$ has the same exponential distribution as a completely new machine. The machine has no memory of its age and does not deteriorate, although it will break down eventually. It is not too difficult to prove that the exponential distribution is the only continuous (positive) distribution with the memoryless property.
+For example, if $X$ is the lifetime of a machine, then given that the machine is alive at time $x$, its remaining lifetime $X - x$ has the same exponential distribution as a completely new machine. The machine has no memory of its age and does not deteriorate, although it will break down eventually. The exponential distribution is the only continuous (positive) distribution with the memoryless property; this is not proved in this course.
 
 \subsection{Normal distribution}\label{sec:normal}
 
 The normal (or Gaussian) distribution is the most important distribution in the study of statistics.
 
 \begin{definition}[Normal distribution]\label{def:normal}
-A random variable $X$ has a \emph{normal} (or \emph{Gaussian}) distribution with parameters $\mu$ and $\sigma^2$, written $X \sim \Normal(\mu, \sigma^2)$, if its pdf is
+A random variable $X$ has a \emph{normal} (or \emph{Gaussian}) \emph{distribution} with parameters $\mu$ and $\sigma^2$, written $X \sim \Normal(\mu, \sigma^2)$, if its pdf is
 \[
   f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac12 \left(\frac{x - \mu}{\sigma}\right)^2}, \qquad x \in \R.
 \]
@@ -506,9 +514,9 @@ If $\mu = 0$ and $\sigma = 1$, this is the \emph{standard normal distribution}, 
 The CDF of the standard normal distribution is denoted $\Phi$.
 \end{definition}
 
-The parameters $\mu$ and $\sigma^2$ turn out to be the expectation and variance of the distribution. The normal distribution is symmetric about $\mu$, and its spread is controlled by $\sigma^2$, or the standard deviation $\sigma$.
+The parameters $\mu$ and $\sigma^2$ turn out to be the expectation and variance of the distribution. The normal distribution is symmetric about $\mu$, and its spread is controlled by $\sigma^2$ (or $\sigma$).
 
-\Cref{fig:normal-pdfs} shows the pdf of the $\Normal(\mu, \sigma^2)$ distribution for various $\mu$ and $\sigma^2$.
+\Cref{fig:normal-pdfs} shows the pdf for various $\mu$ and $\sigma^2$.
 
 \begin{figure}[H]
 \centering
@@ -543,30 +551,30 @@ Conversely, if $Z$ is standard normal and $X = \mu + \sigma Z$, then $F(x) = \Pr
 So any normal random variable is an affine (linear plus constant) transformation of a standard normal random variable. Standardisation expresses the CDF of any normal distribution in terms of $\Phi$, which is why traditional statistics textbooks only tabulate the standard normal distribution.
 
 \begin{theorem}[Properties of the normal distribution]\label{thm:normal-properties}
-Let $X \sim \Normal(\mu, \sigma^2)$. Then
+For $X \sim \Normal(\mu, \sigma^2)$,
 \begin{enumerate}
+  \item the MGF is $M(s) = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
   \item $\E(X) = \mu$
   \item $\Var(X) = \sigma^2$
-  \item the MGF is $\E(e^{sX}) = e^{s\mu + s^2\sigma^2/2}$ for $s \in \R$
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}\leavevmode
 \begin{enumerate}[leftmargin=*]
-  \item[1.] The pdf is symmetric about $\mu$ (\cref{prop:symmetric-expectation}).
-  \item[2.] Write $X = \mu + \sigma Z$ with $Z$ standard normal. Then $\Var(X) = \sigma^2 \Var(Z)$, so it suffices to show $\Var(Z) = \E(Z^2) = 1$ (the expectation of $Z$ is 0). Integrating by parts,
-\[
-  \E(Z^2) = \int_{-\infty}^\infty z \cdot z \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = \Bigl[z \cdot \frac{-1}{\sqrt{2\pi}} e^{-z^2/2}\Bigr]_{-\infty}^\infty + \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = 0 + 1 = 1,
-\]
-since the last integrand is the standard normal pdf.
-  \item[3.] First let $Z \sim \Normal(0, 1)$. Completing the square,
+  \item[1.] First let $Z \sim \Normal(0, 1)$. Completing the square,
 \[
   \E(e^{sZ}) = \int_{-\infty}^\infty e^{sz} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = e^{s^2/2} \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-(z - s)^2/2} \dd z = e^{s^2/2},
 \]
 since the last integrand is the $\Normal(s, 1)$ pdf. For general $X = \mu + \sigma Z$,
 \[
-  \E(e^{sX}) = \E(e^{s(\mu + \sigma Z)}) = e^{s\mu} \E(e^{s\sigma Z}) = e^{s\mu} e^{\sigma^2 s^2/2}. \qedhere \qedhere
+  \E(e^{sX}) = \E(e^{s(\mu + \sigma Z)}) = e^{s\mu} \E(e^{s\sigma Z}) = e^{s\mu} e^{\sigma^2 s^2/2}.
   \]
+  \item[2.] The pdf is symmetric about $\mu$ (\cref{prop:symmetric-expectation}).
+  \item[3.] Write $X = \mu + \sigma Z$ with $Z$ standard normal. Then $\Var(X) = \sigma^2 \Var(Z)$, so it suffices to show $\Var(Z) = \E(Z^2) = 1$ (the expectation of $Z$ is 0). Integrating by parts,
+\[
+  \E(Z^2) = \int_{-\infty}^\infty z \cdot z \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = \Bigl[z \cdot \frac{-1}{\sqrt{2\pi}} e^{-z^2/2}\Bigr]_{-\infty}^\infty + \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = 0 + 1 = 1,
+\]
+since the last integrand is the standard normal pdf. \qedhere
 \end{enumerate}
 \end{proof}
 
@@ -603,12 +611,12 @@ There is no simple formula for areas under the normal density curve. As a rough 
   \addplot[thmcolor!25] fill between[of=f and axis, soft clip={domain=-1:1}];
 \end{axis}
 \end{tikzpicture}
-\caption{The shaded area is $\Prob(\abs{X - \mu} \le c\sigma)$, the probability that $X$ lies within $c$ standard deviations of its expectation.}
+\caption{The shaded area is $\Prob(\abs{X - \mu} \le c\sigma)$, the chance that $X$ is within $c$ standard deviations of $\mu$.}
 \label{fig:normal-within-c-sd}
 \end{figure}
 
 
-The function \texttt{pnorm} also evaluates the CDF of a general normal distribution. For example, for $X \sim \Normal(1, 4)$, $\Prob(X \le 3)$ is \texttt{pnorm(3, mean = 1, sd = 2)} $= 0.8413$. Note that R uses the \emph{standard deviation} as its argument, not the variance.
+The function \texttt{pnorm} also evaluates the CDF of a general normal distribution. For example, for $X \sim \Normal(1, 4)$, $\Prob(X \le 3)$ is \texttt{pnorm(3, mean = 1, sd = 2)} $= 0.8413$. Note that R uses the standard deviation as its argument, not the variance.
 
 We can also go the other way: for $X \sim \Normal(1, 4)$, which value $z$ has $\Prob(X \le z) = 0.9$? Such a value is a quantile (\cref{def:quantiles}), here the $0.9$-quantile, and for the normal distribution it is given by \texttt{qnorm}. In statistical inference we often need values that cut off small tail areas under the standard normal curve.
 
@@ -655,16 +663,18 @@ The \emph{gamma function} is
 \end{enumerate}
 \end{theorem}
 
+These are not proved in this course.
+
 \begin{definition}[Gamma distribution]\label{def:gamma-distribution}
-A random variable $X$ with pdf
+A random variable $X$ has a \emph{gamma distribution} with shape $\alpha > 0$ and rate $\lambda > 0$, written $X \sim \GammaDist(\alpha, \lambda)$, if its pdf is
 \[
-  f(x) = \frac{\lambda^\alpha x^{\alpha - 1} e^{-\lambda x}}{\Gamma(\alpha)}, \qquad x \ge 0,
+  f(x) = \frac{\lambda^\alpha x^{\alpha - 1} e^{-\lambda x}}{\Gamma(\alpha)}, \qquad x \ge 0.
 \]
-has a \emph{gamma distribution}, written $X \sim \GammaDist(\alpha, \lambda)$. The parameter $\alpha$ is the \emph{shape} parameter and $\lambda$ the \emph{rate} parameter; $1/\lambda$ is the \emph{scale} parameter.
+The reciprocal $1/\lambda$ is the scale parameter.
 \end{definition}
 
 \begin{theorem}[Properties of the gamma distribution]\label{thm:gamma-properties}
-Let $X \sim \GammaDist(\alpha, \lambda)$. Then
+For $X \sim \GammaDist(\alpha, \lambda)$,
 \begin{enumerate}
   \item the MGF is $M(s) = \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^\alpha$ for $s < \lambda$
   \item $\E(X) = \alpha/\lambda$
@@ -691,9 +701,7 @@ since the last integrand is the $\GammaDist(\alpha, \lambda - s)$ pdf.
 A random variable $X$ has a \emph{chi-squared distribution} with $n \in \set{1, 2, \ldots}$ \emph{degrees of freedom} if $X \sim \GammaDist(n/2, 1/2)$. We write $X \sim \ChiSq{n}$.
 \end{definition}
 
-In other words, the $\ChiSq{n}$ distribution is a special case of the gamma distribution.
-
-\Cref{fig:chi-squared-pdfs} shows the pdf of the $\ChiSq{n}$ distribution for various $n$.
+\Cref{fig:chi-squared-pdfs} shows the pdf for various $n$.
 
 \begin{figure}[H]
 \centering
@@ -720,11 +728,10 @@ For $\alpha, \beta > 0$, the \emph{beta function} is
 \end{definition}
 
 \begin{definition}[Beta distribution]\label{def:beta-distribution}
-A random variable $X$ with pdf
+A random variable $X$ has a \emph{beta distribution} with parameters $\alpha, \beta > 0$, written $X \sim \BetaDist(\alpha, \beta)$, if its pdf is
 \[
-  f(x) = \frac{x^{\alpha - 1} (1 - x)^{\beta - 1}}{B(\alpha, \beta)}, \qquad 0 \le x \le 1,
+  f(x) = \frac{x^{\alpha - 1} (1 - x)^{\beta - 1}}{B(\alpha, \beta)}, \qquad 0 \le x \le 1.
 \]
-has a \emph{beta distribution}, written $X \sim \BetaDist(\alpha, \beta)$. Its support is $[0, 1]$.
 \end{definition}
 
 % ==========================================================================

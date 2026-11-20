@@ -55,6 +55,9 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - Prefer precise words: "almost surely" rather than "certainly" where that is the meaning, and "a set of possible outcomes" where the set isn't unique.
 - Numbers in prose: write "0.5" rather than "½" for values such as limits and probabilities.
 - Don't elaborate on a term that is outside the chapter's scope (e.g. no examples of measurable spaces in the random-variable definition).
+- Distribution definitions all follow one template: "A random variable $X$ has a *… distribution* with parameters …, written $X \sim \ldots$, if its pmf/pdf is [display]. It counts … / It describes …". The motivating story goes in the text before or in that last sentence, not in the "if" clause.
+- Property theorems for distributions all follow one template: "[Properties of the … distribution] For $X \sim \ldots$, 1. the PGF/MGF is …, 2. $\E(X) = …$, 3. $\Var(X) = …$, then CDF and tail probability if given." Proofs follow the same order. Paired results (e.g. the geometric and exponential memoryless properties) have the same statement and proof shape.
+- Results stated without proof in the course are followed by "Not proved in this course." (or "These are not proved in this course.").
 - Paired results mirror each other too: if the MGF has a "Moments from the MGF" theorem, the PGF gets a matching "Moments from the PGF" theorem rather than the same facts in running text.
 - Paired definitions (discrete and continuous, pmf and pdf, …) mirror each other: the same structure and the same items (values taken, positivity, normalisation, how probabilities are computed, notation), so each can be read against the other.
 - Use "is invertible" rather than "can be inverted"; prefer the shorter standard phrase.
