@@ -11,7 +11,7 @@ This chapter lists the most important discrete and continuous distributions, wit
 \section{Bernoulli trials}\label{sec:bernoulli-trials}
 % ==========================================================================
 
-A \emph{Bernoulli trial} is a random experiment with only two possible outcomes, usually labelled ``success'' (1) and ``failure'' (0). Examples are a single coin toss (1 for Heads, 0 for Tails), or selecting a person at random from a population and asking whether they approve of the prime minister.
+A \emph{Bernoulli trial} is a random experiment with only two possible outcomes, usually labelled ``success'' (1) and ``failure'' (0). Examples are a single coin toss (1 for heads, 0 for tails), or selecting a person at random from a population and asking whether they approve of the prime minister.
 
 \begin{definition}[i.i.d.]\label{def:iid}
 Random variables (or trials) are \emph{i.i.d.} if they are \emph{independent and identically distributed}.
@@ -29,7 +29,7 @@ for any distinct indices $i_1, \ldots, i_k$ (\cref{ex:binomial-law}). The distri
   \item negative binomial: the number of trials until the $k$th success (values $k, k+1, \ldots$).
 \end{itemize}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \foreach \y/\lab/\m in {0/{$\Bern(p)$}/1, -0.9/{$\Bin(n,p)$}/2, -1.8/{$\Geom(p)$}/3, -2.7/{$\NegBin(k,p)$}/4} {
@@ -64,7 +64,7 @@ We write $X \sim \Bern(p)$.
 
 Despite its simplicity, this is one of the most important distributions in probability. It models, for example, a single coin toss.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[pmfplot, width=0.45\textwidth, height=4cm, xmin=-0.5, xmax=1.5, ymax=0.7, xtick={0,1}, xlabel={$x$}, ylabel={$f(x)$}]
@@ -85,17 +85,17 @@ Let $X \sim \Bern(p)$. Then
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1. $\E X = 0 \cdot \Prob(X = 0) + 1 \cdot \Prob(X = 1) = 0 \cdot (1-p) + 1 \cdot p = p$.
-
-2. Since $X^2 = X$, $\Var(X) = \E X^2 - (\E X)^2 = \E X - (\E X)^2 = p - p^2 = p(1-p)$.
-
-3. $G(z) = z^0 (1-p) + z^1 p = 1 - p + zp$.
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] $\E X = 0 \cdot \Prob(X = 0) + 1 \cdot \Prob(X = 1) = 0 \cdot (1-p) + 1 \cdot p = p$.
+  \item[2.] Since $X^2 = X$, $\Var(X) = \E X^2 - (\E X)^2 = \E X - (\E X)^2 = p - p^2 = p(1-p)$.
+  \item[3.] $G(z) = z^0 (1-p) + z^1 p = 1 - p + zp$. \qedhere
+\end{enumerate}
 \end{proof}
 
 \subsection{Binomial distribution}\label{sec:binomial}
 
-Flip a fair coin 100 times and let $X$ be the number of successes (Heads). $X$ can take the values $0, 1, \ldots, 100$. There are $2^{100}$ equally likely sequences of tosses, and $\binom{100}{x}$ of them have exactly $x$ ones, since we must choose $x$ positions for the ones out of 100. So
+Flip a fair coin 100 times and let $X$ be the number of successes (heads). $X$ can take the values $0, 1, \ldots, 100$. There are $2^{100}$ equally likely sequences of tosses, and $\binom{100}{x}$ of them have exactly $x$ ones, since we must choose $x$ positions for the ones out of 100. So
 \[
   \Prob(X = x) = \frac{\binom{100}{x}}{2^{100}}, \qquad x = 0, 1, \ldots, 100.
 \]
@@ -104,7 +104,7 @@ For example, $\Prob(X \ge 60) = \sum_{x=60}^{100} \binom{100}{x} / 2^{100}$, whi
 sum(choose(100, 60:100)) / 2^100    # 0.02844397
 \end{rcode}
 
-More generally, if the probability of Heads is $p$, the outcomes are no longer equally likely. By the product rule (\cref{thm:product-rule}), each particular sequence with $x$ Heads and $n - x$ Tails has probability $p^x (1-p)^{n-x}$, and there are $\binom{n}{x}$ such sequences (\cref{ex:binomial-law}).
+More generally, if the probability of heads is $p$, the outcomes are no longer equally likely. By the product rule (\cref{thm:product-rule}), each particular sequence with $x$ heads and $n - x$ tails has probability $p^x (1-p)^{n-x}$, and there are $\binom{n}{x}$ such sequences (\cref{ex:binomial-law}).
 
 \begin{definition}[Binomial distribution]\label{def:binomial}
 Let $X$ be the number of successes in $n$ independent Bernoulli trials (coin tosses) with success probability $p$. Then $X$ has a \emph{binomial distribution} with parameters $n$ and $p$, written $X \sim \Bin(n, p)$, with pmf
@@ -115,7 +115,7 @@ Let $X$ be the number of successes in $n$ independent Bernoulli trials (coin tos
 
 \Cref{fig:binomial-pmf} shows an example.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=-0.5, xmax=10.5, xlabel={$x$}, ylabel={$f(x)$}, xtick={0,...,10}]
@@ -161,11 +161,11 @@ Counting successes in coin flips may seem artificial, but many practical situati
 
 \subsection{Geometric distribution}\label{sec:geometric}
 
-Again consider a sequence of coin tosses, but now let $X$ be the number of tosses needed until the first Heads (success), including that toss. Then
+Again consider a sequence of coin tosses, but now let $X$ be the number of tosses needed until the first heads (success), including that toss. Then
 \[
   \Prob(X = x) = (1 - p)^{x-1} p, \qquad x = 1, 2, 3, \ldots,
 \]
-since the only sequence of the required form is $x - 1$ Tails followed by a Head, which has probability $(1-p)^{x-1}p$ (\cref{ex:geometric-law}).
+since the only sequence of the required form is $x - 1$ tails followed by a head, which has probability $(1-p)^{x-1}p$ (\cref{ex:geometric-law}).
 
 \begin{definition}[Geometric distribution]\label{def:geometric}
 A random variable with pmf $f(x) = (1-p)^{x-1} p$, $x = 1, 2, \ldots$, has a \emph{geometric distribution} with parameter $p$. We write $X \sim \Geom(p)$.
@@ -173,7 +173,7 @@ A random variable with pmf $f(x) = (1-p)^{x-1} p$, $x = 1, 2, \ldots$, has a \em
 
 \Cref{fig:geometric-pmf} shows an example.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=0.5, xmax=16.5, xlabel={$x$}, ylabel={$f(x)$}, xtick={1,...,16}]
@@ -195,20 +195,19 @@ Let $X \sim \Geom(p)$. Then
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1. Using the geometric series $1 + a + a^2 + \cdots = 1/(1-a)$ for $\abs{a} < 1$,
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] Using the geometric series $1 + a + a^2 + \cdots = 1/(1-a)$ for $\abs{a} < 1$,
 \[
   G(z) = \sum_{x=1}^\infty z^x p (1-p)^{x-1} = zp \sum_{k=0}^\infty \bigl(z(1-p)\bigr)^k = \frac{zp}{1 - z(1-p)}.
 \]
-
-2. Differentiating, $\E X = G'(1) = 1/p$. This is intuitive: if successes occur with probability $p$, we expect to wait $1/p$ throws for one.
-
-3. Differentiating twice,
+  \item[2.] Differentiating, $\E X = G'(1) = 1/p$. This is intuitive: if successes occur with probability $p$, we expect to wait $1/p$ throws for one.
+  \item[3.] Differentiating twice,
 \[
   \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \frac{2(1-p)}{p^2} + \frac1p - \frac{1}{p^2} = \frac{1-p}{p^2}.
 \]
-
-4. $\set{X > k}$ is the event of $k$ consecutive failures, which has probability $(1-p)^k$.
+  \item[4.] $\set{X > k}$ is the event of $k$ consecutive failures, which has probability $(1-p)^k$. \qedhere
+\end{enumerate}
 \end{proof}
 
 The geometric distribution has the \emph{memoryless property}. Suppose we have tossed the coin $x$ times without a success. What is the probability that we need more than $y$ additional tosses? Obviously it is the same as the probability of needing more than $y$ tosses starting from scratch, $\Prob(X > y) = (1-p)^y$, whatever $x$ is. The coin has no memory of what happened.
@@ -263,7 +262,7 @@ The pmf sums to 1, since by the Maclaurin series for $e^\lambda$,
 
 \Cref{fig:poisson-pmf} shows an example.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=-0.5, xmax=20.5, xlabel={$x$}, ylabel={$f(x)$}, xtick={0,2,...,20}]
@@ -303,19 +302,19 @@ Let $X \sim \Pois(\lambda)$. Then
 So for the Poisson distribution, the expectation and variance are equal.
 \end{theorem}
 
-\begin{proof}
-1. This is \cref{ex:pgf-poisson}.
-
-2. $\E X = G'(1) = \lambda$. Directly,
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] This is \cref{ex:pgf-poisson}.
+  \item[2.] $\E X = G'(1) = \lambda$. Directly,
 \[
   \E X = \sum_{x=0}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=1}^\infty x e^{-\lambda} \frac{\lambda^x}{x!} = \sum_{x=0}^\infty (x+1) e^{-\lambda} \frac{\lambda^{x+1}}{(x+1)!} = \lambda \sum_{x=0}^\infty e^{-\lambda} \frac{\lambda^x}{x!} = \lambda.
 \]
 Intuitively, the mean number of successes in the corresponding coin-flip experiment is $np = n(\lambda/n) = \lambda$.
-
-3. The same argument suggests the variance should be $n(\lambda/n)(1 - \lambda/n) \to \lambda$. Indeed,
+  \item[3.] The same argument suggests the variance should be $n(\lambda/n)(1 - \lambda/n) \to \lambda$. Indeed,
 \[
-  \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \lambda^2 + \lambda - \lambda^2 = \lambda. \qedhere
-\]
+  \Var(X) = G''(1) + G'(1) - \bigl(G'(1)\bigr)^2 = \lambda^2 + \lambda - \lambda^2 = \lambda. \qedhere \qedhere
+  \]
+\end{enumerate}
 \end{proof}
 
 \subsection{Hypergeometric distribution}\label{sec:hypergeometric}
@@ -379,7 +378,7 @@ A random variable $X$ has a \emph{uniform distribution} on the interval $[a, b]$
 
 $X \sim \Unif[a, b]$ models a point chosen at random from $[a, b]$, each choice being equally likely. The total area under the pdf is 1.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, width=0.5\textwidth, height=3.8cm, xmin=0, xmax=5, ymin=0, ymax=0.6, xtick={1,4}, xticklabels={$a$,$b$}, ytick={0.3333}, yticklabels={$\frac{1}{b-a}$}, xlabel={$x$}, ylabel={$f(x)$}]
@@ -401,21 +400,22 @@ Let $X \sim \Unif[a, b]$. Then
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1. Directly,
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] Directly,
 \[
   \E X = \int_a^b \frac{x}{b - a} \dd x = \frac{1}{b-a} \cdot \frac{b^2 - a^2}{2} = \frac{a + b}{2}.
 \]
 Alternatively, the expectation is finite (it lies between $a$ and $b$) and the pdf is symmetric about $(a+b)/2$, so by \cref{prop:symmetric-expectation} it equals the symmetry point.
-
-2. Write $X = a + (b - a)U$, where $U \sim \Unif[0, 1]$: choosing a point at random in $[a, b]$ is the same as choosing a point at random in $[0, 1]$, multiplying by $b - a$ and adding $a$. Indeed, for $x \in [a, b]$,
+  \item[2.] Write $X = a + (b - a)U$, where $U \sim \Unif[0, 1]$: choosing a point at random in $[a, b]$ is the same as choosing a point at random in $[0, 1]$, multiplying by $b - a$ and adding $a$. Indeed, for $x \in [a, b]$,
 \[
   \Prob(X \le x) = \frac{x - a}{b - a} = \Prob\Bigl(U \le \frac{x - a}{b - a}\Bigr) = \Prob\bigl(a + (b-a)U \le x\bigr).
 \]
 By \cref{thm:variance-properties}, $\Var(X) = \Var\bigl(a + (b-a)U\bigr) = (b-a)^2 \Var(U)$. Finally,
 \[
-  \Var(U) = \E U^2 - (\E U)^2 = \int_0^1 u^2 \dd u - \Bigl(\frac12\Bigr)^2 = \frac13 - \frac14 = \frac{1}{12}. \qedhere
-\]
+  \Var(U) = \E U^2 - (\E U)^2 = \int_0^1 u^2 \dd u - \Bigl(\frac12\Bigr)^2 = \frac13 - \frac14 = \frac{1}{12}. \qedhere \qedhere
+  \]
+\end{enumerate}
 \end{proof}
 
 \subsection{Exponential distribution}\label{sec:exponential}
@@ -432,7 +432,7 @@ The exponential distribution can be viewed as a continuous version of the geomet
 
 Graphs of the pdf for various values of $\lambda$ are given in \cref{fig:exponential-pdfs}.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, xmin=0, xmax=5, ymin=0, ymax=2.1, xlabel={$x$}, ylabel={$f(x)$}, legend pos=north east]
@@ -457,22 +457,20 @@ Let $X \sim \Expo(\lambda)$. Then
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1. For $s < \lambda$,
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] For $s < \lambda$,
 \[
   M(s) = \int_0^\infty e^{sx} \lambda e^{-\lambda x} \dd x = \lambda \int_0^\infty e^{-(\lambda - s)x} \dd x = \lambda \Bigl[\frac{-e^{-(\lambda - s)x}}{\lambda - s}\Bigr]_{x=0}^\infty = \frac{\lambda}{\lambda - s}.
 \]
-
-2. $\E X = M'(0) = \dfrac{\lambda}{(\lambda - s)^2}\Big|_{s=0} = \dfrac1\lambda$. Alternatively, integrating by parts,
+  \item[2.] $\E X = M'(0) = \dfrac{\lambda}{(\lambda - s)^2}\Big|_{s=0} = \dfrac1\lambda$. Alternatively, integrating by parts,
 \[
   \E X = \int_0^\infty x \lambda e^{-\lambda x} \dd x = \bigl[-x e^{-\lambda x}\bigr]_0^\infty + \int_0^\infty e^{-\lambda x} \dd x = 0 + \Bigl[\frac{-e^{-\lambda x}}{\lambda}\Bigr]_0^\infty = \frac1\lambda.
 \]
-
-3. The second moment is $\E X^2 = M''(0) = \dfrac{2\lambda}{(\lambda - s)^3}\Big|_{s=0} = \dfrac{2}{\lambda^2}$, so $\Var(X) = \dfrac{2}{\lambda^2} - \dfrac{1}{\lambda^2} = \dfrac{1}{\lambda^2}$.
-
-4. $F(x) = \int_0^x \lambda e^{-\lambda u} \dd u = \bigl[-e^{-\lambda u}\bigr]_0^x = 1 - e^{-\lambda x}$.
-
-5. $\Prob(X > x) = 1 - F(x) = e^{-\lambda x}$.
+  \item[3.] The second moment is $\E X^2 = M''(0) = \dfrac{2\lambda}{(\lambda - s)^3}\Big|_{s=0} = \dfrac{2}{\lambda^2}$, so $\Var(X) = \dfrac{2}{\lambda^2} - \dfrac{1}{\lambda^2} = \dfrac{1}{\lambda^2}$.
+  \item[4.] $F(x) = \int_0^x \lambda e^{-\lambda u} \dd u = \bigl[-e^{-\lambda u}\bigr]_0^x = 1 - e^{-\lambda x}$.
+  \item[5.] $\Prob(X > x) = 1 - F(x) = e^{-\lambda x}$. \qedhere
+\end{enumerate}
 \end{proof}
 
 The most important property of the exponential distribution is the following.
@@ -513,7 +511,7 @@ The parameters $\mu$ and $\sigma^2$ turn out to be the expectation and variance 
 
 \Cref{fig:normal-pdfs} shows the pdf of the $\Normal(\mu, \sigma^2)$ distribution for various $\mu$ and $\sigma^2$.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, xmin=-3, xmax=5, ymin=0, ymax=0.62, xlabel={$x$}, ylabel={$f(x)$}, legend pos=north east]
@@ -554,23 +552,23 @@ Let $X \sim \Normal(\mu, \sigma^2)$. Then
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1. The pdf is symmetric about $\mu$ (\cref{prop:symmetric-expectation}).
-
-2. Write $X = \mu + \sigma Z$ with $Z$ standard normal. Then $\Var(X) = \sigma^2 \Var(Z)$, so it suffices to show $\Var(Z) = \E Z^2 = 1$ (the expectation of $Z$ is 0). Integrating by parts,
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] The pdf is symmetric about $\mu$ (\cref{prop:symmetric-expectation}).
+  \item[2.] Write $X = \mu + \sigma Z$ with $Z$ standard normal. Then $\Var(X) = \sigma^2 \Var(Z)$, so it suffices to show $\Var(Z) = \E Z^2 = 1$ (the expectation of $Z$ is 0). Integrating by parts,
 \[
   \E Z^2 = \int_{-\infty}^\infty z \cdot z \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = \Bigl[z \cdot \frac{-1}{\sqrt{2\pi}} e^{-z^2/2}\Bigr]_{-\infty}^\infty + \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = 0 + 1 = 1,
 \]
 since the last integrand is the standard normal pdf.
-
-3. First let $Z \sim \Normal(0, 1)$. Completing the square,
+  \item[3.] First let $Z \sim \Normal(0, 1)$. Completing the square,
 \[
   \E e^{sZ} = \int_{-\infty}^\infty e^{sz} \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \dd z = e^{s^2/2} \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}} e^{-(z - s)^2/2} \dd z = e^{s^2/2},
 \]
 since the last integrand is the $\Normal(s, 1)$ pdf. For general $X = \mu + \sigma Z$,
 \[
-  \E e^{sX} = \E e^{s(\mu + \sigma Z)} = e^{s\mu} \E e^{s\sigma Z} = e^{s\mu} e^{\sigma^2 s^2/2}. \qedhere
-\]
+  \E e^{sX} = \E e^{s(\mu + \sigma Z)} = e^{s\mu} \E e^{s\sigma Z} = e^{s\mu} e^{\sigma^2 s^2/2}. \qedhere \qedhere
+  \]
+\end{enumerate}
 \end{proof}
 
 \begin{example}[Comparing heights]\label{ex:standardisation-heights}
@@ -597,7 +595,7 @@ There is no simple formula for areas under the normal density curve. As a rough 
   \item about 99.7\% for $c = 3$.
 \end{itemize}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, width=0.55\textwidth, height=4cm, xmin=-3.5, xmax=3.5, ymin=0, ymax=0.45, xtick={-1,0,1}, xticklabels={$\mu - c\sigma$, $\mu$, $\mu + c\sigma$}, ytick=\empty, xlabel={$x$}]
@@ -619,7 +617,7 @@ We can also go the other way: for $X \sim \Normal(1, 4)$, which value $z$ has $\
 For $0 < \alpha < 1$, $z_\alpha$ is the value for which the area under the standard normal pdf to the right of $z_\alpha$ is $\alpha$. Equivalently, $\Phi(z_\alpha) = 1 - \alpha$: $z_\alpha$ is the $(1 - \alpha)$-quantile of the standard normal distribution.
 \end{definition}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, width=0.55\textwidth, height=4cm, xmin=-3.5, xmax=3.5, ymin=0, ymax=0.45, xtick={1.645}, xticklabels={$z_\alpha$}, ytick=\empty, xlabel={$z$}]
@@ -675,19 +673,19 @@ Let $X \sim \GammaDist(\alpha, \lambda)$. Then
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1. For $s < \lambda$,
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] For $s < \lambda$,
 \[
   M(s) = \int_0^\infty e^{sx} \frac{e^{-\lambda x} \lambda^\alpha x^{\alpha - 1}}{\Gamma(\alpha)} \dd x = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^\alpha \int_0^\infty \frac{e^{-(\lambda - s)x} (\lambda - s)^\alpha x^{\alpha - 1}}{\Gamma(\alpha)} \dd x = \Bigl(\frac{\lambda}{\lambda - s}\Bigr)^\alpha,
 \]
 since the last integrand is the $\GammaDist(\alpha, \lambda - s)$ pdf.
-
-2. $\E X = M'(0) = \dfrac{\alpha}{\lambda} \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^{\alpha + 1}\Big|_{s=0} = \dfrac{\alpha}{\lambda}$. Alternatively, using the $\GammaDist(\alpha + 1, \lambda)$ pdf and $\Gamma(\alpha+1) = \alpha\Gamma(\alpha)$,
+  \item[2.] $\E X = M'(0) = \dfrac{\alpha}{\lambda} \Bigl(\dfrac{\lambda}{\lambda - s}\Bigr)^{\alpha + 1}\Big|_{s=0} = \dfrac{\alpha}{\lambda}$. Alternatively, using the $\GammaDist(\alpha + 1, \lambda)$ pdf and $\Gamma(\alpha+1) = \alpha\Gamma(\alpha)$,
 \[
   \E X = \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha + 1)}{\lambda^{\alpha + 1}} \int_0^\infty \frac{\lambda^{\alpha + 1} x^\alpha e^{-\lambda x}}{\Gamma(\alpha + 1)} \dd x = \frac{1}{\lambda} \frac{\Gamma(\alpha + 1)}{\Gamma(\alpha)} = \frac{\alpha}{\lambda}.
 \]
-
-3. Similarly, by differentiating the MGF twice.
+  \item[3.] Similarly, by differentiating the MGF twice. \qedhere
+\end{enumerate}
 \end{proof}
 
 \begin{definition}[Chi-squared distribution]\label{def:chi-squared}
@@ -698,7 +696,7 @@ In other words, the $\ChiSq{n}$ distribution is a special case of the gamma dist
 
 \Cref{fig:chi-squared-pdfs} shows the pdf of the $\ChiSq{n}$ distribution for various $n$.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, xmin=0, xmax=10, ymin=0, ymax=0.5, xlabel={$x$}, ylabel={$f(x)$}, legend pos=north east]

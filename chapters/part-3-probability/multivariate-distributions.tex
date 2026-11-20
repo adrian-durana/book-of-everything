@@ -78,7 +78,7 @@ $f_X(x)$ & 0.3 & 0.4 & 0.3 & 1 \\
 That is, $f_X = (0.3, 0.4, 0.3)$ on $\set{1, 2, 3}$ and $f_Y = (0.6, 0.4)$ on $\set{1, 2}$.
 \end{example}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[view={-35}{25}, width=0.55\textwidth, height=5.5cm, xmin=0.5, xmax=3.5, ymin=0.5, ymax=2.5, zmin=0, zmax=0.35,
@@ -126,7 +126,7 @@ for any subset $B$ of $\R^2$. Instead of the area under a curve, we now evaluate
 \]
 Again, we usually cannot reconstruct the joint pdf from the marginal pdfs, unless the random variables are independent.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.2cm}, view={-30}{30}, width=0.5\textwidth, height=5cm,
@@ -198,7 +198,7 @@ The model in which $X_1, \ldots, X_n$ are independent and all have the same dist
 \end{remark}
 
 \begin{example}[Coin flips]\label{ex:coin-flips-independent}
-Flip a coin $n$ times. For $i = 1, \ldots, n$, let $X_i = 1$ if the $i$th toss is Heads and $X_i = 0$ otherwise, with $\Prob(X_i = 1) = p = 1 - \Prob(X_i = 0)$, and assume that $X_1, \ldots, X_n$ are independent. That is, $X_1, \ldots, X_n$ is a random sample from the $\Bern(p)$ distribution. This completely specifies the model. For example, let $X = X_1 + \cdots + X_n$ be the total number of Heads, and let $A$ be the set of binary vectors $\vect{x} = (x_1, \ldots, x_n)$ with $\sum_i x_i = k$. $A$ has $\binom{n}{k}$ elements, so
+Flip a coin $n$ times. For $i = 1, \ldots, n$, let $X_i = 1$ if the $i$th toss is heads and $X_i = 0$ otherwise, with $\Prob(X_i = 1) = p = 1 - \Prob(X_i = 0)$, and assume that $X_1, \ldots, X_n$ are independent. That is, $X_1, \ldots, X_n$ is a random sample from the $\Bern(p)$ distribution. This completely specifies the model. For example, let $X = X_1 + \cdots + X_n$ be the total number of heads, and let $A$ be the set of binary vectors $\vect{x} = (x_1, \ldots, x_n)$ with $\sum_i x_i = k$. $A$ has $\binom{n}{k}$ elements, so
 \begin{align*}
   \Prob(X = k) &= \sum_{\vect{x} \in A} \Prob(X_1 = x_1, \ldots, X_n = x_n) = \sum_{\vect{x} \in A} \Prob(X_1 = x_1) \cdots \Prob(X_n = x_n) \\
   &= \sum_{\vect{x} \in A} p^k (1-p)^{n-k} = \binom{n}{k} p^k (1-p)^{n-k}.
@@ -219,7 +219,7 @@ plot(y ~ x, xlim = c(-3, 3), ylim = c(-3, 3))
 \end{rcode}
 \end{example}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, width=6.5cm, height=6.5cm, xmin=-3.5, xmax=3.5, ymin=-3.5, ymax=3.5, xlabel={$x$}, ylabel={$y$}, axis lines=box, enlarge x limits=false]
@@ -248,7 +248,7 @@ in the discrete case, where $f$ is the joint pmf, and
 \]
 in the continuous case, where $f$ is the joint pdf.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \draw[thick] (0,0) circle (0.7); \node at (0,1.0) {$\Omega$};
@@ -345,27 +345,23 @@ For random variables $X$, $Y$ and $Z$ and constants $a$ and $b$:
 
 \begin{proof}
 Properties 1 and 2 are \cref{thm:variance-properties}. Write $\mu_X = \E X$ and $\mu_Y = \E Y$.
-
-3. $\Cov(X, Y) = \E[XY - Y\mu_X - X\mu_Y + \mu_X\mu_Y] = \E XY - \mu_Y\mu_X - \mu_X\mu_Y + \mu_X\mu_Y = \E XY - \mu_X\mu_Y$.
-
-4. $\Cov(X, Y) = \E[(X - \mu_X)(Y - \mu_Y)] = \E[(Y - \mu_Y)(X - \mu_X)] = \Cov(Y, X)$.
-
-5. Using property 3,
+\begin{enumerate}[leftmargin=*]
+  \item[3.] $\Cov(X, Y) = \E[XY - Y\mu_X - X\mu_Y + \mu_X\mu_Y] = \E XY - \mu_Y\mu_X - \mu_X\mu_Y + \mu_X\mu_Y = \E XY - \mu_X\mu_Y$.
+  \item[4.] $\Cov(X, Y) = \E[(X - \mu_X)(Y - \mu_Y)] = \E[(Y - \mu_Y)(X - \mu_X)] = \Cov(Y, X)$.
+  \item[5.] Using property 3,
 \begin{align*}
   \Cov(aX + bY, Z) &= \E[(aX + bY)Z] - \E[aX + bY]\,\E Z \\
   &= a\E XZ + b \E YZ - a \E X \, \E Z - b \E Y \, \E Z \\
   &= a\bigl(\E XZ - \E X\,\E Z\bigr) + b\bigl(\E YZ - \E Y\,\E Z\bigr) = a\Cov(X, Z) + b\Cov(Y, Z).
 \end{align*}
-
-6. $\Cov(X, X) = \E[(X - \mu_X)^2] = \Var(X)$.
-
-7. By property 6, $\Var(X + Y) = \Cov(X + Y, X + Y)$. By property 5, and property 4 to expand the second argument,
+  \item[6.] $\Cov(X, X) = \E[(X - \mu_X)^2] = \Var(X)$.
+  \item[7.] By property 6, $\Var(X + Y) = \Cov(X + Y, X + Y)$. By property 5, and property 4 to expand the second argument,
 \[
   \Cov(X + Y, X + Y) = \Cov(X, X) + \Cov(X, Y) + \Cov(Y, X) + \Cov(Y, Y),
 \]
 which by properties 4 and 6 equals $\Var(X) + \Var(Y) + 2\Cov(X, Y)$.
-
-8. If $X$ and $Y$ are independent, then $\E XY = \E X\,\E Y$ (\cref{thm:joint-expectation-properties}), so $\Cov(X, Y) = 0$ by property 3.
+  \item[8.] If $X$ and $Y$ are independent, then $\E XY = \E X\,\E Y$ (\cref{thm:joint-expectation-properties}), so $\Cov(X, Y) = 0$ by property 3. \qedhere
+\end{enumerate}
 \end{proof}
 
 A scaled version of the covariance is given by the correlation coefficient.
@@ -399,7 +395,7 @@ Choosing $a = \sigma_Y/\sigma_X$ makes the bracket equal to $2$, so $-1 \le \Cor
 
 \Cref{fig:correlation-illustration} illustrates the correlation coefficient. Each panel shows a sample of size 40 from a different two-dimensional distribution, in each case with $\E X = \E Y = 0$ and $\Var(X) = \Var(Y) = 1$.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{groupplot}[group style={group size=3 by 2, horizontal sep=0.5cm, vertical sep=0.9cm},
@@ -493,33 +489,29 @@ Let $\vect{X}, \vect{Y} \in \R^n$ be random vectors and $\vect{b} \in \R^n$ a co
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1. Writing $\mu_i = \E X_i$,
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] Writing $\mu_i = \E X_i$,
 \begin{align*}
   \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T &= \E\begin{pmatrix} X_1X_1 & X_1X_2 & \cdots \\ X_2X_1 & X_2X_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} - \begin{pmatrix} \mu_1\mu_1 & \mu_1\mu_2 & \cdots \\ \mu_2\mu_1 & \mu_2\mu_2 & \cdots \\ \vdots & & \ddots \end{pmatrix} \\
   &= \begin{pmatrix} \Var(X_1) & \Cov(X_1, X_2) & \cdots \\ \Cov(X_2, X_1) & \Var(X_2) & \cdots \\ \vdots & & \ddots \end{pmatrix},
 \end{align*}
 since the $(i,j)$th element is $\E X_iX_j - \mu_i\mu_j = \Cov(X_i, X_j)$ by \cref{thm:covariance-properties}(3).
-
-2. $\Cov(X_i, X_j) = \Cov(X_j, X_i)$.
-
-3. Let $\vect{Y} = \vect{X} - \vect{\mu}$. Then $\vect{Y}\T\vect{u}$ is a random variable, and
+  \item[2.] $\Cov(X_i, X_j) = \Cov(X_j, X_i)$.
+  \item[3.] Let $\vect{Y} = \vect{X} - \vect{\mu}$. Then $\vect{Y}\T\vect{u}$ is a random variable, and
 \[
   \vect{u}\T\mat{\Sigma}\vect{u} = \vect{u}\T\E(\vect{Y}\vect{Y}\T)\vect{u} = \E(\vect{u}\T\vect{Y}\vect{Y}\T\vect{u}) = \E\bigl((\vect{Y}\T\vect{u})\T(\vect{Y}\T\vect{u})\bigr) = \E(\vect{Y}\T\vect{u})^2 \ge 0.
 \]
-
-4. Independent random variables have zero covariance (\cref{thm:covariance-properties}(8)).
-
-5. Expand $\Cov(X_i + Y_i, X_j + Y_j)$ using \cref{thm:covariance-properties}(5) and (4).
-
-6. Adding a constant does not change $\vect{X} - \E\vect{X}$.
-
-7. Let $\vect{Y} = \mat{A}\vect{X}$. By linearity, $\E\vect{Y} = \mat{A}\E\vect{X}$, so
+  \item[4.] Independent random variables have zero covariance (\cref{thm:covariance-properties}(8)).
+  \item[5.] Expand $\Cov(X_i + Y_i, X_j + Y_j)$ using \cref{thm:covariance-properties}(5) and (4).
+  \item[6.] Adding a constant does not change $\vect{X} - \E\vect{X}$.
+  \item[7.] Let $\vect{Y} = \mat{A}\vect{X}$. By linearity, $\E\vect{Y} = \mat{A}\E\vect{X}$, so
 \begin{align*}
   \Cov(\vect{Y}) &= \E\bigl[(\vect{Y} - \E\vect{Y})(\vect{Y} - \E\vect{Y})\T\bigr] = \E\bigl[(\mat{A}\vect{X} - \mat{A}\E\vect{X})(\mat{A}\vect{X} - \mat{A}\E\vect{X})\T\bigr] \\
   &= \E\bigl[\mat{A}(\vect{X} - \E\vect{X})(\vect{X} - \E\vect{X})\T\mat{A}\T\bigr] \\
   &= \mat{A}\,\E\bigl[(\vect{X} - \E\vect{X})(\vect{X} - \E\vect{X})\T\bigr]\mat{A}\T = \mat{A}\Cov(\vect{X})\mat{A}\T. \qedhere
 \end{align*}
+\end{enumerate}
 \end{proof}
 
 \begin{remark}
@@ -536,7 +528,7 @@ We independently throw $n$ balls into $k$ urns, such that each ball is thrown in
 \]
 which gives us the following distribution.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \foreach \i/\lab in {0/1, 1.6/2, 3.2/3, 5.8/k} {

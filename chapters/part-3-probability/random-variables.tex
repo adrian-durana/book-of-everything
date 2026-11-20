@@ -43,7 +43,7 @@ $\Prob(X = x)$ & $\frac{1}{36}$ & $\frac{2}{36}$ & $\frac{3}{36}$ & $\frac{4}{36
 \Cref{fig:rv-sum-two-dice} depicts $X$ as a function: all outcomes in the encircled set are mapped to 8.
 \end{example}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[scale=0.55]
   \foreach \i in {1,...,6} \foreach \j in {1,...,6} \fill (\i,\j) circle (2.5pt);
@@ -107,7 +107,7 @@ We write $F_X$ when the random variable needs naming.
 
 \Cref{fig:generic-cdf} shows the graph of a CDF.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, width=0.6\textwidth, height=4.2cm, xmin=-3, xmax=4, ymin=0, ymax=1.1, xtick=\empty, ytick={0,1}, xlabel={$x$}, ylabel={$F(x)$}]
@@ -178,7 +178,7 @@ The easiest way to specify the distribution of a discrete random variable is to 
 \end{equation}
 for any subset $B$ of the range of $X$ (say an interval $(a, b)$), as illustrated in \cref{fig:pmf-sum-rule}. Read $\set{X \in B}$ as ``$X$ is an element of the region $B$''.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[pmfplot, width=0.6\textwidth, height=4.2cm, xmin=0, xmax=11, ymax=0.25, xtick=\empty, ytick=\empty, xlabel={$x$}, ylabel={$f(x)$}]
@@ -248,7 +248,7 @@ We write $X \sim f$ or $X \sim F$ to indicate that $X$ is distributed according 
 \end{equation}
 as illustrated in \cref{fig:pdf-integral-rule}.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, width=0.6\textwidth, height=4.2cm, xmin=-1, xmax=6, ymin=0, ymax=0.45, xtick={1.5,3.2}, xticklabels={$a$, $b$}, ytick=\empty, xlabel={$x$}, ylabel={$f(x)$}]

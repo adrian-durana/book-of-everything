@@ -1,6 +1,6 @@
 \chapter{Probability Spaces}\label{ch:probability-spaces}
 
-\chapterinfo{STAT2003, STAT1301}{Nothing.}
+\chapterinfo{STAT2003, STAT1301}{nothing}
 
 % Sources: STAT2003 handwritten notes (pp. 1-7, 84); STAT2003 course notes, Chapter 1;
 % STAT1301 course notes (2026), Sections 1.3-1.7.
@@ -11,29 +11,37 @@ The purpose of this chapter is to introduce the language of probability, which i
 \section{Random experiments}\label{sec:random-experiments}
 % ==========================================================================
 
-A \emph{random experiment} is an experiment whose outcome cannot be determined in advance, for example tossing a die or counting the calls arriving at a telephone exchange in a fixed period. Probability analyses a mathematical model of the experiment to calculate quantities such as probabilities and expectations. Statistics goes the other way, fitting a model to observed data.
+A \emph{random experiment} is an experiment whose outcome cannot be determined in advance. Examples are:
+\begin{enumerate}
+  \item tossing a die;
+  \item measuring the amount of rainfall in Brisbane in January;
+  \item counting the number of calls arriving at a telephone exchange during a fixed time period;
+  \item selecting a random sample of fifty people and observing the number of left-handers;
+  \item choosing at random ten people and measuring their heights.
+\end{enumerate}
+The goal of probability is to understand the behaviour of random experiments by analysing the corresponding mathematical models. Mathematical models for random experiments are also the basis of statistics, where one fits an appropriate model to observed data.
 
 \begin{example}[Coin tossing]\label{ex:coin-tossing-simulation}
-The R program below simulates 100 tosses of a fair coin and plots the running average number of Heads (\cref{fig:coin-running-average}). The average approaches $\tfrac12$, with a lot of random fluctuation.
+The R program below simulates 100 tosses of a fair coin and plots the running average number of heads (\cref{fig:coin-running-average}). The average approaches $\tfrac12$, with a lot of random fluctuation. Similar results hold for a biased coin, with probability $p$ of heads.
 \begin{rcode}
 x <- sample(c(0, 1), size = 100, replace = TRUE)  # simulate coin tosses
 y <- cumsum(x) / 1:100                            # running average
 plot(y, type = "l")
 \end{rcode}
-A probability question: with $\Prob(\text{Heads}) = p$, what is the probability of $x$ Heads in 100 tosses? A statistics question: given 100 observed tosses with $p$ unknown, is the coin fair, and how well can $p$ be estimated?
+Typical probability questions about this experiment are: what is the probability of $x$ heads in 100 tosses? How many heads would you expect to come up? A statistical analysis would instead start from observed data, for example the outcomes of 100 tosses, with $p$ unknown. Typical statistics questions are: is the coin fair? How can $p$ best be estimated from the data?
 \end{example}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
-\begin{axis}[bookplot, xmin=1, xmax=100, ymin=0, ymax=1, xlabel={Number of tosses $n$}, ylabel={Average number of Heads}]
+\begin{axis}[bookplot, xmin=1, xmax=100, ymin=0, ymax=1, xlabel={Number of tosses $n$}, ylabel={Average number of heads}]
   \addplot[no marks, thin, color=thmcolor] table[x=n, y=r1] {figures/data/coin-running-average.dat};
   \addplot[no marks, thin, color=defcolor] table[x=n, y=r2] {figures/data/coin-running-average.dat};
   \addplot[no marks, thin, color=excolor] table[x=n, y=r3] {figures/data/coin-running-average.dat};
   \addplot[dashed, thin, domain=1:100] {0.5};
 \end{axis}
 \end{tikzpicture}
-\caption{The average number of Heads in $n$ tosses of a fair coin, $n = 1, \ldots, 100$, for three independent runs of the experiment.}
+\caption{The average number of heads in $n$ tosses of a fair coin, $n = 1, \ldots, 100$, for three independent runs of the experiment.}
 \label{fig:coin-running-average}
 \end{figure}
 
@@ -68,7 +76,7 @@ The usual set laws (commutative, associative and distributive) apply. In particu
 \end{equation}
 Two events $A$ and $B$ that have no outcomes in common, that is, $A \cap B = \emptyset$, are called \emph{disjoint} events. It is often useful to depict events in a Venn diagram, such as \cref{fig:venn-diagram}. In this diagram, $A \cap C = \emptyset$, so $A$ and $C$ are disjoint; and $(A \cap B^c) \cap (A^c \cap B) = \emptyset$, so $A \cap B^c$ and $A^c \cap B$ are disjoint.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \draw[thick] (-2.6,-1.6) rectangle (4.6,1.8);
@@ -115,7 +123,7 @@ A \emph{probability space} is a triple $(\Omega, \mathcal{F}, \Prob)$, where
 \begin{itemize}
   \item $\Omega$ is the sample space;
   \item $\mathcal{F} \subseteq \powerset(\Omega)$ is the collection of events, where $\powerset(\Omega)$ is the set of all subsets of $\Omega$;
-  \item $\Prob \colon \mathcal{F} \to [0, 1]$ is the probability (also called the probability law or probability measure).
+  \item $\Prob \colon \mathcal{F} \to [0, 1]$ is the probability measure.
 \end{itemize}
 \end{definition}
 
@@ -124,7 +132,7 @@ If $\Omega$ is infinite, $\mathcal{F}$ is infinite too. In that case $\mathcal{F
 \end{remark}
 
 \begin{definition}[Probability measure]\label{def:probability-measure}
-A \emph{probability} $\Prob$ is a rule (function) which assigns a number to each event, and which satisfies the following axioms (Kolmogorov, 1933):
+A \emph{probability measure} $\Prob$ is a rule (function) which assigns a number to each event, and which satisfies the following axioms (Kolmogorov, 1933):
 \begin{enumerate}[label=\textbf{Axiom \arabic*:}, leftmargin=*, widest=3]
   \item $\Prob(A) \ge 0$;
   \item $\Prob(\Omega) = 1$;
@@ -140,7 +148,7 @@ Axiom 2 just states that the probability of the ``certain'' event $\Omega$ is 1.
 Note that a probability rule $\Prob$ has exactly the same properties as the common ``area measure'': the total area of a union of non-overlapping triangles is the sum of the areas of the individual triangles. This is how you should interpret property \eqref{eq:sum-rule}. But instead of measuring areas, $\Prob$ measures probabilities.
 
 \begin{example}[An unfair coin]\label{ex:unfair-coin}
-A coin with Heads worse than Tails can be modelled by $\Omega = \set{H, T}$, $\mathcal{F} = \powerset(\Omega) = \set{\emptyset, \set{H}, \set{T}, \set{H, T}}$ and
+A coin with heads worse than tails can be modelled by $\Omega = \set{H, T}$, $\mathcal{F} = \powerset(\Omega) = \set{\emptyset, \set{H}, \set{T}, \set{H, T}}$ and
 \[
   \Prob(\set{H}) = 0.45, \qquad \Prob(\set{T}) = 0.55, \qquad \Prob(\emptyset) = 0, \qquad \Prob(\Omega) = 1.
 \]
@@ -159,16 +167,14 @@ Let $A$ and $B$ be events. Then
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-1. Since $\Omega = \Omega \cup \emptyset$, we have, by the sum rule, $\Prob(\Omega) = \Prob(\Omega) + \Prob(\emptyset)$, and therefore, by the second axiom, $1 = 1 + \Prob(\emptyset)$, from which it follows that $\Prob(\emptyset) = 0$.
-
-2. If $A \subseteq B$, then $B = A \cup (B \cap A^c)$, where $A$ and $B \cap A^c$ are disjoint. Hence, by the sum rule, $\Prob(B) = \Prob(A) + \Prob(B \cap A^c)$, which is (by the first axiom) greater than or equal to $\Prob(A)$.
-
-3. This follows directly from property 2 and Axiom 2, since $A \subseteq \Omega$.
-
-4. $\Omega = A \cup A^c$, where $A$ and $A^c$ are disjoint. Hence, by the sum rule and Axiom 2, $1 = \Prob(\Omega) = \Prob(A) + \Prob(A^c)$, and thus $\Prob(A^c) = 1 - \Prob(A)$.
-
-5. Write $A \cup B$ as the disjoint union of $A$ and $B \cap A^c$. Then $\Prob(A \cup B) = \Prob(A) + \Prob(B \cap A^c)$. Also, $B = (A \cap B) \cup (B \cap A^c)$, so that $\Prob(B) = \Prob(A \cap B) + \Prob(B \cap A^c)$. Combining these two equations gives $\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)$.
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] Since $\Omega = \Omega \cup \emptyset$, we have, by the sum rule, $\Prob(\Omega) = \Prob(\Omega) + \Prob(\emptyset)$, and therefore, by the second axiom, $1 = 1 + \Prob(\emptyset)$, from which it follows that $\Prob(\emptyset) = 0$.
+  \item[2.] If $A \subseteq B$, then $B = A \cup (B \cap A^c)$, where $A$ and $B \cap A^c$ are disjoint. Hence, by the sum rule, $\Prob(B) = \Prob(A) + \Prob(B \cap A^c)$, which is (by the first axiom) greater than or equal to $\Prob(A)$.
+  \item[3.] This follows directly from property 2 and Axiom 2, since $A \subseteq \Omega$.
+  \item[4.] $\Omega = A \cup A^c$, where $A$ and $A^c$ are disjoint. Hence, by the sum rule and Axiom 2, $1 = \Prob(\Omega) = \Prob(A) + \Prob(A^c)$, and thus $\Prob(A^c) = 1 - \Prob(A)$.
+  \item[5.] Write $A \cup B$ as the disjoint union of $A$ and $B \cap A^c$. Then $\Prob(A \cup B) = \Prob(A) + \Prob(B \cap A^c)$. Also, $B = (A \cap B) \cup (B \cap A^c)$, so that $\Prob(B) = \Prob(A \cap B) + \Prob(B \cap A^c)$. Combining these two equations gives $\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)$. \qedhere
+\end{enumerate}
 \end{proof}
 
 Property 5 extends to $n$ events.
@@ -192,7 +198,7 @@ In many applications the sample space is countable, that is, $\Omega = \set{a_1,
 \]
 This idea is represented in \cref{fig:discrete-sample-space}. Each element $a_i$ of the sample space is assigned a probability weight $p_i$, represented by a dot. To find the probability of the set $A$, we sum the weights of all the elements in $A$.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \draw[thick] (0,0) rectangle (6,3);
@@ -243,7 +249,7 @@ This completely specifies $\Prob$. In particular, the probability that the point
 
 Counting is not always easy. Fortunately, many counting problems can be cast into the simple framework of drawing balls from an urn (\cref{fig:urn}).
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \draw[very thick] (0,2.2) -- (0,0.3) arc (180:360:1.6 and 0.3) -- (3.2,2.2);
@@ -258,7 +264,7 @@ Counting is not always easy. Fortunately, many counting problems can be cast int
 \label{fig:urn}
 \end{figure}
 
-Consider an urn with $n$ different balls, numbered $1, \ldots, n$, from which $k$ balls are drawn. This can be done in a number of different ways. First, the balls can be drawn one by one, or one could draw all the $k$ balls at the same time. In the first case the order in which the balls are drawn can be noted; in the second case that is not possible. In the latter case we can (and will) still assume the balls are drawn one by one, but that the order is not noted. Second, once a ball is drawn, it can either be put back into the urn (after the number is recorded), or left out. This is called, respectively, drawing \emph{with} and \emph{without replacement}. All in all there are 4 possible experiments: (ordered, with replacement), (ordered, without replacement), (unordered, without replacement) and (unordered, with replacement). The art is to recognise a seemingly unrelated counting problem as one of these four urn problems. For example:
+Consider an urn with $n$ different balls, numbered $1, \ldots, n$, from which $k$ balls are drawn. This can be done in a number of different ways. First, the balls can be drawn one by one, or one could draw all the $k$ balls at the same time. In the first case the order in which the balls are drawn can be noted; in the second case that is not possible. In the latter case we can still assume the balls are drawn one by one, but that the order is not noted. Second, once a ball is drawn, it can either be put back into the urn (after the number is recorded), or left out. This is called, respectively, drawing \emph{with} and \emph{without replacement}. All in all there are 4 possible experiments: (ordered, with replacement), (ordered, without replacement), (unordered, without replacement) and (unordered, with replacement). The art is to recognise a seemingly unrelated counting problem as one of these four urn problems. For example:
 \begin{enumerate}
   \item A multiple-choice form has 20 questions, each with 3 choices. Completing the form is drawing 20 balls from an urn containing 3 balls, noting the order, and with replacement.
   \item Betting on the placings (1st, 2nd, 3rd) in a race with 8 horses is drawing 3 balls from an urn containing 8 balls, noting the order, and without replacement.
@@ -271,7 +277,7 @@ We denote ordered arrangements by vectors, for example $(1, 2, 3) \ne (3, 2, 1)$
 
 Here, after we draw each ball, we note the number on the ball and put the ball back. For $n = 4$, $k = 3$, some possible outcomes are $(1,1,1)$, $(4,1,2)$, $(2,3,2)$, $(4,2,1)$, \ldots. To count how many such arrangements there are, we can reason as follows: we have three positions $(\cdot, \cdot, \cdot)$ to fill. Each position can have the numbers 1, 2, 3 or 4, so the total number of possibilities is $4 \times 4 \times 4 = 4^3 = 64$. This is illustrated by the tree diagram in \cref{fig:tree-with-duplication}.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[grow=right, level distance=2.3cm, font=\small,
   level 1/.style={sibling distance=1.75cm}, level 2/.style={sibling distance=0.5cm}, level 3/.style={sibling distance=0.34cm},
@@ -302,7 +308,7 @@ The number of ordered arrangements of $k$ numbers chosen from $\set{1, \ldots, n
 
 Here we again draw $k$ numbers (balls) from the set $\set{1, 2, \ldots, n}$ and note the order, but now we do not replace them. Let $n = 4$ and $k = 3$. Again there are 3 positions to fill $(\cdot, \cdot, \cdot)$, but now the numbers cannot be the same, for example $(1, 4, 2)$ or $(3, 2, 1)$. Such an ordered arrangement is called a \emph{permutation} of size $k$ from the set $\set{1, \ldots, n}$. (A permutation of $\set{1, \ldots, n}$ of size $n$ is simply called a permutation of $\set{1, \ldots, n}$.) For the first position we have 4 possibilities. Once the first position has been chosen, we have only 3 possibilities left for the second position, and after the first two positions have been chosen there are 2 left. So the number of arrangements is $4 \times 3 \times 2 = 24$, as illustrated in \cref{fig:tree-without-duplication}: it is the same tree as in \cref{fig:tree-with-duplication}, but with all ``duplicate'' branches removed.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[grow=right, level distance=2.3cm, font=\small,
   level 1/.style={sibling distance=1.6cm}, level 2/.style={sibling distance=0.6cm}, level 3/.style={sibling distance=0.4cm},
@@ -349,7 +355,7 @@ The number of combinations of size $k$ from the set $\set{1, \ldots, n}$ is
 
 Taking $n = 4$, $k = 3$, possible outcomes are $\set{3, 3, 4}$, $\set{1, 2, 4}$, $\set{2, 2, 2}$, etc. The trick to solve this counting problem is to represent the outcomes in a different way, via an ordered vector $(x_1, \ldots, x_n)$ representing how many times each element of $\set{1, \ldots, 4}$ occurs. For example, $\set{3, 3, 4}$ corresponds to $(0, 0, 2, 1)$ and $\set{1, 2, 4}$ corresponds to $(1, 1, 0, 1)$. Thus, we can count how many distinct vectors $(x_1, \ldots, x_n)$ there are such that the sum of the components is 3, and each $x_i$ can take the value 0, 1, 2 or 3. Another way of looking at this is to consider placing $k = 3$ balls into $n = 4$ urns, numbered $1, \ldots, 4$. Then $(0, 0, 2, 1)$ means that the third urn has 2 balls and the fourth urn has 1 ball. One way to distribute the balls over the urns is to distribute $n - 1 = 3$ ``separators'' and $k = 3$ balls over $n - 1 + k = 6$ positions, as in \cref{fig:separators}.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \foreach \i in {1,...,6} { \draw[thick] (\i-1,0) rectangle (\i,0.8); \node[font=\small] at (\i-0.5,-0.3) {\i}; }
@@ -419,12 +425,12 @@ What is the probability that, out of a group of 40 people, all have different bi
 Choosing the birthdays is like choosing 40 balls with replacement from an urn containing the balls $1, \ldots, 365$. Thus, our sample space $\Omega$ consists of vectors of length 40, whose components are chosen from $\set{1, \ldots, 365}$. There are $\abs{\Omega} = 365^{40}$ such vectors, and all are equally likely. Let $A$ be the event that all 40 people have different birthdays. Then $\abs{A} = {}^{365}P_{40} = 365!/325!$. It follows that $\Prob(A) = \abs{A}/\abs{\Omega} \approx 0.109$, so not very big!
 \end{solution}
 
-\begin{example}[Five Heads in ten tosses]\label{ex:five-heads}
-What is the probability that in 10 tosses with a fair coin we get exactly 5 Heads and 5 Tails?
+\begin{example}[Five heads in ten tosses]\label{ex:five-heads}
+What is the probability that in 10 tosses with a fair coin we get exactly 5 heads and 5 tails?
 \end{example}
 
 \begin{solution}
-Here $\Omega$ consists of vectors of length 10 consisting of 1s (Heads) and 0s (Tails), so there are $2^{10}$ of them, and all are equally likely. Let $A$ be the event of exactly 5 Heads. We must count how many binary vectors there are with exactly five 1s. This is equivalent to determining in how many ways the positions of the five 1s can be chosen out of 10 positions, that is, $\binom{10}{5}$. Consequently, $\Prob(A) = \binom{10}{5}/2^{10} = 252/1024 \approx 0.25$.
+Here $\Omega$ consists of vectors of length 10 consisting of 1s (heads) and 0s (tails), so there are $2^{10}$ of them, and all are equally likely. Let $A$ be the event of exactly 5 heads. We must count how many binary vectors there are with exactly five 1s. This is equivalent to determining in how many ways the positions of the five 1s can be chosen out of 10 positions, that is, $\binom{10}{5}$. Consequently, $\Prob(A) = \binom{10}{5}/2^{10} = 252/1024 \approx 0.25$.
 \end{solution}
 
 % ==========================================================================
@@ -433,7 +439,7 @@ Here $\Omega$ consists of vectors of length 10 consisting of 1s (Heads) and 0s (
 
 How do probabilities change when we know that some event $B \subseteq \Omega$ has occurred? Then we know that the outcome lies in $B$, so $A$ will occur if and only if $A \cap B$ occurs (\cref{fig:conditional-probability}). The relative chance of $A$ occurring is therefore $\Prob(A \cap B)/\Prob(B)$.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \draw[thick] (-2.5,-1.4) rectangle (3.5,1.5);
@@ -489,7 +495,7 @@ This is a nice application of conditional probability. Consider a quiz in which 
 \begin{solution}
 The sample space consists of 4 possible outcomes: $Ac$, the prize is behind A and Monty opens C; $Ab$, the prize is behind A and Monty opens B; $Bc$, the prize is behind B and Monty opens C; and $Cb$, the prize is behind C and Monty opens B. Let $A$, $B$, $C$ be the events that the prize is behind A, B and C, respectively. Then $A = \set{Ac, Ab}$, $B = \set{Bc}$ and $C = \set{Cb}$ (\cref{fig:monty-hall}).
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \draw[thick] (0,0) rectangle (4,2);
@@ -554,7 +560,7 @@ Now $\Prob(A_k \given A_{k-1}) = (365 - k + 1)/365$, because given that the firs
 A graph of $\Prob(A_n)$ against $n$ is given in \cref{fig:birthday}. The probability $\Prob(A_n)$ rapidly decreases to zero. Indeed, for $n = 23$ the probability of having no duplicate birthdays is already less than $1/2$.
 \end{example}
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[bookplot, xmin=0, xmax=60, ymin=0, ymax=1.05, xlabel={$n$}, ylabel={$\Prob(A_n)$}]
@@ -596,7 +602,7 @@ implying that
 
 Suppose $B_1, B_2, \ldots, B_n$ is a \emph{partition} of $\Omega$; that is, $B_1, B_2, \ldots, B_n$ are disjoint and their union is $\Omega$ (\cref{fig:partition}).
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \draw[thick] (0,0) rectangle (6,2.6);
@@ -688,13 +694,13 @@ We flip a coin $n$ times. We can write the sample space as the set of binary $n$
 \[
   \Omega = \set{(0, \ldots, 0), \ldots, (1, \ldots, 1)}.
 \]
-Here 0 represents Tails and 1 represents Heads. For example, the outcome $(0, 1, 0, 1, \ldots)$ means that the first throw is Tails, the second Heads, the third Tails, the fourth Heads, etc.
+Here 0 represents tails and 1 represents heads. For example, the outcome $(0, 1, 0, 1, \ldots)$ means that the first throw is tails, the second heads, the third tails, the fourth heads, etc.
 
-How should we define $\Prob$? Let $A_i$ denote the event of Heads on the $i$th throw, $i = 1, \ldots, n$. Then $\Prob$ should be such that the events $A_1, \ldots, A_n$ are independent, and moreover $\Prob(A_i)$ should be the same for all $i$. We don't know whether the coin is fair or not, but we can call this probability $p$ ($0 \le p \le 1$). These two rules completely specify $\Prob$. For example, the probability that the first $k$ throws are Heads and the last $n - k$ are Tails is
+How should we define $\Prob$? Let $A_i$ denote the event of heads on the $i$th throw, $i = 1, \ldots, n$. Then $\Prob$ should be such that the events $A_1, \ldots, A_n$ are independent, and moreover $\Prob(A_i)$ should be the same for all $i$. We don't know whether the coin is fair or not, but we can call this probability $p$ ($0 \le p \le 1$). These two rules completely specify $\Prob$. For example, the probability that the first $k$ throws are heads and the last $n - k$ are tails is
 \[
   \Prob(\set{(1, 1, \ldots, 1, 0, 0, \ldots, 0)}) = \Prob(A_1) \cdots \Prob(A_k)\,\Prob(A_{k+1}^c) \cdots \Prob(A_n^c) = p^k (1-p)^{n-k}.
 \]
-Also, let $B_k$ be the event that there are $k$ Heads in total. The probability of this event is the sum of the probabilities of the elementary events $\set{(x_1, \ldots, x_n)}$ such that $x_1 + \cdots + x_n = k$. Each of these events has probability $p^k(1-p)^{n-k}$, and there are $\binom{n}{k}$ of them. Thus
+Also, let $B_k$ be the event that there are $k$ heads in total. The probability of this event is the sum of the probabilities of the elementary events $\set{(x_1, \ldots, x_n)}$ such that $x_1 + \cdots + x_n = k$. Each of these events has probability $p^k(1-p)^{n-k}$, and there are $\binom{n}{k}$ of them. Thus
 \[
   \Prob(B_k) = \binom{n}{k} p^k (1-p)^{n-k}, \qquad k = 0, 1, \ldots, n.
 \]
@@ -702,7 +708,7 @@ We have thus discovered the \emph{binomial distribution} (\cref{ch:common-distri
 \end{example}
 
 \begin{example}[Geometric law]\label{ex:geometric-law}
-There is another important law associated with the coin flip experiment. Suppose we flip the coin until Heads appears for the first time. Let $C_k$ be the event that Heads appears for the first time at the $k$th toss, $k = 1, 2, \ldots$. Then, using the same events $\set{A_i}$ as in \cref{ex:binomial-law}, we can write
+There is another important law associated with the coin flip experiment. Suppose we flip the coin until heads appears for the first time. Let $C_k$ be the event that heads appears for the first time at the $k$th toss, $k = 1, 2, \ldots$. Then, using the same events $\set{A_i}$ as in \cref{ex:binomial-law}, we can write
 \[
   C_k = A_1^c \cap A_2^c \cap \cdots \cap A_{k-1}^c \cap A_k,
 \]

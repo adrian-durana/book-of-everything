@@ -23,7 +23,7 @@ This is a living document. It will be revised after the pilot chapter, based on 
 
 ## Structure
 - Part → Chapter → Section → Subsection. Aim for 15–40 pages per chapter.
-- Every chapter starts with `\chapterinfo{<courses>}{<builds on>}`. "Builds on" uses `\cref` to earlier chapters.
+- Every chapter starts with `\chapterinfo{<courses>}{<builds on>}`. "Builds on" uses `\cref` to earlier chapters, or is just `nothing` (lower case, no full stop).
 - A chapter may use only material from chapters it lists in "Builds on" (plus general mathematical maturity). Anything else is stated in full, or proved in the chapter.
 
 ## Environments
@@ -40,7 +40,12 @@ This is a living document. It will be revised after the pilot chapter, based on 
 | `python` / `rcode` | Short snippets. R (`rcode`) for Parts III–IV (Probability, Statistics); Python (`python`) for all other Parts. Use the other language only when strictly necessary. |
 
 - All items share one counter per chapter (Definition 3.1, Theorem 3.2, …).
-- Give every result a short descriptive name in brackets where one exists, e.g. `[Continuity of probability]`.
+- Give every result a short descriptive name in brackets where one exists, e.g. `[Continuity of probability]`. Don't attach names to individual list items (no "(complement rule)").
+- Theorem bodies are upright (preamble style). Italics only for a term being defined or mentioned, and for maths.
+- Figures use `[H]` and sit in the source directly after the box or paragraph that first mentions them.
+- A proof of an enumerated list of statements is itself a list: "Proof." on its own line, then `\item[1.]`, `\item[2.]`, …, with `\qedhere` at the end of the last item.
+- `solution` ends with ◀.
+- Coins: "heads" and "tails" in lower case.
 
 ## Labels and cross-references
 - Use `\cref{...}` only, never "Theorem~\ref{...}".

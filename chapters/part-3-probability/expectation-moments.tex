@@ -52,7 +52,7 @@ Another interpretation of the expectation is as a centre of mass. Imagine point 
 \]
 which is exactly the expectation of a discrete random variable taking the values $x_1, \ldots, x_n$ with probabilities $p_1, \ldots, p_n$. Compare this with moments in physics, and with the moments defined in \cref{sec:variance-moments}. An obvious consequence of this interpretation is the following.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
   \draw[thick] (0,0) -- (8,0);
@@ -186,14 +186,15 @@ For any random variable $X$ and real numbers $a$ and $b$,
 Consequently, the standard deviation of $aX + b$ is $\abs{a}$ times the standard deviation of $X$.
 \end{theorem}
 
-\begin{proof}
-1. Write $\E X = \mu$, so that $\Var(X) = \E(X - \mu)^2 = \E(X^2 - 2\mu X + \mu^2)$. By linearity of expectation (\cref{thm:linearity-single}), this equals $\E X^2 - 2\mu \E X + \mu^2 = \E X^2 - \mu^2$.
-
-2. The expectation of $aX + b$ is $a\mu + b$. So
+\begin{proof}\leavevmode
+\begin{enumerate}[leftmargin=*]
+  \item[1.] Write $\E X = \mu$, so that $\Var(X) = \E(X - \mu)^2 = \E(X^2 - 2\mu X + \mu^2)$. By linearity of expectation (\cref{thm:linearity-single}), this equals $\E X^2 - 2\mu \E X + \mu^2 = \E X^2 - \mu^2$.
+  \item[2.] The expectation of $aX + b$ is $a\mu + b$. So
 \[
   \Var(aX + b) = \E\bigl(aX + b - (a\mu + b)\bigr)^2 = \E\bigl(a^2 (X - \mu)^2\bigr) = a^2 \E(X - \mu)^2 = a^2 \Var(X).
 \]
-Taking square roots gives the statement about the standard deviation.
+Taking square roots gives the statement about the standard deviation. \qedhere
+\end{enumerate}
 \end{proof}
 
 % ==========================================================================
