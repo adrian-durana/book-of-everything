@@ -40,7 +40,7 @@ This is a living document. The section "Writing and layout preferences" collects
 - Give every result a short descriptive name in brackets where one exists, e.g. `[Continuity of probability]`. Don't attach names to individual list items (no "(complement rule)").
 
 ## Writing and layout preferences (author's review feedback)
-These came from the author's review of Chapter 25. Apply them to every chapter, including new ones and those drafted by course chats.
+These come from the author's reviews (Chapter 25 onwards). Every piece of review feedback, even when it is about one chapter, is recorded here as a general rule and applied to every chapter, including new ones and those drafted by course chats. When a review adds a new preference, add it here in the same session.
 
 ### Tone and length
 - This is a personal reference book. Don't write as if the reader is seeing the material for the first time. The exception is the harder third-year courses, where the expanded, first-encounter style is kept.
@@ -60,6 +60,9 @@ These came from the author's review of Chapter 25. Apply them to every chapter, 
 - Use "is invertible" rather than "can be inverted"; prefer the shorter standard phrase.
 - Keep a source's lists of examples when they show different kinds of case (for example discrete and continuous random experiments). Trim the surrounding commentary instead.
 - Go straight to the general result when it is just as easy: don't work a specific case first ("ℙ(X = 8) = 5/36. In the same way, …").
+- Leave out trivial cases that add nothing (e.g. the 0th central moment, which is always 1).
+- A list inside a sentence can be set off with em dashes: "the most important ones --- the expectation, the variance and the moments --- and ends with …".
+- Write "compare to", not "compare".
 - Question lists in examples: at most two questions per kind (for example two probability questions and two statistics questions).
 - Reactions to a result should be brief and accurate: "This is surprisingly small!", not "so not very big!".
 
