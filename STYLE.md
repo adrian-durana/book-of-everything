@@ -54,6 +54,9 @@ These came from the author's review of Chapter 25. Apply them to every chapter, 
 - Cut qualifiers that add nothing, such as "(in days)" or "(and will)".
 - Prefer precise words: "almost surely" rather than "certainly" where that is the meaning, and "a set of possible outcomes" where the set isn't unique.
 - Numbers in prose: write "0.5" rather than "½" for values such as limits and probabilities.
+- Don't elaborate on a term that is outside the chapter's scope (e.g. no examples of measurable spaces in the random-variable definition).
+- Paired definitions (discrete and continuous, pmf and pdf, …) mirror each other: the same structure and the same items (values taken, positivity, normalisation, how probabilities are computed, notation), so each can be read against the other.
+- Use "is invertible" rather than "can be inverted"; prefer the shorter standard phrase.
 - Keep a source's lists of examples when they show different kinds of case (for example discrete and continuous random experiments). Trim the surrounding commentary instead.
 - Question lists in examples: at most two questions per kind (for example two probability questions and two statistics questions).
 - Reactions to a result should be brief and accurate: "This is surprisingly small!", not "so not very big!".
