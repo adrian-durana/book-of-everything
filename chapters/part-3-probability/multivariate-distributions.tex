@@ -479,13 +479,13 @@ These take the same role as $\mu$ and $\sigma^2$, respectively, in the one-dimen
 \begin{theorem}[Properties of covariance matrices]\label{thm:covariance-matrix-properties}
 Let $\vect{X}, \vect{Y} \in \R^n$ be random vectors and $\vect{b} \in \R^n$ a constant vector.
 \begin{enumerate}
-  \item $\Cov(\vect{X}) = \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T$. (Compare to $\Var(X) = \E(X^2) - (\E X)^2$ in 1D and $\Cov(X, Y) = \E(XY) - \E(X)\,\E(Y)$ in 2D.)
-  \item $\mat{\Sigma}$ is symmetric: $\mat{\Sigma}\T = \mat{\Sigma}$.
-  \item $\mat{\Sigma}$ is positive semidefinite: $\vect{u}\T\mat{\Sigma}\vect{u} \ge 0$ for every $\vect{u} \in \R^n$.
-  \item If $X_1, \ldots, X_n$ are independent, then $\mat{\Sigma}$ is a diagonal matrix.
-  \item $\bigl[\Cov(\vect{X} + \vect{Y})\bigr]_{ij} = \bigl[\Cov(\vect{X})\bigr]_{ij} + \bigl[\Cov(\vect{Y})\bigr]_{ij} + \Cov(X_i, Y_j) + \Cov(Y_i, X_j)$. So $\Cov(\vect{X} + \vect{Y}) = \Cov(\vect{X}) + \Cov(\vect{Y})$ if and only if $X_i$ and $Y_j$ are uncorrelated for all $i, j$.
-  \item $\Cov(\vect{X} + \vect{b}) = \Cov(\vect{X})$.
-  \item If $\mat{A}$ is an $m \times n$ matrix and $\vect{Y} = \mat{A}\vect{X}$, then $\Cov(\vect{Y}) = \mat{A}\Cov(\vect{X})\mat{A}\T$.
+  \item $\Cov(\vect{X}) = \E(\vect{X}\vect{X}\T) - (\E\vect{X})(\E\vect{X})\T$ (compare to $\Var(X) = \E(X^2) - (\E X)^2$ in 1D and $\Cov(X, Y) = \E(XY) - \E(X)\,\E(Y)$ in 2D)
+  \item $\mat{\Sigma}$ is symmetric: $\mat{\Sigma}\T = \mat{\Sigma}$
+  \item $\mat{\Sigma}$ is positive semidefinite: $\vect{u}\T\mat{\Sigma}\vect{u} \ge 0$ for every $\vect{u} \in \R^n$
+  \item $X_1, \ldots, X_n$ independent $\implies \mat{\Sigma}$ diagonal
+  \item $\bigl[\Cov(\vect{X} + \vect{Y})\bigr]_{ij} = \bigl[\Cov(\vect{X})\bigr]_{ij} + \bigl[\Cov(\vect{Y})\bigr]_{ij} + \Cov(X_i, Y_j) + \Cov(Y_i, X_j)$, so $\Cov(\vect{X} + \vect{Y}) = \Cov(\vect{X}) + \Cov(\vect{Y})$ if and only if $X_i$ and $Y_j$ are uncorrelated for all $i, j$
+  \item $\Cov(\vect{X} + \vect{b}) = \Cov(\vect{X})$
+  \item $\vect{Y} = \mat{A}\vect{X}$ with $\mat{A} \in \R^{m \times n}$ $\implies \Cov(\vect{Y}) = \mat{A}\Cov(\vect{X})\mat{A}\T$
 \end{enumerate}
 \end{theorem}
 
@@ -554,5 +554,5 @@ where each $x_i \in \set{0, 1, \ldots, n}$. It counts the balls in each of $k$ u
 \end{definition}
 
 \begin{remark}
-The multinomial distribution extends the binomial distribution, which is limited to two urns. In particular, $X_i \sim \Bin(n, p_i)$ for each $i$.
+The multinomial distribution extends the binomial distribution, which is limited to two urns. Each $X_i$ has a $\Bin(n, p_i)$ distribution.
 \end{remark}

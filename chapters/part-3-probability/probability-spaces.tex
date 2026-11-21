@@ -70,10 +70,10 @@ Since events are sets, we can apply the usual set laws and operations to them:
   \item $A^c$ is the event that $A$ does not occur
   \item if $A \subseteq B$, then event $A$ is said to \emph{imply} event $B$
 \end{enumerate}
-In particular, De Morgan's laws hold for any collection of events $\set{A_i}$:
-\begin{equation}\label{eq:de-morgan}
+De Morgan's laws hold for any collection of events $\set{A_i}$:
+\[
   \Bigl(\bigcup_i A_i\Bigr)^c = \bigcap_i A_i^c, \qquad \Bigl(\bigcap_i A_i\Bigr)^c = \bigcup_i A_i^c.
-\end{equation}
+\]
 Two events $A$ and $B$ that have no outcomes in common, that is, $A \cap B = \emptyset$, are called \emph{disjoint} events. It is often useful to depict events in a Venn diagram, such as \cref{fig:venn-diagram}.
 
 \begin{figure}[H]
@@ -145,7 +145,7 @@ A \emph{probability measure} $\Prob$ is a rule (function) which assigns a number
 
 Axiom 3 is the crucial property of a probability, and is sometimes referred to as the \emph{sum rule}. It states that if an event can happen in a number of different ways that cannot happen at the same time, then its probability is the sum of the probabilities of the composing events.
 
-Note that a probability rule $\Prob$ has exactly the same properties as the common ``area measure'': the total area of a union of non-overlapping triangles is the sum of the areas of the individual triangles. This is how to interpret Axiom 3, with $\Prob$ measuring probabilities instead of areas.
+Note that a probability measure $\Prob$ has exactly the same properties as the common ``area measure'': the total area of a union of non-overlapping triangles is the sum of the areas of the individual triangles. This is how to interpret Axiom 3, with $\Prob$ measuring probabilities instead of areas.
 
 \begin{example}[An unfair coin]\label{ex:unfair-coin}
 A coin with heads worse than tails can be modelled by $\Omega = \set{H, T}$, $\mathcal{F} = \powerset(\Omega) = \set{\emptyset, \set{H}, \set{T}, \set{H, T}}$ and
@@ -188,6 +188,8 @@ For events $E_1, \ldots, E_n$,
 In particular, $\Prob\bigl(\bigcup_i E_i\bigr) \le \sum_i \Prob(E_i)$.
 \end{theorem}
 
+This is not proved in this course.
+
 We have now completed our model for a random experiment. It is up to the modeller to specify the sample space $\Omega$ and probability measure $\Prob$ which most closely describe the actual experiment.
 
 \subsection{Discrete sample spaces}\label{sec:discrete-sample-spaces}
@@ -226,10 +228,10 @@ If $\Omega$ has a finite number of outcomes, and all are equally likely, then th
 \]
 \end{theorem}
 
-Thus for such sample spaces the calculation of probabilities reduces to counting the number of outcomes in $A$ and $\Omega$ (\cref{sec:counting}).
+This is not proved in this course. For such sample spaces the calculation of probabilities reduces to counting the number of outcomes in $A$ and $\Omega$ (\cref{sec:counting}).
 
 \begin{example}[Fair die]\label{ex:fair-die}
-Consider the experiment where we throw a fair die. How should we define $\Omega$ and $\Prob$? Obviously $\Omega = \set{1, 2, \ldots, 6}$, and common sense shows that we should define $\Prob$ by
+Consider the experiment where we throw a fair die. How should we define $\Omega$ and $\Prob$? Here $\Omega = \set{1, 2, \ldots, 6}$, and common sense shows that we should define $\Prob$ by
 \[
   \Prob(A) = \frac{\abs{A}}{6}, \qquad A \subseteq \Omega,
 \]
@@ -241,11 +243,11 @@ where $\abs{A}$ denotes the number of elements in $A$. For example, the probabil
 When the sample space is not countable, for example $\Omega = \R^{+}$, it is said to be \emph{continuous}.
 
 \begin{example}[Drawing a point in an interval]\label{ex:point-in-interval}
-We draw at random a point in the interval $[0, 1]$, each point being equally likely to be drawn. How do we specify the model for this experiment? The sample space is obviously $\Omega = [0, 1]$, which is a continuous sample space. We cannot define $\Prob$ via the elementary events $\set{x}$, $x \in [0, 1]$, because each of these events must have probability 0. However, we can define $\Prob$ as follows: for each $0 \le a \le b \le 1$, let
+We draw at random a point in the interval $[0, 1]$, each point being equally likely to be drawn. How do we specify the model for this experiment? The sample space is $\Omega = [0, 1]$, a continuous sample space. We cannot define $\Prob$ via the elementary events $\set{x}$, $x \in [0, 1]$, because each of these events must have probability 0. However, we can define $\Prob$ as follows: for each $0 \le a \le b \le 1$, let
 \[
   \Prob([a, b]) = b - a.
 \]
-This completely specifies $\Prob$. In particular, the probability that the point falls into any (sufficiently nice) set $A$ is the length of that set.
+This completely specifies $\Prob$: the probability that the point falls into any (sufficiently nice) set $A$ is the length of that set.
 \end{example}
 
 % ==========================================================================
@@ -342,7 +344,7 @@ The number of permutations of size $k$ from $\set{1, \ldots, n}$ is
 \[
   {}^nP_k = n(n-1)\cdots(n-k+1) = \frac{n!}{(n-k)!}.
 \]
-In particular, when $k = n$, the number of ordered arrangements of $n$ items is $n! = n(n-1)(n-2)\cdots 1$, where $n!$ is called $n$-\emph{factorial}.
+When $k = n$, the number of ordered arrangements of $n$ items is $n! = n(n-1)(n-2)\cdots 1$, where $n!$ is called $n$-\emph{factorial}.
 \end{theorem}
 
 \subsection{Unordered, without replacement}\label{sec:count-unordered-without}
@@ -480,7 +482,7 @@ Given a probability space $(\Omega, \mathcal{F}, \Prob)$ and two events $A, B \i
 \end{equation}
 \end{definition}
 
-\begin{proposition}\label{prop:conditional-probability-is-probability}
+\begin{proposition}[Conditional probability is a probability measure]\label{prop:conditional-probability-is-probability}
 For fixed $B$ with $\Prob(B) \ne 0$, $\Prob(\cdot \given B)$ satisfies the probability axioms.
 \end{proposition}
 
@@ -529,11 +531,11 @@ The sample space consists of 4 possible outcomes: $Ac$, the prize is behind A an
 \label{fig:monty-hall}
 \end{figure}
 
-Obviously $\Prob(A) = \Prob(B) = \Prob(C)$, and since $Ac$ and $Ab$ are equally likely, $\Prob(\set{Ab}) = \Prob(\set{Ac}) = 1/6$. Monty opening curtain B means that we have the information that the event $\set{Ab, Cb}$ has occurred. The probability that the prize is behind A, given this event, is therefore
+By symmetry, $\Prob(A) = \Prob(B) = \Prob(C)$, and since $Ac$ and $Ab$ are equally likely, $\Prob(\set{Ab}) = \Prob(\set{Ac}) = 1/6$. Monty opening curtain B means that we have the information that the event $\set{Ab, Cb}$ has occurred. The probability that the prize is behind A, given this event, is therefore
 \[
   \Prob(A \given \text{B is opened}) = \frac{\Prob(\set{Ac, Ab} \cap \set{Ab, Cb})}{\Prob(\set{Ab, Cb})} = \frac{\Prob(\set{Ab})}{\Prob(\set{Ab, Cb})} = \frac{1/6}{1/6 + 1/3} = \frac13.
 \]
-This is what we expected: the fact that Monty opens a curtain does not give us any extra information that the prize is behind A. So one could think that it does not matter whether we switch or not. But what about $\Prob(B \given \text{B is opened})$? Obviously this is 0: opening curtain B means that event B cannot occur. It follows that $\Prob(C \given \text{B is opened})$ must be $2/3$, since a conditional probability behaves like any other probability and must satisfy Axiom 2. Indeed,
+This is what we expected: the fact that Monty opens a curtain does not give us any extra information that the prize is behind A. So one could think that it does not matter whether we switch or not. But what about $\Prob(B \given \text{B is opened})$? This is 0, since opening curtain B means that event B cannot occur. It follows that $\Prob(C \given \text{B is opened})$ must be $2/3$, since a conditional probability behaves like any other probability and must satisfy Axiom 2. Indeed,
 \[
   \Prob(C \given \text{B is opened}) = \frac{\Prob(\set{Cb} \cap \set{Ab, Cb})}{\Prob(\set{Ab, Cb})} = \frac{1/3}{1/6 + 1/3} = \frac23.
 \]
@@ -543,9 +545,9 @@ Hence, given that B is opened, it is twice as likely that the prize is behind C 
 \subsection{The product rule}\label{sec:product-rule}
 
 By the definition of conditional probability we have
-\begin{equation}\label{eq:product-rule-two}
+\[
   \Prob(A \cap B) = \Prob(A)\,\Prob(B \given A).
-\end{equation}
+\]
 We can generalise this to $n$ intersections $A_1 \cap A_2 \cap \cdots \cap A_n$, which we abbreviate as $A_1 A_2 \cdots A_n$. This gives the \emph{product rule} of probability, also called the chain rule.
 
 \begin{theorem}[Product rule]\label{thm:product-rule}

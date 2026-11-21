@@ -45,6 +45,7 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 ### Tone and length
 - This is a personal reference book. Don't write as if the reader is seeing the material for the first time. The exception is the harder third-year courses, where the expanded, first-encounter style is kept.
 - Open each chapter with one short explanatory paragraph: what the topic is for, its main building blocks, and what the chapter covers. Model it on the Chapter 25 opening ("The purpose of this chapter is to introduce…").
+- Chapter and section introductions should be (relatively) self-contained, so they work for a quick review on their own.
 - Keep section and subsection introductions short. Set a model up once, then let the examples be brief (see Ch 25, "Coin-tossing models").
 - Keep the source's wording where it reads well. Paraphrase only to shorten or clarify.
 - Cut filler sentences:
@@ -52,16 +53,12 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
   - restatements of the obvious, such as "Axiom 2 just states that the probability of the certain event is 1";
   - commentary on a figure that only repeats what the figure shows, such as "In this diagram, A ∩ C = ∅, so A and C are disjoint".
 - Cut qualifiers that add nothing, such as "(in days)" or "(and will)".
+- Don't add "In particular" special cases that just restate the general result.
 - Prefer precise words: "almost surely" rather than "certainly" where that is the meaning, and "a set of possible outcomes" where the set isn't unique.
+- Use "is invertible" rather than "can be inverted"; prefer the shorter standard phrase.
 - Numbers in prose: write "0.5" rather than "½" for values such as limits and probabilities.
 - Don't elaborate on a term that is outside the chapter's scope (e.g. no examples of measurable spaces in the random-variable definition).
-- Distribution definitions all follow one template: "A random variable $X$ has a *… distribution* with parameters …, written $X \sim \ldots$, if its pmf/pdf is [display]. It counts … / It describes …". The motivating story goes in the text before or in that last sentence, not in the "if" clause.
-- Property theorems for distributions all follow one template: "[Properties of the … distribution] For $X \sim \ldots$, 1. $\E(X) = …$, 2. $\Var(X) = …$, 3. $\pgf(z) = …$ or $\mgf(s) = …$, then $F(x) = …$, $\Prob(X > x) = …$". Items are formulas only, without "The PGF is". The PGF/MGF comes first only when the proofs of the expectation and variance use it. Proofs follow the same order. Paired results (e.g. the two memoryless properties) have the same statement and proof shape.
-- In lists, small fractions are written inline with a slash (e.g. $\pgf(z) = zp/\bigl(1 - z(1-p)\bigr)$); only big ones (e.g. the hypergeometric moments) use \verb|\dfrac|.
-- Results stated without proof in the course are followed by "Not proved in this course." (or "These are not proved in this course.").
-- Paired results mirror each other too: if the MGF has a "Moments from the MGF" theorem, the PGF gets a matching "Moments from the PGF" theorem rather than the same facts in running text.
-- Paired definitions (discrete and continuous, pmf and pdf, …) mirror each other: the same structure and the same items (values taken, positivity, normalisation, how probabilities are computed, notation), so each can be read against the other.
-- Use "is invertible" rather than "can be inverted"; prefer the shorter standard phrase.
+- Don't define standard terms in passing (e.g. no "affine (linear plus constant)").
 - Keep a source's lists of examples when they show different kinds of case (for example discrete and continuous random experiments). Trim the surrounding commentary instead.
 - Go straight to the general result when it is just as easy: don't work a specific case first ("ℙ(X = 8) = 5/36. In the same way, …").
 - Leave out trivial cases that add nothing (e.g. the 0th central moment, which is always 1).
@@ -70,12 +67,25 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 - Question lists in examples: at most two questions per kind (for example two probability questions and two statistics questions).
 - Reactions to a result should be brief and accurate: "This is surprisingly small!", not "so not very big!".
 
+### Content and structure
+- Results stated without proof in the course are followed by "Not proved in this course." (or "These are not proved in this course.").
+- Distribution definitions all follow one template: "A random variable $X$ has a *… distribution* with parameters …, written $X \sim \ldots$, if its pmf/pdf is [display]. It counts … / It describes …". The motivating story goes in the text before or in that last sentence, not in the "if" clause.
+- Property theorems for distributions all follow one template: "[Properties of the … distribution] For $X \sim \ldots$, 1. $\E(X) = …$, 2. $\Var(X) = …$, 3. $\pgf(z) = …$ or $\mgf(s) = …$, then $F(x) = …$, $\Prob(X > x) = …$". Items are formulas only, without "The PGF is". The PGF/MGF comes first only when the proofs of the expectation and variance use it. Proofs follow the same order. Paired results (e.g. the two memoryless properties) have the same statement and proof shape.
+- Paired definitions (discrete and continuous, pmf and pdf, …) mirror each other: the same structure and the same items (values taken, positivity, normalisation, how probabilities are computed, notation), so each can be read against the other.
+- Paired results mirror each other too: if the MGF has a "Moments from the MGF" theorem, the PGF gets a matching "Moments from the PGF" theorem rather than the same facts in running text.
+- R (or Python) code goes only in the chapter's computing section, not in the main text; examples there use the code heavily, reusing the chapter's own examples. (Applied in Ch 29; other chapters keep their code for now.)
+
 ### Naming and referring
+- Every theorem box has a name in brackets, and states its result as a formula where possible ("$-1 \le \Corr(X, Y) \le 1$", not "always lies between −1 and 1").
+- Name results plainly: "Markov inequality", "Chebyshev inequality", "Generalised Markov inequality" (not "Markov's inequality, general form"). Give a colloquial name alongside the formal one where it is common, e.g. "Law of the unconscious statistician, LOTUS".
 - Name a result by what it is, not by its number: "The inclusion–exclusion principle extends to n events", not "Property 5 extends…".
+- When a result reappears for another object, give it the full name ("Memoryless property of the exponential distribution") and say where it was met before.
 - Don't attach names to individual list items (no "(complement rule)" after an item).
 - Refer to an axiom or property by its name ("Axiom 3") rather than an equation number. Number an equation only if it is cited again.
 - Write "the Kolmogorov axioms", not "the axioms (Kolmogorov, 1933)". Leave out dates and citations of historical origin.
+- Don't link to specific theorems or definitions in chapter or section introductions (for now). Links to other chapters are fine there, but don't go out of the way to add them.
 - Don't read symbols out in words ("$A \cup B$ ($A$ union $B$)") outside the chapter that introduces them; set operations belong to the Foundations chapter on sets.
+- Definitions may be phrased "We define the *term* … by …", "The *term* of … is …" or "… has a *term* if …"; all are fine. Avoid "obvious"; say "follows in the same way".
 - Say "probability measure" for $\Prob$ (not "probability law" or "probability rule").
 - Coins: "heads" and "tails" in lower case.
 
@@ -85,11 +95,19 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 
 ### Lists
 - Short-point lists (`itemize`, `enumerate`) have no punctuation between or after items. Lists of full sentences keep their full stops.
+- In a list of labelled items ("Binomial: the number of …"), capitalise the first word of each item.
+- In lists of properties, write conditions as implications: "$X$ and $Y$ independent $\implies \Cov(X, Y) = 0$", not "if …, then …".
+- In lists, small fractions are written inline with a slash (e.g. $\pgf(z) = zp/\bigl(1 - z(1-p)\bigr)$); only big ones (e.g. the hypergeometric moments) use \verb|\dfrac|.
 - A proof of an enumerated list of statements is itself a list: "Proof." on its own line, then `\item[1.]`, `\item[2.]`, …, with `\qedhere` at the end of the last item.
+
+### Proofs
+- Proofs: say a result "follows from" an earlier one ("Properties 1 and 2 follow from Theorem 27.11"). Skip routine algebra steps that the reader can see at once.
+- A proof that ends in a formula gives it in a display: "…, and so [display]", not "Hence $\lim … = …$" inline.
 
 ### Equations and spacing
 - Long equations broken over lines use `align*`. The continuation line starts with `&\qquad +`, a little right of the `=`, not right-aligned as in `multline`.
 - Inline fractions of probabilities get light spacing: `\Prob(A \cap B) \mkern2mu / \mkern2mu \Prob(B)`.
+- State facts as formulas where that is clearer: $\sigma_{aX+b} = \abs{a}\,\sigma_X$, not "the standard deviation of $aX + b$ is $\abs{a}$ times …".
 - Avoid paragraphs whose last line holds only a word or two: reword slightly. Check the built PDF for these before handing a chapter over.
 - If a line inside a box has stretched word spacing (usually from long inline maths), put `\raggedright` at the start of that paragraph. Normal word spacing with a gap at the right edge is preferred to stretched spacing.
 
@@ -110,20 +128,6 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
 ### Notation
 - Expectation is written $\E(X)$, $\E(X^2)$, $\E(g(X))$, with $\E\bigl((X - \mu)^2\bigr)$ for powers of brackets. $\E[X]$ and $\E X$ are mentioned once, as alternatives, in the definition. Use $\E X$ only where brackets would clutter, e.g. $(\E X)^2$.
 - Alternative symbols for a quantity go in its definition ("written $\Var(X)$ or $\sigma_X^2$"), not in the surrounding text.
-- State facts as formulas where that is clearer: $\sigma_{aX+b} = \abs{a}\,\sigma_X$, not "the standard deviation of $aX + b$ is $\abs{a}$ times …".
-- Every theorem box has a name in brackets, and states its result as a formula where possible ("$-1 \le \Corr(X, Y) \le 1$", not "always lies between −1 and 1").
-- Definitions may be phrased "We define the *term* … by …", "The *term* of … is …" or "… has a *term* if …"; all are fine. Avoid "obvious"; say "follows in the same way".
-- When a result reappears for another object, give it the full name ("Memoryless property of the exponential distribution") and say where it was met before.
-- A proof that ends in a formula gives it in a display: "…, and so [display]", not "Hence $\lim … = …$" inline.
-- In a list of labelled items ("Binomial: the number of …"), capitalise the first word of each item.
-- Chapter and section introductions should be (relatively) self-contained, so they work for a quick review on their own.
-- Don't link to specific theorems or definitions in chapter or section introductions (for now). Links to other chapters are fine there, but don't go out of the way to add them.
-- Don't define standard terms in passing (e.g. no "affine (linear plus constant)").
-- R (or Python) code goes only in the chapter's computing section, not in the main text; examples there use the code heavily, reusing the chapter's own examples. (Applied in Ch 29; other chapters keep their code for now.)
-- In lists of properties, write conditions as implications: "$X$ and $Y$ independent $\implies \Cov(X, Y) = 0$", not "if …, then …".
-- Proofs: say a result "follows from" an earlier one ("Properties 1 and 2 follow from Theorem 27.11"). Skip routine algebra steps that the reader can see at once.
-- Don't add "In particular" special cases that just restate the general result.
-- Name results plainly: "Markov inequality", "Chebyshev inequality", "Generalised Markov inequality" (not "Markov's inequality, general form"). Give a colloquial name alongside the formal one where it is common, e.g. "Law of the unconscious statistician, LOTUS".
 - Distributions: $\Bern(p)$ = Ber, $\Pois(\lambda)$ = Poi, $\Normal(\mu, \sigma^2)$ = $\mathcal{N}$ (may revert later), $\GammaDist(\alpha, \lambda)$ = Gamma (shape, rate; mention the scale form $\GammaDist(\alpha, \beta)$, $\beta = 1/\lambda$), $\BetaDist(\alpha, \beta)$ = Beta. Always use the macros.
 - Generating functions: PGF $\pgf$ ($\mathcal{G}$), MGF $\mgf$ ($\mathcal{M}$), with subscripts $\pgf_X$, $\mgf_X$ when needed.
 - Positive and negative reals: $\R^{+}$ and $\R^{-}$. Power set: `\powerset(\Omega)`, not $2^\Omega$.
