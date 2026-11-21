@@ -1,5 +1,161 @@
 \chapter{Conditional Distributions and Conditional Expectation}\label{ch:conditional-expectation}
 
-\chapterinfo{STAT2003}{\textit{to be completed}}
+\chapterinfo{STAT2003}{\cref{ch:probability-spaces,ch:expectation-moments,ch:multivariate-distributions}}
 
-\textit{Not yet written.}
+Knowing the value of one random variable can change what we know about another. Conditional distributions capture this: the conditional pmf or pdf of $X$ given $Y = y$ is the distribution of $X$ once we have the information that $Y$ takes the value $y$. This chapter defines conditional distributions in the discrete and continuous cases, and the corresponding conditional expectation, whose expectation is simply the expectation of $X$ (the tower property).
+
+% ==========================================================================
+\section{Conditional distributions}\label{sec:conditional-distributions}
+% ==========================================================================
+
+The conditional pmf of $X$ given $Y = y$ is the conditional probability $\Prob(X = x \given Y = y)$ (\cref{ch:probability-spaces}), viewed as a function of $x$. The same formula defines the conditional pdf for continuous random variables.
+
+\begin{definition}[Conditional pmf, conditional pdf]\label{def:conditional-pmf-pdf}
+Suppose $X$ and $Y$ are both discrete or both continuous, with joint pmf or pdf $f_{X,Y}$, and suppose $f_Y(y) > 0$. The \emph{conditional pmf} (or \emph{conditional pdf}) of $X$ given $Y = y$ is
+\[
+  f_{X \mid Y}(x \given y) = \frac{f_{X,Y}(x, y)}{f_Y(y)} \qquad \text{for all } x.
+\]
+\end{definition}
+
+For discrete random variables, the definition rephrases conditional probability:
+\[
+  f_{X \mid Y}(x \given y) = \Prob(X = x \given Y = y) = \frac{\Prob(X = x, Y = y)}{\Prob(Y = y)} = \frac{f_{X,Y}(x, y)}{f_Y(y)}.
+\]
+Swapping the roles of $X$ and $Y$, the conditional pmf or pdf of $Y$ given $X = x$ is $f_{Y \mid X}(y \given x) = f_{X,Y}(x, y) / f_X(x)$.
+
+\begin{example}[Conditional pmf from a table]\label{ex:conditional-pmf-table}
+For the joint pmf of \cref{ex:joint-pmf-table},
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}c|ccc|c@{}}
+ & $x = 1$ & $x = 2$ & $x = 3$ & $f_Y(y)$ \\
+\hline
+$y = 1$ & 0.1 & 0.3 & 0.2 & 0.6 \\
+$y = 2$ & 0.2 & 0.1 & 0.1 & 0.4 \\
+\end{tabular}
+\end{center}
+the conditional pmf of $X$ given $Y = 2$ is the $y = 2$ row divided by $f_Y(2) = 0.4$:
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{c|ccc}
+$x$ & 1 & 2 & 3 \\
+\hline
+$f_{X \mid Y}(x \given 2)$ & $1/2$ & $1/4$ & $1/4$ \\
+\end{tabular}
+\end{center}
+\end{example}
+
+\begin{example}[Uniformly drawing from a discrete triangle]\label{ex:discrete-triangle}
+We draw ``uniformly'' a point $(X, Y)$ from the 10 points of the triangle $D = \set{(x, y) \in \set{1, 2, 3, 4}^2 : x \le y}$ in \cref{fig:discrete-triangle}, each point being equally likely. That is, the joint pmf is
+\[
+  f_{X,Y}(x, y) = \Prob(X = x, Y = y) = \frac{1}{10}, \qquad (x, y) \in D.
+\]
+The marginal pmfs of $X$ and $Y$ are
+\[
+  f_X(x) = \frac{5 - x}{10}, \quad x \in \set{1, 2, 3, 4}, \qquad f_Y(y) = \frac{y}{10}, \quad y \in \set{1, 2, 3, 4}.
+\]
+$X$ and $Y$ are not independent: if we know that $X = 2$, then $Y$ can only take the values 2, 3 or 4. The conditional pmf of $Y$ given $X = 2$ is
+\[
+  f_{Y \mid X}(y \given 2) = \frac{f_{X,Y}(2, y)}{f_X(2)} = \frac{1/10}{3/10} = \frac13, \qquad y = 2, 3, 4,
+\]
+so, given $X = 2$, $Y$ takes the values 2, 3 and 4 with equal probability.
+\end{example}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.8]
+  \fill[thmcolor!12] (1.6,1.6) rectangle (2.4,4.4);
+  \draw[->] (-0.2,0) -- (4.7,0) node[right] {$x$};
+  \draw[->] (0,-0.2) -- (0,4.7) node[above] {$y$};
+  \foreach \t in {1,2,3,4} {
+    \draw (\t,0.08) -- (\t,-0.08) node[below] {\small\t};
+    \draw (0.08,\t) -- (-0.08,\t) node[left] {\small\t};
+  }
+  \foreach \x in {1,...,4} \foreach \y in {\x,...,4} \fill (\x,\y) circle (2.5pt);
+  \foreach \y in {2,3,4} \fill[thmcolor] (2,\y) circle (3.2pt);
+  \node[thmcolor, font=\small, anchor=west] at (2.5,1.5) {$X = 2$};
+  \node[font=\small] at (3.6,4.5) {$D$};
+\end{tikzpicture}
+\caption{The 10 points of the triangle $D$, each with probability $1/10$. Given $X = 2$ (shaded column), $Y$ is one of the 3 highlighted points, each with conditional probability $1/3$.}
+\label{fig:discrete-triangle}
+\end{figure}
+
+When $Y$ is continuous, $\Prob(Y = y) = 0$, so the definition of conditional probability cannot be applied directly. Instead, we first define the conditional CDF of $X$ given $Y = y$ as the limit
+\[
+  F_{X \mid Y}(x \given y) \coloneqq \lim_{h \to 0} \Prob(X \le x \given y < Y \le y + h).
+\]
+The definition of conditional probability gives
+\[
+  \Prob(X \le x \given y < Y \le y + h) = \frac{\int_{-\infty}^x \int_y^{y+h} f_{X,Y}(u, v) \dd v \dd u}{\int_y^{y+h} f_Y(v) \dd v}.
+\]
+For small $h$, the integral $\int_y^{y+h} f_{X,Y}(u, v) \dd v$ is approximately $h f_{X,Y}(u, y)$, plus a term that goes to zero faster than $h$. Similarly, $\int_y^{y+h} f_Y(v) \dd v \approx h f_Y(y)$. Hence, as $h \to 0$,
+\[
+  F_{X \mid Y}(x \given y) = \frac{\int_{-\infty}^x f_{X,Y}(u, y) \dd u}{f_Y(y)}.
+\]
+As a function of $x$, $F_{X \mid Y}(x \given y)$ has all the properties of a CDF. Differentiating it with respect to $x$ gives the conditional pdf of $X$ given $Y = y$, which is the formula of \cref{def:conditional-pmf-pdf}.
+
+\begin{theorem}[Product rule and law of total probability for densities]\label{thm:density-product-rule}
+For continuous random variables $X$ and $Y$,
+\[
+  f_{X,Y}(x, y) = f_Y(y)\, f_{X \mid Y}(x \given y),
+\]
+and
+\begin{equation}\label{eq:total-probability-densities}
+  f_X(x) = \int_{-\infty}^\infty f_{X \mid Y}(x \given y)\, f_Y(y) \dd y.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+The first formula rewrites \cref{def:conditional-pmf-pdf}. Integrating it over $y$ gives the second, since the marginal pdf of $X$ is $f_X(x) = \int f_{X,Y}(x, y) \dd y$.
+\end{proof}
+
+Conditional pmfs and pdfs for more than two random variables are defined in the same way. For example, the conditional pmf of $X_n$ given $X_1, \ldots, X_{n-1}$ is
+\[
+  f_{X_n \mid X_1, \ldots, X_{n-1}}(x_n \given x_1, \ldots, x_{n-1}) = \frac{\Prob(X_1 = x_1, \ldots, X_n = x_n)}{\Prob(X_1 = x_1, \ldots, X_{n-1} = x_{n-1})}.
+\]
+
+% ==========================================================================
+\section{Conditional expectation}\label{sec:conditional-expectation}
+% ==========================================================================
+
+A conditional pmf or pdf has all the properties of a pmf or pdf, so it has an expectation: the conditional expectation. Viewed as a function of the conditioning variable, it is itself a random variable, whose expectation is the ordinary expectation (the tower property).
+
+\begin{definition}[Conditional expectation]\label{def:conditional-expectation}
+The \emph{conditional expectation} of $X$ given $Y = y$ is
+\[
+  \E(X \given Y = y) = \begin{cases}
+    \displaystyle\sum_x x\, \Prob(X = x \given Y = y) & \text{(discrete case)}, \\[2ex]
+    \displaystyle\int_{-\infty}^\infty x\, f_{X \mid Y}(x \given y) \dd x & \text{(continuous case)}.
+  \end{cases}
+\]
+In both cases $\E(X \given Y = y)$ is a function of $y$, say $h(y)$. The random variable $h(Y)$ is the \emph{conditional expectation} of $X$ given $Y$, written $\E(X \given Y)$.
+\end{definition}
+
+One of the most useful results in probability is that the expectation of $\E(X \given Y)$ is simply the expectation of $X$. This simplifies law-of-total-probability calculations such as \eqref{eq:total-probability-densities}.
+
+\begin{theorem}[Tower property]\label{thm:tower-property}
+For any pair of random variables $X$ and $Y$,
+\[
+  \E\bigl(\E(X \given Y)\bigr) = \E(X).
+\]
+\end{theorem}
+
+\begin{proof}
+We prove it for the case where $X$ and $Y$ are jointly continuous. For $y$ with $f_Y(y) > 0$,
+\[
+  h(y) = \E(X \given Y = y) = \int_{-\infty}^\infty x\, f_{X \mid Y}(x \given y) \dd x.
+\]
+Then, by \eqref{eq:total-probability-densities},
+\begin{align*}
+  \E(h(Y)) &= \int_{-\infty}^\infty h(y)\, f_Y(y) \dd y = \int_{-\infty}^\infty \int_{-\infty}^\infty x\, f_{X \mid Y}(x \given y) \dd x\, f_Y(y) \dd y \\
+  &= \int_{-\infty}^\infty x \int_{-\infty}^\infty f_{X \mid Y}(x \given y)\, f_Y(y) \dd y \dd x \\
+  &= \int_{-\infty}^\infty x\, f_X(x) \dd x = \E(X). \qedhere
+\end{align*}
+\end{proof}
+
+\begin{example}[Random sums]\label{ex:random-sums}
+Let $X_1, X_2, \ldots$ be i.i.d.\ random variables with common mean $\mu$, and let $S_0 = 0$ and $S_n = X_1 + \cdots + X_n$ for $n \ge 1$, so $\E(S_n) = n\mu$. Now let $N$ be a random variable, independent of $X_1, X_2, \ldots$, taking values in the non-negative integers. Then $\E(S_N \given N) = N\mu$, and by the tower property,
+\[
+  \E(S_N) = \E\bigl(\E(S_N \given N)\bigr) = \E(N\mu) = \mu\, \E(N).
+\]
+\end{example}
