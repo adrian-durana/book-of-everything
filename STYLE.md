@@ -52,6 +52,7 @@ These come from the author's reviews (Chapter 25 onwards). Every piece of review
   - announcements such as "Because this principle is so important, we formulate it as a theorem";
   - restatements of the obvious, such as "Axiom 2 just states that the probability of the certain event is 1";
   - commentary on a figure that only repeats what the figure shows, such as "In this diagram, A ∩ C = ∅, so A and C are disjoint".
+- No specific dates, even where the lecture notes give them (no "dated 22 July", no "(Kolmogorov, 1933)"). When a source needs identifying, give only the semester in which the course was taken, e.g. "Semester 1, 2025".
 - Cut qualifiers that add nothing, such as "(in days)" or "(and will)".
 - Don't add "In particular" special cases that just restate the general result.
 - Prefer precise words: "almost surely" rather than "certainly" where that is the meaning, and "a set of possible outcomes" where the set isn't unique.
