@@ -2,6 +2,9 @@
 
 This is a LaTeX reference book covering the author's undergraduate mathematics and statistics at UQ. It is organised by topic, not by course. The author edits all text directly.
 
+## Current phase: transcription (course chats)
+Course chats are in the **transcription phase**. They check that every image is legible, transcribe the notes into `claude/notes-<course>.md` and build `claude/inventory-<course>.md` in the project. They do **not** draft chapters, edit the repository or build the PDF yet. Their initialising prompt is in the project doc `claude/course-chats.md`. Only the hub chat writes LaTeX for now.
+
 ## Before writing anything
 0. **Content rule:** use only material from the course sources (corrections allowed, additions not). See the "Content rule" section of `STYLE.md`.
 1. Read `STYLE.md`. It covers voice, environments, labels and notation rules. Its "Writing and layout preferences" section is the author's review feedback; follow it for every chapter, and check the built PDF against it (short last lines, figure placement, italics) before handing a chapter over.
